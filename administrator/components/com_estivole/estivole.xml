@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="2.5.0" method="upgrade">
+	<name>com_estivole</name>
+	<creationDate>2013-01-31</creationDate>
+	<author>Spark</author>
+	<authorEmail>info@sparkbuilt.com</authorEmail>
+	<authorUrl>http://estivole.sparkbuilt.com</authorUrl>
+	<copyright>Copyright Info</copyright>
+	<license>License Info</license>
+	<version>1.0.0</version>
+	<description>com_estivole_DESCRIPTION</description>
+
+	<install>
+  		<sql>
+    		<file charset="utf8" driver="mysql">install.mysql.sql</file>
+  		</sql>
+	</install>
+
+	<files folder="site">
+		<folder>assets</folder>
+		<folder>controllers</folder>
+		<folder>helpers</folder>
+		<folder>languages</folder>
+		<folder>models</folder>
+		<folder>tables</folder>
+		<folder>views</folder>
+		<filename>index.html</filename>
+		<filename>estivole.php</filename>
+		<filename>router.php</filename>
+	</files> 
+
+	<scriptfile>install.php</scriptfile>
+
+	<languages folder="site">
+		<language tag="en-GB">languages/en-GB/en-GB.com_estivole.ini</language>
+		<language tag="fr-FR">languages/fr-FR/fr-FR.com_estivole.ini</language>
+	</languages>
+
+	<administration>
+		<menu link="option=com_estivole" img="components/com_estivole/assets/images/estivole_icon.png">com_estivole</menu>
+		<submenu>
+			<menu view="settings" img="components/com_estivole/assets/images/settings_icon.png" 
+				alt="estivole/Settings">com_estivole_SETTINGS</menu>
+		</submenu>
+
+		<files folder="admin">
+			<folder>controllers</folder>
+			<folder>languages</folder>
+			<folder>models</folder>
+			<folder>views</folder>
+			<filename>estivole.php</filename>
+			<filename>index.html</filename>
+			<filename>install.mysql.sql</filename>
+		</files>  
+
+		<languages folder="admin">
+			<language tag="en-GB">languages/en-GB/en-GB.com_estivole.ini</language>
+			<language tag="en-GB">languages/en-GB/en-GB.com_estivole.sys.ini</language>
+			<language tag="fr-FR">languages/fr-FR/fr-FR.com_estivole.ini</language>
+			<language tag="fr-FR">languages/fr-FR/fr-FR.com_estivole.sys.ini</language>
+		</languages>
+
+	</administration>
+	
+</extension>

@@ -1,16 +1,28 @@
-<?php
-/**
- * @package     Joomla.Site
- * @subpackage  com_contact
- *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+<?php // No direct access
 
-defined('_JEXEC') or die;
+defined( '_JEXEC' ) or die( 'Restricted access' );
+ 
+//sessions
+jimport( 'joomla.session.session' );
+ 
+//load tables
+JTable::addIncludePath(JPATH_COMPONENT.'/tables');
 
-require_once JPATH_COMPONENT . '/helpers/route.php';
+//load classes
+JLoader::registerPrefix('Estivole', JPATH_COMPONENT);
 
-$controller = JControllerLegacy::getInstance('frontend');
-$controller->execute(JFactory::getApplication()->input->get('task'));
-$controller->redirect();
+//Load plugins
+JPluginHelper::importPlugin('Estivole');
+ 
+//application
+$app = JFactory::getApplication();
+ 
+// Require specific controller if requested
+$controller = $app->input->get('controller','default');
+ 
+// Create the controller
+$classname  = 'EstivoleControllers'.ucwords($controller);
+$controller = new $classname();
+ 
+// Perform the Request task
+$controller->execute();
