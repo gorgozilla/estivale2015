@@ -1,0 +1,16 @@
+<?php
+
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' ); 
+
+//Display partial views
+class EstivoleViewsBookPhtml extends JViewHTML
+{
+
+    function render()
+    {
+    	$this->params = JComponentHelper::getParams('com_estivole');
+    	
+    	return parent::render();
+ 	}
+}

@@ -8,6 +8,6 @@ class TableLibrary extends JTable
   * @param object Database connector object
   */
   function __construct( &$db ) {
-    parent::__construct('#__Estivole_libraries', 'library_id', $db);
+    parent::__construct('#__estivole_libraries', 'library_id', $db);
   }
 }

@@ -8,6 +8,6 @@ class TableWaitlist extends JTable
   * @param object Database connector object
   */
   function __construct( &$db ) {
-    parent::__construct('#__Estivole_waitlists', 'waitlist_id', $db);
+    parent::__construct('#__estivole_waitlists', 'waitlist_id', $db);
   }
 }

@@ -8,6 +8,6 @@ class TableBook extends JTable
   * @param object Database connector object
   */
   function __construct( &$db ) {
-    parent::__construct('#__Estivole_books', 'book_id', $db);
+    parent::__construct('#__estivole_books', 'book_id', $db);
   }
 }

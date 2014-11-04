@@ -8,6 +8,6 @@
     * @param object Database connector object
     */
     function __construct( &$db ) {
-      parent::__construct('#__Estivole_wishlists', 'wishlist_id', $db);
+      parent::__construct('#__estivole_wishlists', 'wishlist_id', $db);
     }
   }

@@ -4,28 +4,52 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  
 class EstivoleModelsDefault extends JModelBase
 {
-  var $__state_set  = null;
-  var $_total       = null;
-  var $_pagination  = null;
-  var $_db          = null;
-  var $id           = null;
+  protected $__state_set  = null;
+  protected $_total       = null;
+  protected $_pagination  = null;
+  protected $_db          = null;
+  protected $id           = null;
+  protected $limitstart   = 0;
+  protected $limit        = 10;
  
   function __construct()
   {
-    parent::__construct();
-    $this->_db = JFactory::getDBO();
- 
-    $app = JFactory::getApplication();
-    $ids = $app->input->get("cids",null,'array');
- 
-    $id = $app->input->get("id");
-    if ( $id && $id > 0 ){
-      $this->id = $id;
-    }else if ( count($ids) == 1 ){
-      $this->id = $ids[0];
-    }else{
-      $this->id = $ids;
+
+    parent::__construct(); 
+  }
+
+  public function store($data=null)
+  {    
+    $data = $data ? $data : JRequest::get('post');
+    $row = JTable::getInstance($data['table'],'Table');
+
+    $date = date("Y-m-d H:i:s");
+
+     // Bind the form fields to the table
+    if (!$row->bind($data))
+    {
+        return false;
     }
+
+    $row->modified = $date;
+    if ( !$row->created )
+    {
+      $row->created = $date;
+    }
+
+    // Make sure the record is valid
+    if (!$row->check())
+    {
+        return false;
+    }
+ 
+    if (!$row->store())
+    {
+        return false;
+    }
+
+    return $row;
+
   }
  
   /**
@@ -44,6 +68,43 @@ class EstivoleModelsDefault extends JModelBase
     $this->$property = $value;
  
     return $previous;
+  }
+
+  public function get($property, $default = null) 
+  {
+    return isset($this->$property) ? $this->$property : $default;
+  }
+
+  /**
+  * Build a query, where clause and return an object
+  *
+  */
+  public function getItem()
+  {
+    $db = JFactory::getDBO();
+
+    $query = $this->_buildQuery();
+    $this->_buildWhere($query);
+    $db->setQuery($query);
+
+    $item = $db->loadObject();
+
+    return $item;
+  }
+
+  /**
+  * Build query and where for protected _getList function and return a list
+  *
+  * @return array An array of results.
+  */
+  public function listItems()
+  {
+    $query = $this->_buildQuery();    
+    $query = $this->_buildWhere($query);
+    
+    $list = $this->_getList($query, $this->limitstart, $this->limit);
+
+    return $list;
   }
  
   /**
