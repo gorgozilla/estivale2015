@@ -1,6 +1,6 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class TableBook extends JTable
+class TableMemberDaytimes extends JTable
 {                      
   /**
   * Constructor
@@ -8,6 +8,6 @@ class TableBook extends JTable
   * @param object Database connector object
   */
   function __construct( &$db ) {
-    parent::__construct('#__estivole_books', 'book_id', $db);
+    parent::__construct('#__estivole_members_daytimes', 'schedule_id', $db);
   }
 }

@@ -1,6 +1,6 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class TableReview extends JTable
+class TableDayTime extends JTable
 {                      
   /**
   * Constructor
@@ -8,6 +8,6 @@ class TableReview extends JTable
   * @param object Database connector object
   */
   function __construct( &$db ) {
-    parent::__construct('#__estivole_reviews', 'review_id', $db);
+    parent::__construct('#__estivole_daytimes', 'daytime_id', $db);
   }
 }

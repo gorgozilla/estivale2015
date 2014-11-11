@@ -1,6 +1,6 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class TableWaitlist extends JTable
+class TableCalendar extends JTable
 {                      
   /**
   * Constructor
@@ -8,6 +8,6 @@ class TableWaitlist extends JTable
   * @param object Database connector object
   */
   function __construct( &$db ) {
-    parent::__construct('#__estivole_waitlists', 'waitlist_id', $db);
+    parent::__construct('#__estivole_calendars', 'calendar_id', $db);
   }
 }

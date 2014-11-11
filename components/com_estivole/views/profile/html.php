@@ -8,7 +8,7 @@ class EstivoleViewsProfileHtml extends JViewHtml
     $layout = $app->input->get('layout');
 
     //retrieve task list from model
-    $profileModel = new EstivoleModelsProfile();
+    $profileModel = new EstivoleModelsMember();
 
     $this->_modalMessage = EstivoleHelpersView::load('Profile','_message','phtml');
 

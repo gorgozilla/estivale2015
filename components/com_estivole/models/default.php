@@ -14,7 +14,6 @@ class EstivoleModelsDefault extends JModelBase
  
   function __construct()
   {
-
     parent::__construct(); 
   }
 

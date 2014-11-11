@@ -21,9 +21,9 @@ class EstivoleControllersDefault extends JControllerBase
     // Get the document object.
     $document     = JFactory::getDocument();
  
-    $viewName     = $app->input->getWord('view', 'profile');
+    $viewName     = $app->input->getWord('view', 'home');
     $viewFormat   = $document->getType();
-    $layoutName   = $app->input->getWord('layout', 'list');
+    $layoutName   = $app->input->getWord('layout', 'default');
 
     $app->input->set('view', $viewName);
  
