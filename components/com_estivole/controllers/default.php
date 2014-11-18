@@ -24,6 +24,14 @@ class EstivoleControllersDefault extends JControllerBase
     $viewName     = $app->input->getWord('view', 'home');
     $viewFormat   = $document->getType();
     $layoutName   = $app->input->getWord('layout', 'default');
+	
+	if($viewName=="member"){
+        $user = JFactory::getUser();
+        if ($user->get('guest'))
+        {
+            $app->redirect('index.php',JText::_('COM_ESTIVOLE_ACCOUNT_REQUIRED_MSG'));
+        }
+	}
 
     $app->input->set('view', $viewName);
  

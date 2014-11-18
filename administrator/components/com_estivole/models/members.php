@@ -2,7 +2,7 @@
 
 defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class EstivoleModelsMember extends EstivoleModelsDefault
+class EstivoleModelMembers extends JModelLegacy
 {
 
   /**
@@ -72,18 +72,7 @@ class EstivoleModelsMember extends EstivoleModelsDefault
 
     return $query;
   }
-
-  public function getItem()
-  {
-    $member = parent::getItem();
-
-    // $reviewModel = new EstivoleModelsReview();
-    // $reviewModel->set('_member_id',$member->member_id);
-    // $member->reviews = $reviewModel->listItems();
-
-    return $member;
-  }
-
+  
   /**
   * Builds the filter for the query
   * @param    object  Query object
@@ -117,37 +106,52 @@ class EstivoleModelsMember extends EstivoleModelsDefault
     return $query;
   }
 
-  /**
-  * Lend the member
-  * @param    array   Data array of member
-  * @return   object  The member object loaned
-  */
-  public function lend($data = null)
+  public function getItem()
   {
-    $data = isset($data) ? $data : JRequest::get('post');
+    $db = JFactory::getDBO();
 
-    if (isset($data['lend']) && $data['lend']==1)
-    {
-      $date = date("Y-m-d H:i:s");
+    $query = $this->_buildQuery();
+    $this->_buildWhere($query);
+    $db->setQuery($query);
 
-      $data['lent'] = 1;
-      $data['lent_date'] = $date;
-      $data['lent_uid'] = $data['borrower_id'];
+    $item = $db->loadObject();
 
-      $waitlistData = array('waitlist_id'=>$data['waitlist_id'], 'fulfilled' => 1, 'fulfilled_time' => $date, 'table' => 'Waitlist');
-      $waitlistModel = new EstivoleModelsWaitlist();
-      $waitlistModel->store($waitlistData);
-    } else {
-      $data['lent'] = 0;
-      $data['lent_date'] = NULL;
-      $data['lent_uid'] = NULL;
-
-    }
+    return $item;
+  }
+  
+  /**
+  * Build query and where for protected _getList function and return a list
+  *
+  * @return array An array of results.
+  */
+  public function listItems()
+  {
+    $query = $this->_buildQuery();    
+    $query = $this->_buildWhere($query);
     
-    $row = parent::store($data);    
-    
-    return $row;
+    $list = $this->_getList($query, $this->limitstart, $this->limit);
 
+    return $list;
+  }
+  
+  /**
+  * Gets an array of objects from the results of database query.
+  *
+  * @param   string   $query       The query.
+  * @param   integer  $limitstart  Offset.
+  * @param   integer  $limit       The number of records.
+  *
+  * @return  array  An array of results.
+  *
+  * @since   11.1
+  */
+  protected function _getList($query, $limitstart = 0, $limit = 0)
+  {
+    $db = JFactory::getDBO();
+    $db->setQuery($query, $limitstart, $limit);
+    $result = $db->loadObjectList();
+ 
+    return $result;
   }
 
   /**

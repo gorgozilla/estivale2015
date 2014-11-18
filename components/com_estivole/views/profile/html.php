@@ -5,7 +5,7 @@ class EstivoleViewsProfileHtml extends JViewHtml
   function render()
   {
     $app = JFactory::getApplication();
-    $layout = $app->input->get('layout');
+    $layout = $app->input->get('layout', 'default');
 
     //retrieve task list from model
     $profileModel = new EstivoleModelsMember();

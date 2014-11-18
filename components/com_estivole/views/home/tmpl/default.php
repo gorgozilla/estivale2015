@@ -1,3 +1,5 @@
+<?php echo $this->_menuView->renderMenu(); ?>
+
 <h2 class="page-header"><?php echo JText::_('COM_ESTIVOLE_HOME'); ?></h2>
 <div class="row-fluid">
 	<p>Estivale Open Air, c’est un magnifique festival gratuit sur une plage, qui propose sur 4 jours une trentaine de concerts. C’est aussi, en plus de ses 250 bénévoles, un comité et un staff de 60 personnes qui mettent la main à la pâte tout au long de l’année pour préparer et mettre en place cette superbe fête!</p>

@@ -3,7 +3,4 @@
 	<layout title="COM_ESTIVOLE_PROFILE_LIST">
 		<message><![CDATA[COM_ESTIVOLE_PROFILE_LIST_DESC]]></message>
 	</layout>
-	<layout title="COM_ESTIVOLE_PROFILE_MEMBER">
-		<message>Votre profil bénévole</message>
-	</layout>
 </metadata>

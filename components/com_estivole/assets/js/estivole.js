@@ -1,21 +1,22 @@
 //add a book
-function addBook()
+function addMember()
 {
-	var bookInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
-		bookInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	var memberInfo = {};
+	jQuery("#memberForm :input").each(function(idx,ele){
+		memberInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
 	});
 
 	jQuery.ajax({
 		url:'index.php?option=com_estivole&controller=add&format=raw&tmpl=component',
 		type:'POST',
-		data:bookInfo,
+		data:memberInfo,
 		dataType:'JSON',
 		success:function(data)
 		{
 			if ( data.success ){
-				jQuery("#book-list").append(data.html);
-				jQuery("#newBookModal").modal('hide');
+				alert('xo');
+				// jQuery("#member-list").append(data.html);
+				// jQuery("#newMemberModal").modal('hide');
 			}else{
 
 			}

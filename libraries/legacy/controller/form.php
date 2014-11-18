@@ -728,7 +728,6 @@ class JControllerForm extends JControllerLegacy
 		{
 			$validData['tags'] = null;
 		}
-
 		// Attempt to save the data.
 		if (!$model->save($validData))
 		{
@@ -745,7 +744,6 @@ class JControllerForm extends JControllerLegacy
 					. $this->getRedirectToItemAppend($recordId, $urlVar), false
 				)
 			);
-
 			return false;
 		}
 

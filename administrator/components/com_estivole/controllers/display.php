@@ -1,6 +1,6 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class EstivoleControllersDisplay extends JControllerBase
+class EstivoleControllerDisplay extends JControllerAdmin
 {
   public function execute()
   {
@@ -11,7 +11,7 @@ class EstivoleControllersDisplay extends JControllerBase
     // Get the document object.
     $document     = JFactory::getDocument();
  
-    $viewName     = $app->input->getWord('view', 'statistics');
+    $viewName     = $app->input->getWord('view', 'members');
     $viewFormat   = $document->getType();
     $layoutName   = $app->input->getWord('layout', 'default');
 
@@ -32,6 +32,10 @@ class EstivoleControllersDisplay extends JControllerBase
     echo $view->render();
  
     return true;
+  }
+  public function edit()
+  {
+	echo 'lol';
   }
 
 }

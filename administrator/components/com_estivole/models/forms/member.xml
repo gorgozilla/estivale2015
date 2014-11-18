@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fieldset>
+        <field 
+            name="id_service" 
+            type="hidden" />
+        <field 
+            name="lastname" 
+            type="text" 
+            label="Nom"
+            size="40"
+            class="inputbox" />
+        <field 
+            name="firstname" 
+            type="text" 
+            label="Prénom"
+            size="40"
+            class="inputbox" />
+    </fieldset>
+</form>

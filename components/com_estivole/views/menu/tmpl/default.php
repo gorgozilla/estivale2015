@@ -1,0 +1,3 @@
+<a href="<?php echo jroute::_('index.php?option=com_estivole&view=service&layout=list'); ?>" class="btn pull-left">Secteurs</a>
+<a href="<?php echo jroute::_('index.php?option=com_estivole&view=member&layout=member&member_id='.$this->user_id); ?>" class="btn pull-left">Profil</a>
+<a href="<?php echo jroute::_('index.php?option=com_estivole&view=member&layout=list'); ?>" class="btn pull-left">test</a>

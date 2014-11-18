@@ -1,48 +1,20 @@
 <?php // no direct access
 
-defined( '_JEXEC' ) or die( 'Restricted access' ); 
+defined('_JEXEC') or die;
  
-class EstivoleModelsMember extends EstivoleModelsDefault
+class EstivoleModelCalendars extends JModelLegacy
 {
 
   /**
   * Protected fields
   **/
-  var $_member_id     = null;
+  var $_calendar_id     = null;
   
-  var $_lastname     = null;
-  
-  var $_firstname  = null;
-
-  var $_email  = null;
-
-  var $_birthdate       = null;
-
-  var $_phone   = 1;
-
-  var $_address    = null;
-
-  var $_city    = null;
-  
-  var $_npa = null;
-  
-  var $_tshirtsize = null;
-  
-  var $_availibility = null;
-  
-  var $_friendgroup = null;
-  
-  var $_favchoices = null;
-  
-  var $_created = null;
-  
-  var $_modified = null;
-
-
   function __construct()
   {
     $app = JFactory::getApplication();
-    $this->_member_id = $app->input->get('member_id', null);
+    $this->_calendar_id = $app->input->get('calendar_id', null);
+	
     
     parent::__construct();       
   }
@@ -59,7 +31,7 @@ class EstivoleModelsMember extends EstivoleModelsDefault
     $query = $db->getQuery(TRUE);
 
     $query->select('*');
-    $query->from('#__estivole_members as b');
+    $query->from('#__estivole_calendars as b');
 
     // $query->select('w.waitlist_id, w.user_id as borrower_id');
     // $query->leftjoin('#__estivole_waitlists as w on w.member_id = b.member_id AND w.fulfilled = 0');
@@ -73,17 +45,6 @@ class EstivoleModelsMember extends EstivoleModelsDefault
     return $query;
   }
 
-  public function getItem()
-  {
-    $member = parent::getItem();
-
-    // $reviewModel = new EstivoleModelsReview();
-    // $reviewModel->set('_member_id',$member->member_id);
-    // $member->reviews = $reviewModel->listItems();
-
-    return $member;
-  }
-
   /**
   * Builds the filter for the query
   * @param    object  Query object
@@ -93,9 +54,9 @@ class EstivoleModelsMember extends EstivoleModelsDefault
   protected function _buildWhere(&$query)
   {
 
-    if(is_numeric($this->_member_id)) 
+    if(is_numeric($this->_calendar_id)) 
     {
-      $query->where('b.member_id = ' . (int) $this->_member_id);
+      $query->where('b.calendar_id = ' . (int) $this->_calendar_id);
     }
 
     // if(is_numeric($this->_user_id)) 
@@ -116,38 +77,47 @@ class EstivoleModelsMember extends EstivoleModelsDefault
     // $query->where('b.published = ' . (int) $this->_published);
     return $query;
   }
-
+  
+	public function getItem($pk = null)
+	{
+		$item = parent::getItem($pk);
+		return $item;
+	}
+	
+  
   /**
-  * Lend the member
-  * @param    array   Data array of member
-  * @return   object  The member object loaned
+  * Build query and where for protected _getList function and return a list
+  *
+  * @return array An array of results.
   */
-  public function lend($data = null)
+  public function listItems()
   {
-    $data = isset($data) ? $data : JRequest::get('post');
-
-    if (isset($data['lend']) && $data['lend']==1)
-    {
-      $date = date("Y-m-d H:i:s");
-
-      $data['lent'] = 1;
-      $data['lent_date'] = $date;
-      $data['lent_uid'] = $data['borrower_id'];
-
-      $waitlistData = array('waitlist_id'=>$data['waitlist_id'], 'fulfilled' => 1, 'fulfilled_time' => $date, 'table' => 'Waitlist');
-      $waitlistModel = new EstivoleModelsWaitlist();
-      $waitlistModel->store($waitlistData);
-    } else {
-      $data['lent'] = 0;
-      $data['lent_date'] = NULL;
-      $data['lent_uid'] = NULL;
-
-    }
+    $query = $this->_buildQuery();    
+    $query = $this->_buildWhere($query);
     
-    $row = parent::store($data);    
-    
-    return $row;
+    $list = $this->_getList($query, $this->limitstart, $this->limit);
 
+    return $list;
+  }
+  
+  /**
+  * Gets an array of objects from the results of database query.
+  *
+  * @param   string   $query       The query.
+  * @param   integer  $limitstart  Offset.
+  * @param   integer  $limit       The number of records.
+  *
+  * @return  array  An array of results.
+  *
+  * @since   11.1
+  */
+  protected function _getList($query, $limitstart = 0, $limit = 0)
+  {
+    $db = JFactory::getDBO();
+    $db->setQuery($query, $limitstart, $limit);
+    $result = $db->loadObjectList();
+ 
+    return $result;
   }
 
   /**

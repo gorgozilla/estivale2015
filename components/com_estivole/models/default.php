@@ -18,10 +18,10 @@ class EstivoleModelsDefault extends JModelBase
   }
 
   public function store($data=null)
-  {    
+  { 
     $data = $data ? $data : JRequest::get('post');
     $row = JTable::getInstance($data['table'],'Table');
-
+	
     $date = date("Y-m-d H:i:s");
 
      // Bind the form fields to the table
@@ -46,7 +46,6 @@ class EstivoleModelsDefault extends JModelBase
     {
         return false;
     }
-
     return $row;
 
   }
