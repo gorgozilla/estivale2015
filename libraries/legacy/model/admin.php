@@ -1082,9 +1082,9 @@ abstract class JModelAdmin extends JModelForm
 			if (!$table->bind($data))
 			{
 				$this->setError($table->getError());
-
 				return false;
 			}
+
 
 			// Prepare the row for saving
 			$this->prepareTable($table);

@@ -1,5 +1,5 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
- 
+  require_once JPATH_COMPONENT . '/models/daytime.php';
 class EstivoleViewCalendars extends JViewLegacy
 {
 	function display($tpl=null)
@@ -8,17 +8,7 @@ class EstivoleViewCalendars extends JViewLegacy
 		$app = JFactory::getApplication();
 		$model = new EstivoleModelCalendars();
 		$layout = $app->input->get('layout', 'default');
-
-		switch($layout) {
-		  case "edit":
-			$this->calendar = $model->getItem();
-
-		  default:
-			$this->calendars = $model->listItems();
-		  break;
-
-		}
-		//retrieve task list from model
+		$this->calendars = $model->listItems();
 
 		$this->addToolbar();
 

@@ -1,17 +1,20 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
-  require_once JPATH_COMPONENT . '/models/daytime.php';
-class EstivoleViewCalendar extends JViewLegacy
+require_once JPATH_COMPONENT . '/models/daytime.php';
+  
+class EstivoleViewDaytime extends JViewLegacy
 {
 	function display($tpl=null)
 	{
+
 		$app = JFactory::getApplication();
-		$modelDaytime = new EstivoleModelDaytime();
-		$this->daytimes = $modelDaytime->listItems();
 		
-		$model = new EstivoleModelCalendar();
+		$model = new EstivoleModelDaytime();
+
+		$this->daytimes = $model->listItems();
 		$this->state	= $this->get('State');
-		$this->calendar		= $this->get('Item');
+		$this->daytime		= $this->get('Item');
 		$this->form		= $this->get('Form');
+
 		$this->_dayTimeStartList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_start]');
 		$this->_dayTimeEndList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_end]');
 		
@@ -30,18 +33,18 @@ class EstivoleViewCalendar extends JViewLegacy
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
 
-		JToolbarHelper::title(JText::_('Editer un calendrier'));
+		JToolbarHelper::title(JText::_('Editer un jour/horaire'));
 
-		JToolbarHelper::apply('calendar.apply');
-		JToolbarHelper::save('calendar.save');
+		JToolbarHelper::apply('daytime.apply');
+		JToolbarHelper::save('daytime.save');
 
 		if (empty($this->item->id))
 		{
-			JToolbarHelper::cancel('calendar.cancel');
+			JToolbarHelper::cancel('daytime.cancel');
 		}
 		else
 		{
-			JToolbarHelper::cancel('calendar.cancel', 'JTOOLBAR_CLOSE');
+			JToolbarHelper::cancel('daytime.cancel', 'JTOOLBAR_CLOSE');
 		}
 	}
 }

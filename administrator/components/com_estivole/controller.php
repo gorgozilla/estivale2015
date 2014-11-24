@@ -41,7 +41,6 @@ class EstivoleController extends JControllerLegacy
 		// Get and render the view.
 		if ($view = $this->getView($vName, $vFormat))
 		{
-
 			// Get the model for the view.
 			$model = $this->getModel($vName);
 
@@ -54,7 +53,6 @@ class EstivoleController extends JControllerLegacy
 			$view->document = $document;
 
 			$view->display();
-
 		}
 
 		return $this;

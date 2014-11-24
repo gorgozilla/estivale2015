@@ -23,7 +23,6 @@ JHtml::_('formbehavior.chosen', 'select');
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_estivole&view=calendar&layout=edit&calendar_id=' . (int) $this->calendar->calendar_id);?>" method="post" name="adminForm" id="calendar-form" class="form-validate">
 	<div class="form-horizontal">
-
 		<div class="row-fluid">
 			<div class="span9">
 				<div class="form-vertical">
@@ -33,5 +32,47 @@ JHtml::_('formbehavior.chosen', 'select');
 					<?php echo JHtml::_('form.token'); ?>
 				</div>
 			</div>
-		</div>	
+		</div>
+		<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addDayTimeModal('<?php echo $this->calendar->calendar_id; ?>');"><?php echo JText::_('COM_LENDR_LEND_BOOK'); ?></a>
 </form>
+	<br />
+	<br />
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th width="1%" class="nowrap center hidden-phone">
+					<?php echo JHtml::_('grid.checkall'); ?>
+				</th>
+				<th class="left">
+					<?php echo JText::_('Jour'); ?>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($this->daytimes as $i => $item) :
+			// $canEdit   = $this->canDo->get('core.edit');
+			// $canChange = $loggeduser->authorise('core.edit.state',	'com_users');
+
+			// // If this group is super admin and this user is not super admin, $canEdit is false
+			// if ((!$loggeduser->authorise('core.admin')) && JAccess::check($item->id, 'core.admin'))
+			// {
+				// $canEdit   = false;
+				// $canChange = false;
+			// }
+		?>
+			<tr class="row<?php echo $i % 2; ?>">
+				<td class="center hidden-phone">
+					<?php //if ($canEdit) : ?>
+						<?php echo JHtml::_('grid.id', $i, $item->daytime_id); ?>
+					<?php //endif; ?>
+				</td>
+				<td class="left">
+					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $item->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
+						<?php echo JText::_($item->daytime_day); ?>
+					</a>
+				</td>
+			</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+<?php include_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'calendar'.DIRECTORY_SEPARATOR.'tmpl'.DIRECTORY_SEPARATOR.'_adddaytime.php'); ?>

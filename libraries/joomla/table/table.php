@@ -592,6 +592,7 @@ abstract class JTable extends JObject implements JObservableInterface, JTableInt
 	 */
 	public function bind($src, $ignore = array())
 	{
+
 		// JSON encode any fields required
 		if (!empty($this->_jsonEncode))
 		{
