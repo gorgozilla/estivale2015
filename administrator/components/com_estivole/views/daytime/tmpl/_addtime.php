@@ -12,26 +12,18 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
 ?>
-<div id="addDayTimeModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newDayTimeModalLabel" aria-hidden="true">
+<div id="addTimeModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newTimeModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="myModalLabel"><?php echo JText::_('Ajouter une date'); ?></h3>
 	</div>
 	<div class="modal-body" style="height:500px;">
 		<div class="row-fluid">
-			<form id="addDayTimeForm" method="POST" action="index.php?option=com_estivole&task=add.execute&controller=add">
+			<form id="addTimeForm" method="POST" action="index.php?option=com_estivole&task=add.execute&controller=add">
 				<div class="alert alert-info">
 					<?php echo JText::_('COM_LENDR_REQUEST_BOOK'); ?>
 				</div>
 				<div id="daytime-modal-info" class="media"></div>
-				<div class="control-group ">
-					<div class="control-label">
-						<label id="jform_daytime_day-lbl" for="jform_daytime_day" class="required">
-					</div>
-					<div class="controls">
-						<?php echo JHTML::calendar(date("Y-m-d"),'jform[daytime_day]', 'jform_daytime_day', '%Y-%m-%d',array('size'=>'8','maxlength'=>'10','class'=>'required')); ?>
-					</div>
-				</div>
 				<div class="control-group ">
 					<div class="control-label">
 						<label id="jform_daytime_start_hour-lbl" for="jform_daytime_start_hour" class="required">

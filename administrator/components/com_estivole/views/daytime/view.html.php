@@ -12,7 +12,7 @@ class EstivoleViewDaytime extends JViewLegacy
 
 		$this->daytimes = $model->listItems();
 		$this->state	= $this->get('State');
-		$this->daytime		= $this->get('Item');
+		$this->daytime		= $this->daytimes[0];
 		$this->form		= $this->get('Form');
 
 		$this->_dayTimeStartList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_start]');
@@ -40,11 +40,11 @@ class EstivoleViewDaytime extends JViewLegacy
 
 		if (empty($this->item->id))
 		{
-			JToolbarHelper::cancel('daytime.cancel');
+			JToolbarHelper::cancel('calendar.edit');
 		}
 		else
 		{
-			JToolbarHelper::cancel('daytime.cancel', 'JTOOLBAR_CLOSE');
+			JToolbarHelper::cancel('calendar.edit', 'JTOOLBAR_CLOSE');
 		}
 	}
 }

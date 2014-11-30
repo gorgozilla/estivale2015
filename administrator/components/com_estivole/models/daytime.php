@@ -15,6 +15,7 @@ class EstivoleModelDaytime extends JModelAdmin
     $app = JFactory::getApplication();
     $this->_daytime_id = $app->input->get('daytime_id', null);
 	$this->_calendar_id = $app->input->get('calendar_id', null);
+	$this->_daytime_day = $app->input->get('daytime', null);
     
     parent::__construct();       
   }
@@ -46,18 +47,14 @@ class EstivoleModelDaytime extends JModelAdmin
   {
     $db = JFactory::getDBO();
     $query = $db->getQuery(TRUE);
-
-    $query->select('*');
-    $query->from('#__estivole_daytimes as b');
-
-    // $query->select('w.waitlist_id, w.user_id as borrower_id');
-    // $query->leftjoin('#__estivole_waitlists as w on w.member_id = b.member_id AND w.fulfilled = 0');
-
-    // $query->select('l.name as borrower');
-    // $query->leftjoin('#__users as l on l.id = b.lent_uid');
-
-    // $query->select('u.name as waitlist_user');
-    // $query->leftjoin('#__users AS u on u.id = w.user_id');
+	
+	if($this->_daytime_day==''){
+		$query->select('distinct daytime_day');
+		$query->from('#__estivole_daytimes as b');
+	}else{
+		$query->select('*');
+		$query->from('#__estivole_daytimes as b');
+	}
 
     return $query;
   }
@@ -71,25 +68,15 @@ class EstivoleModelDaytime extends JModelAdmin
   protected function _buildWhere(&$query)
   {
 
-    if(is_numeric($this->_id_calendar)) 
+    if(is_numeric($this->_calendar_id)) 
     {
-      $query->where('b.daytime_day = ' . (int) $this->_id_calendar);
+      $query->where('b.calendar_id = ' . (int) $this->_calendar_id);
     }
 
-    // if(is_numeric($this->_user_id)) 
-    // {
-      // $query->where('b.user_id = ' . (int) $this->_user_id);
-    // }
-
-    // if(is_numeric($this->_library_id)) 
-    // {
-      // $query->where('b.library_id = ' . (int) $this->_library_id);
-    // }
-
-    // if($this->_waitlist)
-    // {
-      // $query->where('w.waitlist_id <> ""');
-    // }
+    if($this->_daytime_day) 
+    {
+      $query->where("b.daytime_day = '".$this->_daytime_day."'");
+    }
 
     // $query->where('b.published = ' . (int) $this->_published);
     return $query;
