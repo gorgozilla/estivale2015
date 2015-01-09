@@ -321,3 +321,20 @@ div.logo-text h1 {
 #ja-menu-button {
   z-index: 3;
 }
+
+.moduletablehome-event h1{
+	font-size:25px;
+}
+.moduletablehome-event h2{
+	width:100%;
+	background-color:#ffdd52;
+	padding:10px 0;
+	text-align:center;
+	margin-top:5px;
+}
+
+.logo-home-event{
+	zoom:0.5;
+	left:35%;
+	top:23%;
+}

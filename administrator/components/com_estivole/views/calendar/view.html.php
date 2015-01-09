@@ -1,12 +1,11 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
-  require_once JPATH_COMPONENT . '/models/daytime.php';
+require_once JPATH_COMPONENT . '/models/daytime.php';
+  
 class EstivoleViewCalendar extends JViewLegacy
 {
 	function display($tpl=null)
 	{
 		$app = JFactory::getApplication();
-		$modelDaytime = new EstivoleModelDaytime();
-		$this->daytimes = $modelDaytime->listItems();
 		
 		$model = new EstivoleModelCalendar();
 		$this->state	= $this->get('State');
@@ -15,6 +14,9 @@ class EstivoleViewCalendar extends JViewLegacy
 		$this->_dayTimeStartList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_start]');
 		$this->_dayTimeEndList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_end]');
 		
+		$modelDaytime = new EstivoleModelDaytime();
+		$this->daytimes = $modelDaytime->listItems();
+
 		$this->addToolbar();
 
 		//display
@@ -29,8 +31,8 @@ class EstivoleViewCalendar extends JViewLegacy
 	protected function addToolbar()
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
-
-		JToolbarHelper::title(JText::_('Editer un calendrier'));
+		
+		JToolbarHelper::title(JText::_('Gestion des bénévoles : Editer un calendrier'));
 
 		JToolbarHelper::apply('calendar.apply');
 		JToolbarHelper::save('calendar.save');

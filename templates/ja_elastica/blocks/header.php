@@ -67,3 +67,8 @@ $sloganText = JText::_(trim($this->getParam('sloganText'))); ?>
 <ul class="no-display">
     <li><a href="<?php echo $this->getCurrentURL();?>#ja-content" title="<?php echo JText::_("SKIP_TO_CONTENT");?>"><?php echo JText::_("SKIP_TO_CONTENT");?></a></li>
 </ul>
+
+<div style="clear:both;"></div>
+<div class="logo-dates">
+<h3>Du 30 juillet au 2 aout 2015 | Estavayer-le-Lac</h3>
+</div>

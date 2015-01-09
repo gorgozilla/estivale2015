@@ -27,7 +27,7 @@ class EstivoleViewService extends JViewLegacy
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
 
-		JToolbarHelper::title(JText::_('Editer un secteur'));
+		JToolbarHelper::title(JText::_('Gestion des bénévoles : Editer un secteur'));
 
 		JToolbarHelper::apply('service.apply');
 		JToolbarHelper::save('service.save');

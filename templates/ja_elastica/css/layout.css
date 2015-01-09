@@ -197,6 +197,8 @@ body.content-grid-single.ja-frontpage #ja-content {
 /* FOOTER
 --------------------------------------------------------- */
 #ja-footer {
+	background-color:#fff;
+	margin-top:20px;
 }
 
 /* MAIN NAVIGATION 

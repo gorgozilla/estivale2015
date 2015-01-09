@@ -2,7 +2,7 @@
 <form>
     <fieldset>
         <field 
-            name="id_service" 
+            name="id_member" 
             type="hidden" />
         <field 
             name="lastname" 
@@ -16,5 +16,50 @@
             label="Prénom"
             size="40"
             class="inputbox" />
+        <field 
+            name="email" 
+            type="text" 
+            label="Email"
+            size="40"
+            class="inputbox" />
+        <field 
+            name="phone" 
+            type="text" 
+            label="Tél."
+            size="40"
+            class="inputbox" />
+        <field 
+            name="birthdate" 
+            type="text" 
+            label="Date de naissance"
+            size="40"
+            class="inputbox" />
+        <field 
+            name="address" 
+            type="text" 
+            label="Adresse"
+            size="40"
+            class="inputbox" />
+        <field 
+            name="npa" 
+            type="text" 
+            label="NPA"
+            size="40"
+            class="inputbox" />
+        <field 
+            name="city" 
+            type="text" 
+            label="Ville"
+            size="40"
+            class="inputbox" />
+			<field name="tshirtsize"
+				type="list"
+				label="Taille du T-shirt">
+				<option value="s">S</option>
+				<option value="m">M</option>
+				<option value="l">L</option>
+				<option value="xl">XL</option>
+				<option value="xxl">XXL</option>
+			</field>
     </fieldset>
 </form>

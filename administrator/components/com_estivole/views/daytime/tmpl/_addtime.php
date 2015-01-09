@@ -12,45 +12,55 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
 ?>
-<div id="addTimeModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newTimeModalLabel" aria-hidden="true">
+<div id="addDayTimeModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newDayTimeModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="myModalLabel"><?php echo JText::_('Ajouter une date'); ?></h3>
+		<h3 id="myModalLabel"><?php echo JText::_('Ajouter une tranche horaire'); ?></h3>
 	</div>
 	<div class="modal-body" style="height:500px;">
 		<div class="row-fluid">
-			<form id="addTimeForm" method="POST" action="index.php?option=com_estivole&task=add.execute&controller=add">
+			<form id="addDayTimeForm" method="POST" action="index.php?option=com_estivole&task=add.execute&controller=add&tmpl=component">
 				<div class="alert alert-info">
-					<?php echo JText::_('COM_LENDR_REQUEST_BOOK'); ?>
+					<?php echo JText::_($this->daytime->daytime_day); ?>
 				</div>
 				<div id="daytime-modal-info" class="media"></div>
 				<div class="control-group ">
 					<div class="control-label">
-						<label id="jform_daytime_start_hour-lbl" for="jform_daytime_start_hour" class="required">
+						<label id="jform_quota-lbl" for="jform_quota" class="required">Quota : </label>
 					</div>
 					<div class="controls">
-						<?php echo $this->_dayTimeStartList; ?>
+						<input type="text" name="jform[quota]" id="quota" value="<?php echo $this->daytime->quota; ?>" />
 					</div>
 				</div>
 				<div class="control-group ">
 					<div class="control-label">
-						<label id="jform_daytime_end_hour-lbl" for="jform_daytime_end_hour" class="required">
+						<label id="jform_daytime_start_hour-lbl" for="jform_daytime_start_hour" class="required">Début de la tranche horaire : </label>
 					</div>
 					<div class="controls">
-						<?php echo $this->_dayTimeEndList; ?>
+						<?php echo EstivoleHelpersHtml::hoursList($this->daytime->daytime_day, 'jform[daytime_hour_start]',$this->daytime->daytime_hour_start); ?>
+					</div>
+				</div>
+				<div class="control-group ">
+					<div class="control-label">
+						<label id="jform_daytime_end_hour-lbl" for="jform_daytime_end_hour" class="required">Fin de la tranche horaire : </label>
+					</div>
+					<div class="controls">
+						<?php echo EstivoleHelpersHtml::hoursList($this->daytime->daytime_day, 'jform[daytime_hour_end]',$this->daytime->daytime_hour_end); ?>
 					</div>
 				</div>
 				
-				<input type="hidden" name="jform[calendar_id]" id="calendar_id" value="<?php echo $this->calendar->calendar_id; ?>" />
 				<input type="hidden" name="table" value="daytime" />
 				<input type="hidden" name="model" value="daytime" />
 				<input type="hidden" name="task" value="add.execute" />
+				<input type="hidden" name="jform[daytime_day]" value="<?php echo $this->daytime->daytime_day; ?>" />
+				<input type="hidden" name="daytime_id"  id="daytime_id" value="<?php echo $this->daytime->daytime_id; ?>" />
+				<input type="hidden" name="jform[calendar_id]" id="calendar_id" value="<?php echo $this->daytime->calendar_id; ?>" />
 				<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_LENDR_CLOSE'); ?></button>
-		<button class="btn btn-primary" onclick="this.form.submit();"><?php echo JText::_('COM_LENDR_BORROW'); ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('Annuler'); ?></button>
+		<button class="btn btn-primary" onclick="this.form.submit();"><?php echo JText::_('Ajouter la tranche horaire'); ?></button>
 	</div>
 	</form>
 </div>

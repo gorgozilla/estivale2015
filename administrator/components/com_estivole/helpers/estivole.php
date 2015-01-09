@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @subpackage  com_estivole
  * @since       1.6
  */
-class EstivoleHelpersEstivole
+class EstivoleHelpersEstivole extends JHelperContent
 {
 	public static $extension = 'com_estivole';
 
@@ -40,4 +40,25 @@ class EstivoleHelpersEstivole
 
 		return $result;
 	}
+	
+	public static function addSubmenu($vName)
+    {
+        JHtmlSidebar::addEntry(
+            'Membres',
+            'index.php?option=com_estivole&view=members',
+            $vName == 'members'
+        );
+		
+		JHtmlSidebar::addEntry(
+            'Secteurs',
+            'index.php?option=com_estivole&view=services',
+            $vName == 'services'
+        );
+		
+		JHtmlSidebar::addEntry(
+            'Calendriers',
+            'index.php?option=com_estivole&view=calendars',
+            $vName == 'calendars'
+        );
+    }
 }

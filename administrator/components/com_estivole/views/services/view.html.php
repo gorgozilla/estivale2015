@@ -1,4 +1,5 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
+require_once JPATH_COMPONENT . '/helpers/estivole.php';
  
 class EstivoleViewServices extends JViewLegacy
 {
@@ -17,7 +18,9 @@ class EstivoleViewServices extends JViewLegacy
 		  break;
 
 		}
-		//retrieve task list from model
+
+		EstivoleHelpersEstivole::addSubmenu('services');
+		$this->sidebar = JHtmlSidebar::render();
 
 		$this->addToolbar();
 
@@ -37,13 +40,12 @@ class EstivoleViewServices extends JViewLegacy
         // Get the toolbar object instance
         $bar = JToolBar::getInstance('toolbar');
 
-        JToolbarHelper::title(JText::_('Liste des secteurs'));
+		JToolbarHelper::title(JText::_('Gestion des bénévoles : Secteurs'));
                
         // if ($canDo->get('core.admin'))
         // {
             JToolbarHelper::addNew('service.add');
 			JToolbarHelper::editList();
-			JToolbarHelper::cancel();
         // }
     }
 }

@@ -6,7 +6,6 @@ class EstivoleHelpersView
 {
 	function load($viewName, $layoutName='default', $viewFormat='html', $vars=null)
 	{
-		echo 'lol';
 		// Get the application
 		$app = JFactory::getApplication();
 
@@ -15,9 +14,9 @@ class EstivoleHelpersView
         // Register the layout paths for the view
 	    $paths = new SplPriorityQueue;
 	    $paths->insert(JPATH_COMPONENT . '/views/' . strtolower($viewName) . '/tmpl', 'normal');
-	 
+
 	    $viewClass  = 'EstivoleView' . ucfirst($viewName) . ucfirst($viewFormat);
-	    $modelClass = 'EstivoleModel' . ucfirst($viewName);
+	    $modelClass = 'EstivoleModelMember';
 
 	    $view = new $viewClass(new $modelClass, $paths);
 
@@ -36,7 +35,7 @@ class EstivoleHelpersView
 
 	function getHtml($view, $layout, $item, $data)
 	{
-		$objectView = EstivoleHelpersView::load($view, $layout, 'html');
+		$objectView = EstivoleHelpersView::load($view, $layout, 'phtml');
   		$objectView->$item = $data;
 
   		ob_start();

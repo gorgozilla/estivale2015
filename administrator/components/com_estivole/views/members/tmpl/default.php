@@ -36,87 +36,96 @@ JHtml::_('behavior.modal', 'a.modal');
 		// Joomla.tableOrdering(order, dirn, '');
 	// }
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=members');?>" method="post" name="adminForm" id="adminForm">
-		<div id="j-main-container">
-		<?php
-		// Search tools bar
-		//echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
-		?>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th width="1%" class="nowrap center hidden-phone">
-					<?php echo JHtml::_('grid.checkall'); ?>
-				</th>
-				<th class="left">
-					<?php echo JText::_('Nom'); ?>
-				</th>
-				<th class="left">
-					<?php echo JText::_('Prénom'); ?>
-				</th>
-				<th class="left">
-					<?php echo JText::_('Email'); ?>
-				</th>
-				<th class="left">
-					<?php echo JText::_('Tél.'); ?>
-				</th>
-				<th class="left">
-					<?php echo JText::_('Adresse'); ?>
-				</th>
-				<th class="left">
-					<?php echo JText::_('NPA / Ville'); ?>
-				</th>
-				<th class="left">
-					<?php echo JText::_('Prénom'); ?>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-		<?php foreach ($this->members as $i => $item) :
-			// $canEdit   = $this->canDo->get('core.edit');
-			// $canChange = $loggeduser->authorise('core.edit.state',	'com_users');
+<div id="j-sidebar-container" class="span2">
+	<h4>Choix de la période</h4>
+	<span class="icon-calendar-2"></span><?php echo EstivoleHelpersHtml::calendarsList(); ?>
+	<br />
+	<br />
+	<?php echo $this->sidebar; ?>
+</div>
 
-			// // If this group is super admin and this user is not super admin, $canEdit is false
-			// if ((!$loggeduser->authorise('core.admin')) && JAccess::check($item->id, 'core.admin'))
-			// {
-				// $canEdit   = false;
-				// $canChange = false;
-			// }
-		?>
-			<tr class="row<?php echo $i % 2; ?>">
-				<td class="center hidden-phone">
-					<?php //if ($canEdit) : ?>
-						<?php echo JHtml::_('grid.id', $i, $item->member_id); ?>
-					<?php //endif; ?>
-				</td>
-				<td class="left">
-					<?php echo JText::_($item->lastname); ?>
-				</td>
-				<td class="left">
-					<?php echo JText::_($item->firstname); ?>
-				</td>
-				<td class="left">
-					<?php echo JText::_($item->email); ?>
-				</td>
-				<td class="left">
-					<?php echo JText::_($item->phone); ?>
-				</td>
-				<td class="left">
-					<?php echo JText::_($item->address); ?>
-				</td>
-				<td class="left">
-					<?php echo JText::_($item->npa." / ".$item->city); ?>
-				</td>
-			</tr>
-			<?php endforeach; ?>
-		</tbody>
-	</table>
+<div id="j-main-container" class="span10">
+	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=members');?>" method="post" name="adminForm" id="adminForm">
+			<div id="j-main-container">
+			<?php
+			// Search tools bar
+			//echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+			?>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th width="1%" class="nowrap center hidden-phone">
+						<?php echo JHtml::_('grid.checkall'); ?>
+					</th>
+					<th class="left">
+						<?php echo JText::_('Nom'); ?>
+					</th>
+					<th class="left">
+						<?php echo JText::_('Prénom'); ?>
+					</th>
+					<th class="left">
+						<?php echo JText::_('Email'); ?>
+					</th>
+					<th class="left">
+						<?php echo JText::_('Tél.'); ?>
+					</th>
+					<th class="left">
+						<?php echo JText::_('Adresse'); ?>
+					</th>
+					<th class="left">
+						<?php echo JText::_('NPA / Ville'); ?>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php foreach ($this->members as $i => $item) :
+				// $canEdit   = $this->canDo->get('core.edit');
+				// $canChange = $loggeduser->authorise('core.edit.state',	'com_users');
 
-	<?php //Load the batch processing form. ?>
-	<?php //echo $this->loadTemplate('batch'); ?>
+				// // If this group is super admin and this user is not super admin, $canEdit is false
+				// if ((!$loggeduser->authorise('core.admin')) && JAccess::check($item->id, 'core.admin'))
+				// {
+					// $canEdit   = false;
+					// $canChange = false;
+				// }
+			?>
+				<tr class="row<?php echo $i % 2; ?>">
+					<td class="center hidden-phone">
+						<?php //if ($canEdit) : ?>
+							<?php echo JHtml::_('grid.id', $i, $item->member_id); ?>
+						<?php //endif; ?>
+					</td>
+					<td class="left">
+						<a href="<?php echo JRoute::_('index.php?option=com_estivole&task=member.edit&member_id='.(int) $item->member_id); ?>">
+							<?php echo JText::_($item->lastname); ?>
+						</a>
+					</td>
+					<td class="left">
+						<?php echo JText::_($item->firstname); ?>
+					</td>
+					<td class="left">
+						<?php echo JText::_($item->email); ?>
+					</td>
+					<td class="left">
+						<?php echo JText::_($item->phone); ?>
+					</td>
+					<td class="left">
+						<?php echo JText::_($item->address); ?>
+					</td>
+					<td class="left">
+						<?php echo JText::_($item->npa." / ".$item->city); ?>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
 
-	<input type="hidden" name="task" value="" />
-	<input type="hidden" name="boxchecked" value="0" />
-	<?php echo JHtml::_('form.token'); ?>
-	</div>
-</form>
+		<?php //Load the batch processing form. ?>
+		<?php //echo $this->loadTemplate('batch'); ?>
+
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="boxchecked" value="0" />
+		<?php echo JHtml::_('form.token'); ?>
+		</div>
+	</form>
+</div>

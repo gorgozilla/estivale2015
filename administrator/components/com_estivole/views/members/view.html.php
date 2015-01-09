@@ -1,4 +1,5 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
+require_once JPATH_COMPONENT . '/helpers/estivole.php';
  
 class EstivoleViewMembers extends JViewLegacy
 {
@@ -9,6 +10,9 @@ class EstivoleViewMembers extends JViewLegacy
 		//retrieve task list from model
 		$model = new EstivoleModelMembers();
 		$this->members = $model->listItems();
+		
+		EstivoleHelpersEstivole::addSubmenu('members');
+		$this->sidebar = JHtmlSidebar::render();
 
 		$this->addToolbar();
 
@@ -28,13 +32,12 @@ class EstivoleViewMembers extends JViewLegacy
         // Get the toolbar object instance
         $bar = JToolBar::getInstance('toolbar');
 
-        JToolbarHelper::title(JText::_('Liste des membres'));
+		JToolbarHelper::title(JText::_('Gestion des bénévoles : Bénévoles'));
                
         // if ($canDo->get('core.admin'))
         // {
             JToolbarHelper::addNew('member.add');
 			JToolbarHelper::editList();
-			JToolbarHelper::cancel();
         // }
     }
 }

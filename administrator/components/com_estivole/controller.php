@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_weblinks
@@ -57,4 +58,20 @@ class EstivoleController extends JControllerLegacy
 
 		return $this;
 	}
+	
+  public function getCalendarDates($calendar_id)
+  {
+		$return = array("success"=>false);
+
+		// Get the model for the view.
+		$model = $this->getModel('calendars');
+		$modelDaytime = $this->getModel('daytime');
+		$this->daytimes = $modelDaytime->listItems();
+
+  		$return['success'] = true;
+  		$return['msg'] = 'Yes';
+		$return['calendar_dates'] = $this->daytimes;
+
+		echo json_encode($return);
+  }
 }

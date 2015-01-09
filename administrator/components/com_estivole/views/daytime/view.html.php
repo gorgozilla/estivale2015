@@ -12,11 +12,8 @@ class EstivoleViewDaytime extends JViewLegacy
 
 		$this->daytimes = $model->listItems();
 		$this->state	= $this->get('State');
-		$this->daytime		= $this->daytimes[0];
+		$this->daytime	= $this->daytimes[0];
 		$this->form		= $this->get('Form');
-
-		$this->_dayTimeStartList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_start]');
-		$this->_dayTimeEndList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_end]');
 		
 		$this->addToolbar();
 
@@ -33,7 +30,7 @@ class EstivoleViewDaytime extends JViewLegacy
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
 
-		JToolbarHelper::title(JText::_('Editer un jour/horaire'));
+		JToolbarHelper::title(JText::_('Gestion des bénévoles : Editer un jour/horaire'));
 
 		JToolbarHelper::apply('daytime.apply');
 		JToolbarHelper::save('daytime.save');

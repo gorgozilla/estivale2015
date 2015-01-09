@@ -21,7 +21,7 @@ JHtml::_('formbehavior.chosen', 'select');
 		<div class="row-fluid">
 			<form id="addDayTimeForm" method="POST" action="index.php?option=com_estivole&task=add.execute&controller=add">
 				<div class="alert alert-info">
-					<?php echo JText::_('COM_LENDR_REQUEST_BOOK'); ?>
+					<?php echo JText::_('Calendrier "'.$this->calendar->name.'"'); ?>
 				</div>
 				<div id="daytime-modal-info" class="media"></div>
 				<div class="control-group ">
@@ -57,8 +57,8 @@ JHtml::_('formbehavior.chosen', 'select');
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_LENDR_CLOSE'); ?></button>
-		<button class="btn btn-primary" onclick="this.form.submit();"><?php echo JText::_('COM_LENDR_BORROW'); ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('Annuler'); ?></button>
+		<button class="btn btn-primary" onclick="this.form.submit();"><?php echo JText::_('Ajouter la date'); ?></button>
 	</div>
 	</form>
 </div>

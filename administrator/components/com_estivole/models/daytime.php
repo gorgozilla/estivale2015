@@ -76,8 +76,9 @@ class EstivoleModelDaytime extends JModelAdmin
     if($this->_daytime_day) 
     {
       $query->where("b.daytime_day = '".$this->_daytime_day."'");
-    }
 
+    }
+	
     // $query->where('b.published = ' . (int) $this->_published);
     return $query;
   }
@@ -117,7 +118,7 @@ class EstivoleModelDaytime extends JModelAdmin
   {
     $query = $this->_buildQuery();    
     $query = $this->_buildWhere($query);
-    
+
     $list = $this->_getList($query, $this->limitstart, $this->limit);
 
     return $list;
@@ -155,20 +156,23 @@ class EstivoleModelDaytime extends JModelAdmin
   {
     $app  = JFactory::getApplication();
     $id   = $id ? $id : $app->input->get('daytime_id');
-
+	
     $daytime = JTable::getInstance('Daytime','Table');
     $daytime->load($id);
-
+	
     $daytime->daytime_day = $formData->get('daytime_day');
 	$daytime->daytime_hour_start = $formData->get('daytime_hour_start');
 	$daytime->daytime_hour_end = $formData->get('daytime_hour_end');
 	$daytime->calendar_id = $formData->get('calendar_id');
+	$daytime->quota = $formData->get('quota');
 
-    if($daytime->store()) 
+    if(parent::save($formData)) 
     {
       return true;
     } else {
       return false;
     }
   }
+  
+
 }

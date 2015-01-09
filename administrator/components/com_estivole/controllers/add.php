@@ -8,19 +8,23 @@ class EstivoleControllerAdd extends JControllerForm
     $app      = JFactory::getApplication();
 
     $modelName  = $app->input->get('model', 'Member');
+	
 	// Required objects 
 	$input = JFactory::getApplication()->input; 
 
 	// Get the form data 
 	$formData = new JRegistry($input->get('jform','','array')); 
+	
+	//Get model class
+    $model  = 'EstivoleModel'.ucwords($modelName);
 
-    $modelName  = 'EstivoleModel'.ucwords($modelName);
-  	$model = new $modelName();
    	if ( $row = $model->save($formData) ){
 		$app->enqueueMessage('Date ajoutée avec succès!');
   	 }else{
 		$app->enqueueMessage('Erreur lors de la création!', 'error');
   	 }
+	 
+	 //Redirect on referer page
 	$app->redirect( $_SERVER['HTTP_REFERER']);
   }
 }

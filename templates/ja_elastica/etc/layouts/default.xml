@@ -17,10 +17,12 @@
 		<file>js/jquery.noconflict.js</file>
 		<file>js/jquery.masonry.js</file>
 		<file>js/jquery.mediaqueries.js</file>
+		<file>js/custom.js</file>
 		<content>jQuery.noConflict();</content>
 	</scripts>
 	<blocks name="top" style="xhtml">
 		<block name="header" type="header" main-inner="1"></block>
+		<block name="yop">home-event</block>
 	</blocks>
 	<blocks name="middle">
 		<block name="right1">position-7, position-5</block>

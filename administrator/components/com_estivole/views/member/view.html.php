@@ -1,5 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
- 
+require_once JPATH_COMPONENT . '/models/daytime.php';
+require_once JPATH_COMPONENT . '/models/services.php';
+
 class EstivoleViewMember extends JViewLegacy
 {
 	function display($tpl=null)
@@ -7,6 +9,9 @@ class EstivoleViewMember extends JViewLegacy
 		$app = JFactory::getApplication();
 
 		$model = new EstivoleModelMember();
+		$serviceModel = new EstivoleModelServices();
+
+		$this->services = $serviceModel->listItems();
 
 		$this->state	= $this->get('State');
 		$this->member		= $this->get('Item');
@@ -27,7 +32,7 @@ class EstivoleViewMember extends JViewLegacy
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
 
-		JToolbarHelper::title(JText::_('Editer un secteur'));
+		JToolbarHelper::title(JText::_('Gestion des bénévoles : Editer un bénévole'));
 
 		JToolbarHelper::apply('member.apply');
 		JToolbarHelper::save('member.save');

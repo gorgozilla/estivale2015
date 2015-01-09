@@ -72,7 +72,7 @@ class JConfig {
 	public $proxy_user = '';
 	public $proxy_pass = '';
 	public $MetaRights = '';
-	public $sitename_pagetitles = '0';
+	public $sitename_pagetitles = '1';
 	public $force_ssl = '0';
 	public $session_memcache_server_host = 'localhost';
 	public $session_memcache_server_port = '11211';

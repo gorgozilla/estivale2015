@@ -49,7 +49,6 @@ defined('_JEXEC') or die;
 			$this->showBlock ($block);
 	endforeach;
 	?>
-
 	<!-- MAIN CONTAINER -->
 	<div id="ja-container" class="wrap <?php echo $this->getColumnWidth('cls_w')?$this->getColumnWidth('cls_w'):'ja-mf'; ?> clearfix">
 		<div id="ja-main-wrap" class="main clearfix">
@@ -60,6 +59,7 @@ defined('_JEXEC') or die;
 						//content-top
 						if($this->hasBlock('content-top')) :
 						$block = &$this->getBlockXML ('content-top');
+						
 						?>
 						<div id="ja-content-top" class="ja-content-top clearfix">
 							<?php $this->showBlock ($block); ?>

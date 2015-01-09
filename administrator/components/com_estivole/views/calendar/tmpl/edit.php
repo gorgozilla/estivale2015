@@ -21,22 +21,19 @@ JHtml::_('formbehavior.chosen', 'select');
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=calendar&layout=edit&calendar_id=' . (int) $this->calendar->calendar_id);?>" method="post" name="adminForm" id="calendar-form" class="form-validate">
-	<div class="form-horizontal">
-		<div class="row-fluid">
-			<div class="span9">
-				<div class="form-vertical">
-					<?php echo $this->form->getControlGroup('name'); ?>
-					<?php echo $this->form->getControlGroup('description'); ?>
-					<input type="hidden" name="task" value="" />
-					<?php echo JHtml::_('form.token'); ?>
-				</div>
+
+<div id="j-main-container" class="span12">
+	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=calendar&layout=edit&calendar_id=' . (int) $this->calendar->calendar_id);?>" method="post" name="adminForm" id="calendar-form" class="form-validate">
+		<div class="span12">
+			<div class="form-inline form-inline-header">
+				<?php echo $this->form->getControlGroup('name'); ?>
+				<?php echo $this->form->getControlGroup('description'); ?>
+				<input type="hidden" name="task" value="" />
+				<?php echo JHtml::_('form.token'); ?>
 			</div>
 		</div>
-		<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addDayTimeModal('<?php echo $this->calendar->calendar_id; ?>');"><?php echo JText::_('COM_LENDR_LEND_BOOK'); ?></a>
-</form>
-	<br />
-	<br />
+	</form>
+	<h2>Dates du calendrier</h2>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -67,7 +64,7 @@ JHtml::_('formbehavior.chosen', 'select');
 					<?php //endif; ?>
 				</td>
 				<td class="left">
-					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $item->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
+					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $this->calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
 						<?php echo JText::_($item->daytime_day); ?>
 					</a>
 				</td>
@@ -75,4 +72,6 @@ JHtml::_('formbehavior.chosen', 'select');
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+	<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addDayTimeModal('<?php echo $this->calendar->calendar_id; ?>');"><?php echo JText::_('Ajouter une date'); ?></a>
+</div>
 <?php include_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'calendar'.DIRECTORY_SEPARATOR.'tmpl'.DIRECTORY_SEPARATOR.'_adddaytime.php'); ?>

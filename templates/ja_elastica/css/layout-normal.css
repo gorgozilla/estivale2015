@@ -150,6 +150,7 @@ div.logo-text h1 {
 /* FOOTER
 --------------------------------------------------------- */
 #ja-footer {
+
 }
 
 /* MODULES
@@ -199,3 +200,7 @@ div.logo-text h1 {
 
 /* hide menu button in normal screen */
 #ja-menu-button  {display: none;}
+
+.logo-home-event{
+	zoom:0.8;
+}

@@ -41,10 +41,8 @@ JHtml::_('behavior.modal', 'a.modal');
 				</div>
 			</div>
 		</div>
-		<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addTimeModal('<?php echo $this->daytime->daytime_id; ?>');"><?php echo JText::_('COM_LENDR_LEND_BOOK'); ?></a>
-</form>
-	<br />
-	<br />
+	</form>
+	<h2>Tranches horaire de la date</h2>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -84,7 +82,7 @@ JHtml::_('behavior.modal', 'a.modal');
 					<?php //endif; ?>
 				</td>
 				<td class="left">
-					<?php echo JText::_($item->daytime_day); ?>
+					<a href="javascript:void();" onclick="addDayTimeModal('<?php echo $item->daytime_id; ?>','<?php echo $item->daytime_hour_start; ?>', '<?php echo $item->daytime_hour_end; ?>');"><?php echo JText::_($item->daytime_day); ?></a>
 				</td>
 				<td class="left">
 					<?php echo JText::_($item->daytime_hour_start); ?>
@@ -92,8 +90,14 @@ JHtml::_('behavior.modal', 'a.modal');
 				<td class="left">
 					<?php echo JText::_($item->daytime_hour_end); ?>
 				</td>
+				<td class="left">
+					<?php echo JText::_($item->quota); ?>
+				</td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-<?php include_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'daytime'.DIRECTORY_SEPARATOR.'tmpl'.DIRECTORY_SEPARATOR.'_adddaytime.php'); ?>
+	<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addDayTimeModal('','','');">
+		<?php echo JText::_('Ajouter une tranche horaire'); ?>
+	</a>
+<?php include_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'daytime'.DIRECTORY_SEPARATOR.'tmpl'.DIRECTORY_SEPARATOR.'_addtime.php'); ?>
