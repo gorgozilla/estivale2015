@@ -14,9 +14,10 @@ function addDayTimeModal(daytime_id, start_hour, end_hour)
 	jQuery("#addDayTimeModal #jformdaytime_hour_start").trigger("liszt:updated");
 }
 
-function addAvailibilityModal()
+function addAvailibilityModal(member_id)
 {
 	jQuery("#addAvailibilityModal").modal('show');
+	jQuery("#addAvailibilityModal #member_id").val(member_id);
 	var calendar_id = jQuery("#calendar_selector").val();
 	getCalendarDates(calendar_id);
 	jQuery("#jformdaytime").chosen().change( function(){

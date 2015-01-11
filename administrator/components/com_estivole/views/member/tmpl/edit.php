@@ -37,6 +37,11 @@ JHtml::_('formbehavior.chosen', 'select');
 		</div>
 	</form>
 	<h2>Assignation aux calendriers</h2>
+	
+	<?php
+	foreach($this->calendars as $calendar){
+		echo '<h3>'.$calendar->name.'</h3>';
+	?>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -55,7 +60,7 @@ JHtml::_('formbehavior.chosen', 'select');
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($this->availibilities as $i => $item) :
+		<?php foreach ($calendar->member_daytimes as $i => $item) :
 			// $canEdit   = $this->canDo->get('core.edit');
 			// $canChange = $loggeduser->authorise('core.edit.state',	'com_users');
 
@@ -73,24 +78,27 @@ JHtml::_('formbehavior.chosen', 'select');
 					<?php //endif; ?>
 				</td>
 				<td class="left">
-					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $this->calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
+					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
 						<?php echo JText::_($item->daytime_day); ?>
 					</a>
 				</td>
 				<td class="left">
-					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $this->calendar->calendar_id; ?>&daytime=<?php echo $item->service_name; ?>">
-						<?php echo JText::_($item->service_name); ?>
+					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->name; ?>">
+						<?php echo JText::_($item->name); ?>
 					</a>
 				</td>
 				<td class="left">
-					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $this->calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_time; ?>">
-						<?php echo JText::_($item->daytime_time); ?>
+					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_time; ?>">
+						<?php echo JText::_($item->daytime_hour_start).' - '.JText::_($item->daytime_hour_end); ?>
 					</a>
 				</td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-	<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addAvailibilityModal();"><?php echo JText::_('Assigner à un poste'); ?></a>
+	<?php
+	}
+	?>
+	<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addAvailibilityModal('<?php echo $this->member->member_id; ?>')"><?php echo JText::_('Assigner à un poste'); ?></a>
 </div>
 <?php include_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'member'.DIRECTORY_SEPARATOR.'tmpl'.DIRECTORY_SEPARATOR.'_addavailibility.php'); ?>

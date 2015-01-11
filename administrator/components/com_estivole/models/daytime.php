@@ -67,7 +67,6 @@ class EstivoleModelDaytime extends JModelAdmin
   */
   protected function _buildWhere(&$query)
   {
-
     if(is_numeric($this->_calendar_id)) 
     {
       $query->where('b.calendar_id = ' . (int) $this->_calendar_id);
@@ -78,7 +77,6 @@ class EstivoleModelDaytime extends JModelAdmin
       $query->where("b.daytime_day = '".$this->_daytime_day."'");
 
     }
-	
     // $query->where('b.published = ' . (int) $this->_published);
     return $query;
   }
@@ -123,6 +121,26 @@ class EstivoleModelDaytime extends JModelAdmin
 
     return $list;
   }
+  
+  public function getMemberDaytimes($member_id, $calendar_id)
+  {
+    $query = $this->_buildQuery();   
+    $db = JFactory::getDBO();
+    $query = $db->getQuery(TRUE);
+	
+	$query->select('*');
+	$query->from('#__estivole_members as m, #__estivole_services as s, #__estivole_daytimes as d, #__estivole_members_daytimes as md');
+	$query->where('md.member_id = ' . $member_id);
+	$query->where('d.calendar_id = ' . $calendar_id);
+	$query->where('md.member_id = m.member_id');
+	$query->where('md.service_id = s.service_id');
+	$query->where('md.daytime_id = d.daytime_id');
+	
+    $db->setQuery($query, 0, 0);
+    $result = $db->loadObjectList();
+ 
+    return $result;
+  }
 
   /**
   * Delete a member
@@ -152,26 +170,47 @@ class EstivoleModelDaytime extends JModelAdmin
   * @param int      ID of the member to delete
   * @return boolean True if successfully deleted
   */
-  public function save($formData = null)
+  public function saveTime($formData = null)
+  {
+	$app  = JFactory::getApplication();
+	$id   = $id ? $id : $formData['daytime_id'];
+
+	$daytime = JTable::getInstance('Daytime','Table');
+	$daytime->load($id);
+
+	$daytime->daytime_day = $formData['daytime_day'];
+	$daytime->daytime_hour_start = $formData['daytime_hour_start'];
+	$daytime->daytime_hour_end = $formData['daytime_hour_end'];
+	$daytime->calendar_id = $formData['calendar_id'];
+	$daytime->quota = $formData['quota'];
+
+	if($daytime->store()) 
+	{
+	  return true;
+	} else {
+	  return false;
+	}
+  }
+  
+  public function saveMemberDaytime($formData = null)
   {
     $app  = JFactory::getApplication();
-    $id   = $id ? $id : $app->input->get('daytime_id');
-	
-    $daytime = JTable::getInstance('Daytime','Table');
-    $daytime->load($id);
-	
-    $daytime->daytime_day = $formData->get('daytime_day');
-	$daytime->daytime_hour_start = $formData->get('daytime_hour_start');
-	$daytime->daytime_hour_end = $formData->get('daytime_hour_end');
-	$daytime->calendar_id = $formData->get('calendar_id');
-	$daytime->quota = $formData->get('quota');
+    $id   = $id ? $id : $formData['member_daytime_id'];
 
-    if(parent::save($formData)) 
-    {
-      return true;
-    } else {
-      return false;
-    }
+    $daytime = JTable::getInstance('MemberDaytime','Table');
+
+    $daytime->load($id);
+
+    $daytime->member_id = $formData['member_id'];
+	$daytime->service_id = $formData['service_id'];
+	$daytime->daytime_id = $formData['daytime_id'];
+
+	if($daytime->store()) 
+	{
+		return true;
+	} else {
+		return false;
+	}
   }
   
 

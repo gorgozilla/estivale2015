@@ -22,26 +22,10 @@ JHtml::_('behavior.modal', 'a.modal');
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=daytime&layout=edit&daytime_id=' . (int) $this->daytime->daytime_id);?>" method="post" name="adminForm" id="daytime-form" class="form-validate">
-	<div class="form-horizontal">
-		<div class="row-fluid">
-			<div class="span9">
-				<div class="form-vertical">
-					<div class="control-group ">
-						<div class="control-label">
-							<label id="jform_daytime_day-lbl" for="jform_daytime_day" class="required">
-						</div>
-						<div class="controls">
-							<?php echo JHTML::calendar($this->daytime->daytime_day,'jform[daytime_day]', 'jform_daytime_day', '%Y-%m-%d',array('size'=>'8','maxlength'=>'10','class'=>'required')); ?>
-						</div>
-					</div>
-					<input type="hidden" name="calendar_id" value="<?php echo $this->daytime->calendar_id; ?>" />
-					<input type="hidden" name="task" value="" />
-					<?php echo JHtml::_('form.token'); ?>
-				</div>
-			</div>
-		</div>
+	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=daytime&layout=edit&daytime_id=' . (int) $this->daytime->daytime_id);?>" method="post" name="adminForm" id="daytime-form" class="form-validate">
+		<input type="hidden" name="task" value="" />
 	</form>
+	<h1><?php echo $this->daytime->daytime_day; ?></h1>
 	<h2>Tranches horaire de la date</h2>
 	<table class="table table-striped">
 		<thead>

@@ -19,7 +19,7 @@ JHtml::_('formbehavior.chosen', 'select');
 	</div>
 	<div class="modal-body" style="height:500px;">
 		<div class="row-fluid">
-			<form id="addDayTimeForm" method="POST" action="index.php?option=com_estivole&task=add.add_member_daytime&controller=add">
+			<form id="addDayTimeForm" method="POST" action="index.php?option=com_estivole&task=add.add_member_daytime&controller=add&tmpl=component">
 				<div id="availibility-modal-info" class="media"></div>
 				<div class="control-group ">
 					<div class="control-label">
@@ -50,10 +50,11 @@ JHtml::_('formbehavior.chosen', 'select');
 				
 				</div>
 				
-				<input type="hidden" name="table" value="daytime" />
+				<input type="hidden" name="table" value="member_daytime" />
 				<input type="hidden" name="model" value="daytime" />
 				<input type="hidden" name="task" value="add.add_member_daytime" />
 				<input type="hidden" name="jform[member_id]" id="member_id" value="" />
+				<input type="hidden" name="jform[member_daytime_id]" id="member_daytime_id" value="" />
 				<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</div>

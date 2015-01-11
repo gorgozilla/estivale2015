@@ -19,7 +19,7 @@ JHtml::_('formbehavior.chosen', 'select');
 	</div>
 	<div class="modal-body" style="height:500px;">
 		<div class="row-fluid">
-			<form id="addDayTimeForm" method="POST" action="index.php?option=com_estivole&task=add.execute&controller=add&tmpl=component">
+			<form id="addDayTimeForm" method="POST" action="index.php?option=com_estivole&tmpl=component">
 				<div class="alert alert-info">
 					<?php echo JText::_($this->daytime->daytime_day); ?>
 				</div>
@@ -53,7 +53,7 @@ JHtml::_('formbehavior.chosen', 'select');
 				<input type="hidden" name="model" value="daytime" />
 				<input type="hidden" name="task" value="add.execute" />
 				<input type="hidden" name="jform[daytime_day]" value="<?php echo $this->daytime->daytime_day; ?>" />
-				<input type="hidden" name="daytime_id"  id="daytime_id" value="<?php echo $this->daytime->daytime_id; ?>" />
+				<input type="hidden" name="jform[daytime_id]"  id="daytime_id" value="<?php echo $this->daytime->daytime_id; ?>" />
 				<input type="hidden" name="jform[calendar_id]" id="calendar_id" value="<?php echo $this->daytime->calendar_id; ?>" />
 				<?php echo JHtml::_('form.token'); ?>
 		</div>
