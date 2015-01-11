@@ -1,4 +1,4 @@
-function addDayTimeModal(daytime_id, start_hour, end_hour)
+function addDayTimeModal(daytime_id, start_hour, end_hour, quota)
 {
 	jQuery("#addDayTimeModal").modal('show');
 
@@ -8,6 +8,7 @@ function addDayTimeModal(daytime_id, start_hour, end_hour)
 	}else{
 		jQuery("#addDayTimeModal #daytime_id").val(daytime_id);
 	}
+	jQuery("#addDayTimeModal #quota").val(quota);
 	jQuery("#addDayTimeModal #jformdaytime_hour_end").attr('value', end_hour);
 	jQuery("#addDayTimeModal #jformdaytime_hour_end").trigger("liszt:updated");
 	jQuery("#addDayTimeModal #jformdaytime_hour_start").attr('value', start_hour);

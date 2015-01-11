@@ -34,14 +34,6 @@ class EstivoleViewDaytime extends JViewLegacy
 
 		JToolbarHelper::apply('daytime.apply');
 		JToolbarHelper::save('daytime.save');
-
-		if (empty($this->item->id))
-		{
-			JToolbarHelper::cancel('calendar.edit');
-		}
-		else
-		{
-			JToolbarHelper::cancel('calendar.edit', 'JTOOLBAR_CLOSE');
-		}
+		JToolbarHelper::cancel('calendar.edit');
 	}
 }

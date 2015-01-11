@@ -83,12 +83,12 @@ JHtml::_('formbehavior.chosen', 'select');
 					</a>
 				</td>
 				<td class="left">
-					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->name; ?>">
+					<a href="index.php?option=com_estivole&view=service&layout=edit&service_id=<?php echo $item->service_id; ?>">
 						<?php echo JText::_($item->name); ?>
 					</a>
 				</td>
 				<td class="left">
-					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_time; ?>">
+					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
 						<?php echo JText::_($item->daytime_hour_start).' - '.JText::_($item->daytime_hour_end); ?>
 					</a>
 				</td>

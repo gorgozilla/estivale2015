@@ -36,14 +36,6 @@ class EstivoleViewCalendar extends JViewLegacy
 
 		JToolbarHelper::apply('calendar.apply');
 		JToolbarHelper::save('calendar.save');
-
-		if (empty($this->item->id))
-		{
-			JToolbarHelper::cancel('calendar.cancel');
-		}
-		else
-		{
-			JToolbarHelper::cancel('calendar.cancel', 'JTOOLBAR_CLOSE');
-		}
+		JToolbarHelper::cancel('calendar.cancel');
 	}
 }
