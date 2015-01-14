@@ -26,7 +26,7 @@ JHtml::_('behavior.modal', 'a.modal');
 		<input type="hidden" name="calendar_id" value="<?php echo $this->daytime->calendar_id; ?>" />
 		<input type="hidden" name="task" value="" />
 	</form>
-	<h1><?php echo $this->daytime->daytime_day; ?></h1>
+	<h1><?php echo date('d-m-Y', strtotime($this->daytime->daytime_day)); ?></h1>
 	<h2>Tranches horaire de la date</h2>
 	<table class="table table-striped">
 		<thead>
@@ -67,22 +67,22 @@ JHtml::_('behavior.modal', 'a.modal');
 					<?php //endif; ?>
 				</td>
 				<td class="left">
-					<a href="javascript:void();" onclick="addDayTimeModal('<?php echo $item->daytime_id; ?>','<?php echo $item->daytime_hour_start; ?>', '<?php echo $item->daytime_hour_end; ?>', '<?php echo $item->quota; ?>');"><?php echo JText::_($item->daytime_day); ?></a>
+					<a href="javascript:void();" onclick="addDayTimeModal('<?php echo $item->daytime_id; ?>','<?php echo $item->service_id; ?>','<?php echo $item->daytime_hour_start; ?>', '<?php echo $item->daytime_hour_end; ?>', '<?php echo $item->quota; ?>');"><?php echo date('d-m-Y',strtotime($item->daytime_day)); ?></a>
 				</td>
 				<td class="left">
-					<?php echo JText::_($item->daytime_hour_start); ?>
+					<?php echo date('H:i', strtotime($item->daytime_hour_start));  ?>
 				</td>
 				<td class="left">
-					<?php echo JText::_($item->daytime_hour_end); ?>
+					<?php echo date('H:i', strtotime($item->daytime_hour_end));  ?>
 				</td>
 				<td class="left">
-					<?php echo JText::_($item->quota); ?>
+					<?php echo $item->filledQuota!=''?$item->filledQuota:'0'.' / '.JText::_($item->quota); ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-	<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addDayTimeModal('','','','');">
+	<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addDayTimeModal();">
 		<?php echo JText::_('Ajouter une tranche horaire'); ?>
 	</a>
 <?php include_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'daytime'.DIRECTORY_SEPARATOR.'tmpl'.DIRECTORY_SEPARATOR.'_addtime.php'); ?>

@@ -9,7 +9,6 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('behavior.modal', 'a.modal');
@@ -37,10 +36,6 @@ JHtml::_('behavior.modal', 'a.modal');
 	// }
 </script>
 <div id="j-sidebar-container" class="span2">
-	<h4>Choix de la période</h4>
-	<span class="icon-calendar-2"></span><?php echo EstivoleHelpersHtml::calendarsList(); ?>
-	<br />
-	<br />
 	<?php echo $this->sidebar; ?>
 </div>
 

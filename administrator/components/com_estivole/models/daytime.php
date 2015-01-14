@@ -50,11 +50,12 @@ class EstivoleModelDaytime extends JModelAdmin
 	
 	if($this->_daytime_day==''){
 		$query->select('distinct daytime_day');
-		$query->from('#__estivole_daytimes as b');
+
 	}else{
 		$query->select('*');
-		$query->from('#__estivole_daytimes as b');
 	}
+	
+	$query->from('#__estivole_daytimes as b');
 
     return $query;
   }
@@ -75,9 +76,8 @@ class EstivoleModelDaytime extends JModelAdmin
     if($this->_daytime_day) 
     {
       $query->where("b.daytime_day = '".$this->_daytime_day."'");
-
     }
-    // $query->where('b.published = ' . (int) $this->_published);
+	
     return $query;
   }
   
@@ -114,11 +114,13 @@ class EstivoleModelDaytime extends JModelAdmin
   */
   public function listItems()
   {
+	  //Build and querydatabase
     $query = $this->_buildQuery();    
     $query = $this->_buildWhere($query);
-
+	
+	//Get list of data
     $list = $this->_getList($query, $this->limitstart, $this->limit);
-
+	
     return $list;
   }
   
@@ -135,7 +137,25 @@ class EstivoleModelDaytime extends JModelAdmin
 	$query->where('md.member_id = m.member_id');
 	$query->where('md.service_id = s.service_id');
 	$query->where('md.daytime_id = d.daytime_id');
+	$query->order('d.daytime_day ASC');
 	
+    $db->setQuery($query, 0, 0);
+    $result = $db->loadObjectList();
+ 
+    return $result;
+  }
+  
+  public function getQuotasByDaytime($daytime_id, $member_id)
+  {
+    $query = $this->_buildQuery();   
+    $db = JFactory::getDBO();
+    $query = $db->getQuery(TRUE);
+	
+	$query->select('*');
+	$query->from('#__estivole_daytimes as d, #__estivole_members_daytimes as md');
+	$query->where('md.daytime_id = ' . $daytime_id);
+	$query->where('md.daytime_id = d.daytime_id');
+	//echo $query;exit;
     $db->setQuery($query, 0, 0);
     $result = $db->loadObjectList();
  
@@ -183,7 +203,8 @@ class EstivoleModelDaytime extends JModelAdmin
 	$daytime->daytime_hour_end = $formData['daytime_hour_end'];
 	$daytime->calendar_id = $formData['calendar_id'];
 	$daytime->quota = $formData['quota'];
-
+	$daytime->service_id = $formData['service_id'];
+	
 	if($daytime->store()) 
 	{
 	  return true;

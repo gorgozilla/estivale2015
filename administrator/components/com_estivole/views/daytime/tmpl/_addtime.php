@@ -26,6 +26,14 @@ JHtml::_('formbehavior.chosen', 'select');
 				<div id="daytime-modal-info" class="media"></div>
 				<div class="control-group ">
 					<div class="control-label">
+						<label id="jform_service_id" for="jform_service_id" class="required">Secteur : </label>
+					</div>
+					<div class="controls">
+						<?php echo EstivoleHelpersHtml::servicesList(); ?>
+					</div>
+				</div>
+				<div class="control-group ">
+					<div class="control-label">
 						<label id="jform_quota-lbl" for="jform_quota" class="required">Quota : </label>
 					</div>
 					<div class="controls">
@@ -60,7 +68,7 @@ JHtml::_('formbehavior.chosen', 'select');
 	</div>
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('Annuler'); ?></button>
-		<button class="btn btn-primary" onclick="this.form.submit();"><?php echo JText::_('Ajouter la tranche horaire'); ?></button>
+		<button class="btn btn-primary" onclick="this.form.submit();"><?php if($this->daytime->daytime_id==''){ echo JText::_('Ajouter la tranche horaire'); }else{ echo JText::_('Modifier la tranche horaire'); } ?></button>
 	</div>
 	</form>
 </div>

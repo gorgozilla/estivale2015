@@ -44,8 +44,9 @@
             name="npa" 
             type="text" 
             label="NPA"
-            size="40"
-            class="inputbox" />
+            size="5"
+            class="inputbox"
+			maxlength="5" />
         <field 
             name="city" 
             type="text" 

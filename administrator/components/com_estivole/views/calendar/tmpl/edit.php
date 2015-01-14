@@ -23,6 +23,7 @@ JHtml::_('formbehavior.chosen', 'select');
 </script>
 
 <div id="j-main-container" class="span12">
+	<h1><?php echo $this->calendar->name; ?></h1>
 	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=calendar&layout=edit&calendar_id=' . (int) $this->calendar->calendar_id);?>" method="post" name="adminForm" id="calendar-form" class="form-validate">
 		<div class="span12">
 			<div class="form-inline form-inline-header">
@@ -65,7 +66,7 @@ JHtml::_('formbehavior.chosen', 'select');
 				</td>
 				<td class="left">
 					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $this->calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
-						<?php echo JText::_($item->daytime_day); ?>
+						<?php echo date('d-m-Y', strtotime($item->daytime_day)); ?>
 					</a>
 				</td>
 			</tr>

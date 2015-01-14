@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 		<thead>
 			<tr>
 				<th class="center" colspan="4">
-					<h4><?php echo $this->daytimes[0]->daytime_day; ?></h4>
+					<h4><?php echo date('d-m-Y',strtotime($this->daytimes[0]->daytime_day)); ?></h4>
 				</th>
 			</tr>
 			<tr>
@@ -46,16 +46,17 @@ defined('_JEXEC') or die;
 		?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="left">
-					<?php echo JText::_($item->daytime_hour_start); ?>
+					<?php echo date('H:i', strtotime($item->daytime_hour_start)); ?>
 				</td>
 				<td class="left">
-					<?php echo JText::_($item->daytime_hour_end); ?>
+					<?php echo date('H:i', strtotime($item->daytime_hour_end)); ?>
 				</td>
 				<td class="left">
-					<?php echo JText::_($item->quota); ?>
+					<?php echo $item->filledQuota !='' ? $item->filledQuota : '0'; echo ' / '.JText::_($item->quota); ?>
 				</td>
 				<td class="center hidden-phone">
 					<?php //if ($canEdit) : ?>
+						<!--<input type="checkbox" id="cb2" name="cid[]" value="" onclick="Joomla.isChecked(this.checked);"/>-->
 						<?php echo JHtml::_('grid.id', $i, $item->daytime_id); ?>
 					<?php //endif; ?>
 				</td>

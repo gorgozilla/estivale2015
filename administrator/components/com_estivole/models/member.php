@@ -143,4 +143,24 @@ class EstivoleModelMember extends JModelAdmin
       return false;
     }
   }
+  
+  /**
+  * Delete a member
+  * @param int      ID of the member to delete
+  * @return boolean True if successfully deleted
+  */
+  public function deleteAvailibility($member_daytime_id = null)
+  {
+    $app  = JFactory::getApplication();
+    $id   = $id ? $id : $app->input->get('member_daytime_id');
+
+    $daytime = JTable::getInstance('MemberDaytime','Table');
+
+    $daytime->load($id);
+
+	if ($daytime->delete()) 
+	{
+		return true;
+	}      
+  }
 }

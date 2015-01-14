@@ -42,12 +42,10 @@ JHtml::_('formbehavior.chosen', 'select');
 	foreach($this->calendars as $calendar){
 		echo '<h3>'.$calendar->name.'</h3>';
 	?>
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th width="1%" class="nowrap center hidden-phone">
-					<?php echo JHtml::_('grid.checkall'); ?>
-				</th>
 				<th class="left">
 					<?php echo JText::_('Date'); ?>
 				</th>
@@ -56,6 +54,9 @@ JHtml::_('formbehavior.chosen', 'select');
 				</th>
 				<th class="left">
 					<?php echo JText::_('Tranche horaire'); ?>
+				</th>
+				<th class="center">
+					<?php echo JText::_('Actions'); ?>
 				</th>
 			</tr>
 		</thead>
@@ -72,14 +73,9 @@ JHtml::_('formbehavior.chosen', 'select');
 			// }
 		?>
 			<tr class="row<?php echo $i % 2; ?>">
-				<td class="center hidden-phone">
-					<?php //if ($canEdit) : ?>
-						<?php echo JHtml::_('grid.id', $i, $item->daytime_id); ?>
-					<?php //endif; ?>
-				</td>
 				<td class="left">
 					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
-						<?php echo JText::_($item->daytime_day); ?>
+						<?php echo date('d-m-Y', strtotime($item->daytime_day)); ?>
 					</a>
 				</td>
 				<td class="left">
@@ -89,8 +85,13 @@ JHtml::_('formbehavior.chosen', 'select');
 				</td>
 				<td class="left">
 					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
-						<?php echo JText::_($item->daytime_hour_start).' - '.JText::_($item->daytime_hour_end); ?>
+						<?php echo date('H:i', strtotime($item->daytime_hour_start)).' - '.date('H:i', strtotime($item->daytime_hour_end));  ?>
 					</a>
+				</td>
+				<td class="center">
+					<button type="button" class="btn" onclick="deleteAvailibility('<?php echo $item->member_daytime_id; ?>')">
+						<i class="icon-trash"></i>
+					</button>
 				</td>
 			</tr>
 			<?php endforeach; ?>
