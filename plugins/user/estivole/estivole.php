@@ -34,32 +34,23 @@ class plgUserEstivole extends JPlugin
 
     function onUserAfterSave($user, $isNew, $success, $msg)
     {
-         // If we aren't saving a "new" user (registration), or if we are not
-         // in the front end of the site, then let the
-         //   save happen without interruption.
-         if (!$isNew || !JFactory::getApplication()->isSite()) {
-            return true;
-         }
+        if(!$isNew || ! $success){
+            return;
+        }
+        jimport('joomla.log.log');
+        $res = someThirdPartyCall();
+        //Res is valid here
+        JLog::add("Res  ".print_r($res,true), JLog::WARNING, 'jerror');
 
-         // Load the language file for the plugin
-         $this->loadLanguage();
-         $result = true;
 
-         // Verify that the "I agree to the terms of service for this site."
-         //   checkbox was checked.
-         if (!JRequest::getBool('tos_agree')) {
-             JError::raiseWarning(1000,
-                 JText::_('PLG_USER_MYREGISTRATION_TOS_AGREE_REQUIRED'));
-            $result =  false;
-         }
+        $userOb = JUser::getInstance($user['id']);
+        $userOb->setParam('sugarid', $res['id']);
+        //User ob is valid here
+        JLog::add("UserOb  ".print_r($userOb,true), JLog::WARNING, 'jerror');
+        $saveRes = $userOb->save();
 
-         // Verify that the "I am at least 18 years old." checkbox was checked.
-         if (!JRequest::getBool('old_enough')) {
-            JError::raiseWarning(1000,
-                 JText::_('PLG_USER_MYREGISTRATION_OLD_ENOUGH_REQUIRED'));
-            $result =  false;
-         }
-
-         return $result;
+         //Result is true. Error array is empty.
+        JLog::add("Result ".print_r($saveRes,true), JLog::WARNING, 'jerror');
+        JLog::add("Errors ".print_r($userOb->getErrors(),true), JLog::WARNING, 'jerror');
     }
 }
