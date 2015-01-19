@@ -26,7 +26,13 @@ function addAvailibilityModal(member_id, member_daytime_id)
 	getCalendarDates(calendar_id);
 	jQuery("#jformdaytime").chosen().change( function(){
 		var daytime = jQuery(this).val();
-		getCalendarDaytimes(calendar_id, daytime);
+		var service_id = jQuery("#jformservice_id").val();
+		getCalendarDaytimes(calendar_id, daytime, service_id);
+	});
+	jQuery("#jformservice_id").chosen().change( function(){
+		var service_id = jQuery(this).val();
+		var daytime = jQuery("#jformdaytime").val();
+		getCalendarDaytimes(calendar_id, daytime, service_id);
 	});
 }
 
@@ -69,9 +75,9 @@ function getCalendarDates(calendar_id)
 					el.append(jQuery("<option></option>").attr("value", data.calendar_dates[i].daytime_id).text(data.calendar_dates[i].daytime_day));
 				}
 				jQuery("#addAvailibilityModal #jformdaytime").trigger("liszt:updated");
-				
+				var service_id = jQuery("#jformservice_id").chosen().val();
 				var daytime = jQuery("#jformdaytime").val();
-				getCalendarDaytimes(calendar_id, daytime);	
+				getCalendarDaytimes(calendar_id, daytime, service_id);	
 			} else {
 
 			}
@@ -82,12 +88,12 @@ function getCalendarDates(calendar_id)
 	});
 }
 
-function getCalendarDaytimes(calendar_id, daytime)
+function getCalendarDaytimes(calendar_id, daytime, service_id)
 {
 	jQuery.ajax({
 		url:'index.php?option=com_estivole&controller=member&view=member&layout=_availibilitytable&format=raw&tmpl=component',
 		type:'POST',
-		data: 'calendar_id='+calendar_id+'&daytime='+daytime,
+		data: 'calendar_id='+calendar_id+'&daytime='+daytime+'&service_id='+service_id,
 		success:function(data)
 		{
 			var el = jQuery("#addAvailibilityModal #availibilityTableDiv");

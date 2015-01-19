@@ -1,8 +1,8 @@
 <?php // no direct access
 
-defined( '_JEXEC' ) or die( 'Restricted access' ); 
+defined('_JEXEC') or die;
  
-class EstivoleModelsMember extends EstivoleModelsDefault
+class EstivoleModelMember extends JModelAdmin
 {
 
   /**
@@ -10,42 +10,31 @@ class EstivoleModelsMember extends EstivoleModelsDefault
   **/
   var $_member_id     = null;
   
-  var $_lastname     = null;
-  
-  var $_firstname  = null;
-
-  var $_email  = null;
-
-  var $_birthdate       = null;
-
-  var $_phone   = 1;
-
-  var $_address    = null;
-
-  var $_city    = null;
-  
-  var $_npa = null;
-  
-  var $_tshirtsize = null;
-  
-  var $_availibility = null;
-  
-  var $_friendgroup = null;
-  
-  var $_favchoices = null;
-  
-  var $_created = null;
-  
-  var $_modified = null;
-
-
   function __construct()
   {
     $app = JFactory::getApplication();
     $this->_member_id = $app->input->get('member_id', null);
+	
     
     parent::__construct();       
   }
+  
+    public function getForm($data = array(), $loadData = true)
+    {
+        // Get the form
+        $form = $this->loadForm('com_estivole.member', 'member', array('control' => 'jform', 'load_data' => $loadData));
+        if (!$form) {
+            return false;
+        } else {
+            return $form;
+        }
+    }
+    public function loadFormData()
+    {
+        // Load form data
+        $data = $this->getItem();
+        return $data;
+    }
  
   /**
   * Builds the query to be used by the member model
@@ -71,17 +60,6 @@ class EstivoleModelsMember extends EstivoleModelsDefault
     // $query->leftjoin('#__users AS u on u.id = w.user_id');
 
     return $query;
-  }
-
-  public function getItem()
-  {
-    $member = parent::getItem();
-
-    // $reviewModel = new EstivoleModelsReview();
-    // $reviewModel->set('_member_id',$member->member_id);
-    // $member->reviews = $reviewModel->listItems();
-
-    return $member;
   }
 
   /**
@@ -116,38 +94,31 @@ class EstivoleModelsMember extends EstivoleModelsDefault
     // $query->where('b.published = ' . (int) $this->_published);
     return $query;
   }
-
+  
+	public function getItem($pk = null)
+	{
+		$item = parent::getItem($pk);
+		return $item;
+	}
+  
   /**
-  * Lend the member
-  * @param    array   Data array of member
-  * @return   object  The member object loaned
+  * Gets an array of objects from the results of database query.
+  *
+  * @param   string   $query       The query.
+  * @param   integer  $limitstart  Offset.
+  * @param   integer  $limit       The number of records.
+  *
+  * @return  array  An array of results.
+  *
+  * @since   11.1
   */
-  public function lend($data = null)
+  protected function _getList($query, $limitstart = 0, $limit = 0)
   {
-    $data = isset($data) ? $data : JRequest::get('post');
-
-    if (isset($data['lend']) && $data['lend']==1)
-    {
-      $date = date("Y-m-d H:i:s");
-
-      $data['lent'] = 1;
-      $data['lent_date'] = $date;
-      $data['lent_uid'] = $data['borrower_id'];
-
-      $waitlistData = array('waitlist_id'=>$data['waitlist_id'], 'fulfilled' => 1, 'fulfilled_time' => $date, 'table' => 'Waitlist');
-      $waitlistModel = new EstivoleModelsWaitlist();
-      $waitlistModel->store($waitlistData);
-    } else {
-      $data['lent'] = 0;
-      $data['lent_date'] = NULL;
-      $data['lent_uid'] = NULL;
-
-    }
-    
-    $row = parent::store($data);    
-    
-    return $row;
-
+    $db = JFactory::getDBO();
+    $db->setQuery($query, $limitstart, $limit);
+    $result = $db->loadObjectList();
+ 
+    return $result;
   }
 
   /**
@@ -171,5 +142,25 @@ class EstivoleModelsMember extends EstivoleModelsDefault
     } else {
       return false;
     }
+  }
+  
+  /**
+  * Delete a member
+  * @param int      ID of the member to delete
+  * @return boolean True if successfully deleted
+  */
+  public function deleteAvailibility($member_daytime_id = null)
+  {
+    $app  = JFactory::getApplication();
+    $id   = $id ? $id : $app->input->get('member_daytime_id');
+
+    $daytime = JTable::getInstance('MemberDaytime','Table');
+
+    $daytime->load($id);
+
+	if ($daytime->delete()) 
+	{
+		return true;
+	}      
   }
 }

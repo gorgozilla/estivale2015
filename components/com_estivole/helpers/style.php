@@ -8,11 +8,12 @@ class EstivoleHelpersStyle
 	{
 		$document = JFactory::getDocument();
 
-		//stylesheets
-		$document->addStylesheet(JURI::base().'components/com_estivole/assets/css/style.css');
+		// //stylesheets
+		$document->addStylesheet(JURI::base().'components/com_estivole/assets/css/bootstrap-datetimepicker.min.css');
 
 		//javascripts
 		$document->addScript(JURI::base().'components/com_estivole/assets/js/estivole.js');
+		$document->addScript(JURI::base().'components/com_estivole/assets/js/bootstrap-datetimepicker.min.js');
 
 	}
 }

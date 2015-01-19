@@ -1,32 +1,58 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
+ require_once JPATH_COMPONENT . '/models/daytime.php';
  
-class EstivoleControllersAdd extends JControllerBase
+class EstivoleControllerAdd extends JControllerForm
 {
-  public function execute()
-  {
-    $app      = JFactory::getApplication();
-    $return   = array("success"=>false);
+	public $formData = null;
+	public $model = null;
+	
+	public function execute($task=null)
+	{
+		$app      = JFactory::getApplication();
+		$modelName  = $app->input->get('model', 'Member');
+		// Required objects 
+		$input = JFactory::getApplication()->input; 
+		// Get the form data 
+		$this->formData = new JRegistry($input->get('jform','','array')); 
 
-    $modelName  = $app->input->get('model', 'Member');
-    $view       = $app->input->get('view', 'Member');
-    $layout     = $app->input->get('layout', 'edit');
-    $item       = $app->input->get('item', 'member');
+		//Get model class
+		$this->model = $this->getModel($modelName);
 
-    $modelName  = 'EstivoleModels'.ucwords($modelName);
+		if($task=='add_member_daytime'){
+			$this->add_member_daytime();
+		}else{
+			if ( $row = $this->model->saveTime($this->formData) ){
+				$app->enqueueMessage('Date ajoutée avec succès!');
+			 }else{
+				$app->enqueueMessage('Erreur lors de la création!', 'error');
+			 }
+		 }
+		 //Redirect on referer page
+		$app->redirect( $_SERVER['HTTP_REFERER']);
+	}
 
-  	 $model = new $modelName();
-   	if ( $row = $model->store() )
-  	 {
-  		 $return['success'] = true;
-  		 $return['msg'] = JText::_('COM_ESTIVOLE_SAVE_SUCCESS');
+	public function add_member_daytime()
+	{
+		$app      = JFactory::getApplication();
 
-		$return['html'] = EstivoleHelpersView::getHtml($view, $layout, $item, $row);
-  	 }else{
-  		 $return['msg'] = JText::_('COM_ESTIVOLE_SAVE_FAILURE');
-  	 }
-    
-  	echo json_encode($return);
+		// Required objects 
+		$input = JFactory::getApplication()->input; 
 
-  }
+		// Get the daytimes checkboxes data 
+		$cid = $input->get('cid', array(), 'array');
 
+		if (empty($cid))
+		{
+			JError::raiseWarning(500, JText::_('JERROR_NO_ITEMS_SELECTED'));
+		}
+		else
+		{
+			foreach($cid as $daytime_id){
+				$this->formData['daytime_id']=$daytime_id;
+
+				$this->model->saveMemberDaytime($this->formData);
+				$app->enqueueMessage('Date ajoutée avec succès!');
+			}
+		}
+	}
 }

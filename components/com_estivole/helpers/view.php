@@ -14,14 +14,9 @@ class EstivoleHelpersView
         // Register the layout paths for the view
 	    $paths = new SplPriorityQueue;
 	    $paths->insert(JPATH_COMPONENT . '/views/' . strtolower($viewName) . '/tmpl', 'normal');
-	 
-	    $viewClass  = 'EstivoleViews' . ucfirst($viewName) . ucfirst($viewFormat);
-	    $modelClass = 'EstivoleModels' . ucfirst($viewName);
 
-	    if (false === class_exists($modelClass))
-	    {
-	      $modelClass = 'EstivoleModelsDefault';
-	    }
+	    $viewClass  = 'EstivoleView' . ucfirst($viewName) . ucfirst($viewFormat);
+	    $modelClass = 'EstivoleModelMember';
 
 	    $view = new $viewClass(new $modelClass, $paths);
 

@@ -8,3 +8,4 @@
 2014-10-29T21:42:00+00:00	INFO	joomlafailure	Le nom d'utilisateur ne correspond pas au mot de passe, ou vous n'avez pas encore de compte.
 2014-10-29T21:42:05+00:00	INFO	joomlafailure	Le nom d'utilisateur ne correspond pas au mot de passe, ou vous n'avez pas encore de compte.
 2014-10-29T21:51:38+00:00	INFO 127.0.0.1	joomlafailure	Un mot de passe vide n'est pas autorisé
+2015-01-15T20:48:43+00:00	INFO 127.0.0.1	joomlafailure	Le mot de passe ne correspond pas au nom d'utilisateur, ou vous n'avez pas encore de compte.

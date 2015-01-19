@@ -1,204 +1,106 @@
-//add a book
-function addMember()
+function addDayTimeModal(daytime_id, service_id, start_hour, end_hour, quota)
 {
-	var memberInfo = {};
-	jQuery("#memberForm :input").each(function(idx,ele){
-		memberInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
+	jQuery("#addDayTimeModal").modal('show');
 
-	jQuery.ajax({
-		url:'index.php?option=com_estivole&controller=add&format=raw&tmpl=component',
-		type:'POST',
-		data:memberInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			if ( data.success ){
-				alert('xo');
-				// jQuery("#member-list").append(data.html);
-				// jQuery("#newMemberModal").modal('hide');
-			}else{
-
-			}
-		}
-	});
-
-}
-
-function addToWishlist(book_id)
-{
-	jQuery.ajax({
-	url:'index.php?option=com_estivole&controller=wish&format=raw&tmpl=component',
-	type:'POST',
-	data:'&book_id='+book_id,
-	dataType:'JSON',
-	success:function(data)
-	{
-		if ( data.success ){
-			console.log(data.html);
-			jQuery("#messageModal").modal('show');
-			jQuery("#message").html(data.html);
-		}
+	if(daytime_id==''){
+		jQuery("#addDayTimeModal #daytime_id").val('');	
+		jQuery("#addDayTimeModal #quota").val('');	
+	}else{
+		jQuery("#addDayTimeModal #daytime_id").val(daytime_id);
 	}
+	jQuery("#addDayTimeModal #quota").val(quota);
+	jQuery("#addDayTimeModal #jformdaytime_hour_end").attr('value', end_hour);
+	jQuery("#addDayTimeModal #jformdaytime_hour_end").trigger("liszt:updated");
+	jQuery("#addDayTimeModal #jformdaytime_hour_start").attr('value', start_hour);
+	jQuery("#addDayTimeModal #jformdaytime_hour_start").trigger("liszt:updated");
+	jQuery("#addDayTimeModal #jformservice_id").attr('value', service_id);
+	jQuery("#addDayTimeModal #jformservice_id").trigger("liszt:updated");
+}
+
+function addAvailibilityModal(member_id, member_daytime_id)
+{
+	jQuery("#addAvailibilityModal").modal('show');
+	jQuery("#addAvailibilityModal #member_id").val(member_id);
+	jQuery("#addAvailibilityModal #member_daytime_id").val(member_daytime_id);
+	var calendar_id = jQuery("#calendar_selector").val();
+	getCalendarDates(calendar_id);
+	jQuery("#jformdaytime").chosen().change( function(){
+		var daytime = jQuery(this).val();
+		var service_id = jQuery("#jformservice_id").val();
+		getCalendarDaytimes(calendar_id, daytime, service_id);
+	});
+	jQuery("#jformservice_id").chosen().change( function(){
+		var service_id = jQuery(this).val();
+		var daytime = jQuery("#jformdaytime").val();
+		getCalendarDaytimes(calendar_id, daytime, service_id);
 	});
 }
 
-function loadLendModal(book_id, borrower_id, borrower, waitlist_id)
+function deleteAvailibility(member_daytime_id)
 {
-	jQuery("#lendBookModal").modal('show');
-	jQuery('#borrower_name').html(borrower);
-	jQuery("#book_id").val(book_id);
-	jQuery("#borrower_id").val(borrower_id);
-	jQuery("#waitlist_id").val(waitlist_id);
-}
-
-//add a review
-function addReview()
-{
-	var reviewInfo = {};
-	jQuery("#reviewForm :input").each(function(idx,ele){
-		reviewInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-
 	jQuery.ajax({
-		url:'index.php?option=com_estivole&controller=add&format=raw&tmpl=component',
+		url:'index.php?option=com_estivole&controller=member&task=member.deleteAvailibility',
 		type:'POST',
-		data:reviewInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			if ( data.success ){
-				console.log(data.html);
-				jQuery("#review-list").append(data.html);
-				jQuery("#newReviewModal").modal('hide');
-			}else{
-
-			}
-		}
-	});
-
-}
-
-function borrowBookModal(book_id)
-{
-	jQuery("#borrowBookModal").modal('show');
-	var html = jQuery("#book-row-"+book_id).html();
-	jQuery("#book-modal-info").html(html);
-	jQuery("#book-id").val(book_id);
-}
-
-function lendBook()
-{
-	var lendForm = {};
-	jQuery("#lendForm :input").each(function(idx,ele){
-		lendForm[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-	
-	jQuery.ajax({
-		url:'index.php?option=com_estivole&controller=lend&format=raw&tmpl=component',
-		type:'POST',
-		data:lendForm,
-		dataType:'JSON',
-		success:function(data)
-		{
-			if ( data.success )
-			{
-				jQuery("#lendBookModal").modal('hide');
-			}
-		}
-	});
-}
-
-function borrowBook()
-{
-	var requestInfo = {};
-	jQuery("#borrowForm :input").each(function(idx,ele){
-		requestInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-	
-	jQuery.ajax({
-		url:'index.php?option=com_estivole&controller=request&format=raw&tmpl=component',
-		type:'POST',
-		data:requestInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			if ( data.success )
-			{
-				jQuery("#borrowBookModal").modal('hide');
-			} else {
-
-			}
-		}
-	});
-}
-
-function lendBookModal(book_id,borrower)
-{
-	alert(borrower);
-	jQuery("#lendBookModal").modal('show');
-	jQuery("#bookid").val(book_id);
-	jQuery("#borrower_name").html(borrower);	
-}
-
-function returnBookModal(book_id)
-{
-	jQuery("#returnBookModal").modal('show');
-	jQuery("#book_id").val(book_id);
-}
-
-function returnBook()
-{
-	var postInfo = {};
-	jQuery("#returnForm :input").each(function(idx,ele){
-		postInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-
-	jQuery.ajax({
-		url:'index.php?option=com_estivole&controller=lend&format=raw&tmpl=component',
-		type:'POST',
-		data: postInfo,
+		data: 'member_daytime_id='+member_daytime_id,
 		dataType: 'JSON',
 		success:function(data)
 		{
 			if(data.success)
 			{
-				jQuery("#returnBookModal").modal('hide');
+				alert('ok');
+			} else {
+				alert('ko');
+			}
+		},
+       error : function(resultat, statut, erreur){
+			alert(erreur);
+       }
+	});
+}
+
+function getCalendarDates(calendar_id)
+{
+	jQuery.ajax({
+		url:'index.php?option=com_estivole&task=getCalendarDates&format=raw',
+		type:'POST',
+		data: 'calendar_id='+calendar_id,
+		dataType: 'JSON',
+		success:function(data)
+		{
+			if(data.success)
+			{
+				var el = jQuery("#addAvailibilityModal #jformdaytime");
+				el.empty(); // remove old options
+				for(i=0;i<data.calendar_dates.length;i++){
+					el.append(jQuery("<option></option>").attr("value", data.calendar_dates[i].daytime_id).text(data.calendar_dates[i].daytime_day));
+				}
+				jQuery("#addAvailibilityModal #jformdaytime").trigger("liszt:updated");
+				var service_id = jQuery("#jformservice_id").chosen().val();
+				var daytime = jQuery("#jformdaytime").val();
+				getCalendarDaytimes(calendar_id, daytime, service_id);	
 			} else {
 
 			}
-		}
+		},
+       error : function(resultat, statut, erreur){
+			alert(erreur);
+       }
 	});
 }
 
-function cancelRequest(waitlist_id) 
+function getCalendarDaytimes(calendar_id, daytime, service_id)
 {
 	jQuery.ajax({
-		url:'index.php?option=com_estivole&controller=delete&format=raw&tmpl=component',
+		url:'index.php?option=com_estivole&controller=member&view=member&layout=_availibilitytable&format=raw&tmpl=component',
 		type:'POST',
-		data: 'waitlist_id='+waitlist_id,
-		dataType: 'JSON',
+		data: 'calendar_id='+calendar_id+'&daytime='+daytime+'&service_id='+service_id,
 		success:function(data)
 		{
-			alert(data.msg);
-		}
-	});
-}
-
-function deleteBook(book_id,type) 
-{
-	jQuery.ajax({
-		url:'index.php?option=com_estivole&controller=delete&format=raw&tmpl=component',
-		type:'POST',
-		data: 'book_id='+book_id+'&type='+type,
-		dataType: 'JSON',
-		success:function(data)
-		{
-			alert(data.msg);
-			if(data.success)
-			{
-				jQuery("tr#bookRow"+book_id).hide();
-			}
-		}
+			var el = jQuery("#addAvailibilityModal #availibilityTableDiv");
+			el.html(data);
+		},
+       error : function(resultat, statut, erreur){
+			alert(erreur);
+       }
 	});
 }
