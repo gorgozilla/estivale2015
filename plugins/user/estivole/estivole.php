@@ -34,10 +34,20 @@ class plgUserEstivole extends JPlugin
 
     function onUserAfterSave($user, $isNew, $success, $msg)
     {
-        if(!$isNew || ! $success){
-            return;
-        }
-        jimport('joomla.log.log');
+        if($isNew && $success){
+			JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_estivole/tables');
+			$member = JTable::getInstance('Member','Table');
+			$member->user_id = $user['id'];
+			$member->email = $user['email'];
+			$member->published = 1;
+			$member->created = date("Y-m-d H:i:s");
+			$member->modified = date("Y-m-d H:i:s");
+			$member->store();
+			return true;
+        }else{
+			return false;
+		}
+        /*jimport('joomla.log.log');
         $res = someThirdPartyCall();
         //Res is valid here
         JLog::add("Res  ".print_r($res,true), JLog::WARNING, 'jerror');
@@ -51,6 +61,6 @@ class plgUserEstivole extends JPlugin
 
          //Result is true. Error array is empty.
         JLog::add("Result ".print_r($saveRes,true), JLog::WARNING, 'jerror');
-        JLog::add("Errors ".print_r($userOb->getErrors(),true), JLog::WARNING, 'jerror');
+        JLog::add("Errors ".print_r($userOb->getErrors(),true), JLog::WARNING, 'jerror');*/
     }
 }
