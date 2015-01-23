@@ -2,7 +2,7 @@
 
 defined('_JEXEC') or die;
  
-class EstivoleModelMember extends JModelAdmin
+class EstivoleModelMember extends JModelItem
 {
 
   /**
@@ -14,27 +14,10 @@ class EstivoleModelMember extends JModelAdmin
   {
     $app = JFactory::getApplication();
     $this->_member_id = $app->input->get('member_id', null);
-	
+    $this->_user_id = $app->input->get('user_id', null);
     
     parent::__construct();       
   }
-  
-    public function getForm($data = array(), $loadData = true)
-    {
-        // Get the form
-        $form = $this->loadForm('com_estivole.member', 'member', array('control' => 'jform', 'load_data' => $loadData));
-        if (!$form) {
-            return false;
-        } else {
-            return $form;
-        }
-    }
-    public function loadFormData()
-    {
-        // Load form data
-        $data = $this->getItem();
-        return $data;
-    }
  
   /**
   * Builds the query to be used by the member model
@@ -75,29 +58,25 @@ class EstivoleModelMember extends JModelAdmin
     {
       $query->where('b.member_id = ' . (int) $this->_member_id);
     }
-
-    // if(is_numeric($this->_user_id)) 
-    // {
-      // $query->where('b.user_id = ' . (int) $this->_user_id);
-    // }
-
-    // if(is_numeric($this->_library_id)) 
-    // {
-      // $query->where('b.library_id = ' . (int) $this->_library_id);
-    // }
-
-    // if($this->_waitlist)
-    // {
-      // $query->where('w.waitlist_id <> ""');
-    // }
+	
+    if(is_numeric($this->_user_id)) 
+    {
+      $query->where('b.user_id = ' . (int) $this->_user_id);
+    }
 
     // $query->where('b.published = ' . (int) $this->_published);
     return $query;
   }
   
-	public function getItem($pk = null)
+	public function getItem($user_id)
 	{
-		$item = parent::getItem($pk);
+		$db = JFactory::getDBO();
+
+		$query = $this->_buildQuery();
+		$this->_buildWhere($query);
+		$db->setQuery($query);
+
+		$item = $db->loadObject();
 		return $item;
 	}
   

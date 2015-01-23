@@ -42,13 +42,14 @@ class EstivoleController extends JControllerLegacy
 		// Get and render the view.
 		if ($view = $this->getView($vName, $vFormat))
 		{
-			// Get the model for the view.
-			$model = $this->getModel($vName);
+			if($vName!='default'){
+				// Get the model for the view.
+				$model = $this->getModel($vName);
+				// Push the model into the view (as default).
+				$view->setModel($model, true);
+			}
 
-			// Push the model into the view (as default).
-			$view->setModel($model, true);
 			$view->setLayout($lName);
-
 
 			// Push document object into the view.
 			$view->document = $document;
@@ -58,20 +59,4 @@ class EstivoleController extends JControllerLegacy
 
 		return $this;
 	}
-	
-  public function getCalendarDates($calendar_id)
-  {
-		$return = array("success"=>false);
-
-		// Get the model for the view.
-		$model = $this->getModel('calendars');
-		$modelDaytime = $this->getModel('daytime');
-		$this->daytimes = $modelDaytime->listItems();
-
-  		$return['success'] = true;
-  		$return['msg'] = 'Yes';
-		$return['calendar_dates'] = $this->daytimes;
-
-		echo json_encode($return);
-  }
 }

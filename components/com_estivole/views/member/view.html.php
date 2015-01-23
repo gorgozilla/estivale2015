@@ -2,54 +2,28 @@
 require_once JPATH_COMPONENT . '/models/daytime.php';
 require_once JPATH_COMPONENT . '/models/services.php';
 require_once JPATH_COMPONENT . '/models/calendars.php';
+require_once JPATH_COMPONENT . '/models/member.php';
 
 class EstivoleViewMember extends JViewLegacy
 {
 	function display($tpl=null)
 	{
 		$app = JFactory::getApplication();
-
 		$model = new EstivoleModelMember();
-
+		$this->user = JFactory::getUser();
 		$this->state	= $this->get('State');
-		$this->member		= $this->get('Item');
+		$this->member	= $model->getItem($this->user->id);
 		$this->form		= $this->get('Form');
 		
-		$modelCalendars = new EstivoleModelCalendars();
-		$modelDaytime = new EstivoleModelDaytime();
-		$this->calendars = $modelCalendars->listItems();
+		// $modelcalendars = new estivolemodelcalendars();
+		// $modeldaytime = new estivolemodeldaytime();
+		// $this->calendars = $modelcalendars->listitems();
 		
-		for($i=0; $i<count($this->calendars); $i++){
-			$this->calendars[$i]->member_daytimes = $modelDaytime->getMemberDaytimes($this->member->member_id, $this->calendars[$i]->calendar_id);
-		}
-
-		$this->addToolbar();
+		// for($i=0; $i<count($this->calendars); $i++){
+			// $this->calendars[$i]->member_daytimes = $modeldaytime->getmemberdaytimes($this->member->member_id, $this->calendars[$i]->calendar_id);
+		// }
 
 		//display
 		return parent::display($tpl);
-	}
-
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @since   1.6
-	 */
-	protected function addToolbar()
-	{
-		JFactory::getApplication()->input->set('hidemainmenu', true);
-
-		JToolbarHelper::title(JText::_('Gestion des bénévoles : Editer un bénévole'));
-
-		JToolbarHelper::apply('member.apply');
-		JToolbarHelper::save('member.save');
-
-		if (empty($this->item->id))
-		{
-			JToolbarHelper::cancel('member.cancel');
-		}
-		else
-		{
-			JToolbarHelper::cancel('member.cancel', 'JTOOLBAR_CLOSE');
-		}
 	}
 }
