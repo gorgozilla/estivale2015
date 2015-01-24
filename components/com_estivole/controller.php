@@ -33,7 +33,7 @@ class EstivoleController extends JControllerLegacy
 	{	
 		// Get the document object.
 		$document = JFactory::getDocument();
-
+		
 		// Set the default view name and format from the Request.
 		$vName   = $this->input->get('view', 'default');
 		$vFormat = $document->getType();
@@ -48,12 +48,12 @@ class EstivoleController extends JControllerLegacy
 				// Push the model into the view (as default).
 				$view->setModel($model, true);
 			}
-
+			
+			//Set layout of the view
 			$view->setLayout($lName);
 
 			// Push document object into the view.
 			$view->document = $document;
-
 			$view->display();
 		}
 

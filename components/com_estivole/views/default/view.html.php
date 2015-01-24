@@ -4,7 +4,7 @@ class EstivoleViewDefault extends JViewLegacy
 {
 	function display($tpl=null)
 	{
-		JFactory::getDocument()->setTitle('Set your title here');
+		JFactory::getDocument()->setTitle('Estivale Open Air 2015 - Espace Bénévoles');
 		
 		//display
 		return parent::display($tpl);

@@ -130,6 +130,7 @@ class EstivoleModelDaytime extends JModelAdmin
     return $list;
   }
   
+  
   public function getMemberDaytimes($member_id, $calendar_id)
   {
     $query = $this->_buildQuery();   

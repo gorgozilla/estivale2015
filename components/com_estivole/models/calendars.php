@@ -33,15 +33,6 @@ class EstivoleModelCalendars extends JModelLegacy
     $query->select('*');
     $query->from('#__estivole_calendars as b');
 
-    // $query->select('w.waitlist_id, w.user_id as borrower_id');
-    // $query->leftjoin('#__estivole_waitlists as w on w.member_id = b.member_id AND w.fulfilled = 0');
-
-    // $query->select('l.name as borrower');
-    // $query->leftjoin('#__users as l on l.id = b.lent_uid');
-
-    // $query->select('u.name as waitlist_user');
-    // $query->leftjoin('#__users AS u on u.id = w.user_id');
-
     return $query;
   }
 
@@ -58,23 +49,6 @@ class EstivoleModelCalendars extends JModelLegacy
     {
       $query->where('b.calendar_id = ' . (int) $this->_calendar_id);
     }
-
-    // if(is_numeric($this->_user_id)) 
-    // {
-      // $query->where('b.user_id = ' . (int) $this->_user_id);
-    // }
-
-    // if(is_numeric($this->_library_id)) 
-    // {
-      // $query->where('b.library_id = ' . (int) $this->_library_id);
-    // }
-
-    // if($this->_waitlist)
-    // {
-      // $query->where('w.waitlist_id <> ""');
-    // }
-
-    // $query->where('b.published = ' . (int) $this->_published);
     return $query;
   }
   
@@ -94,7 +68,7 @@ class EstivoleModelCalendars extends JModelLegacy
   {
     $query = $this->_buildQuery();    
     $query = $this->_buildWhere($query);
-
+	$query->order('b.calendar_id DESC');
     $list = $this->_getList($query, $this->limitstart, $this->limit);
 
     return $list;

@@ -123,6 +123,32 @@ class EstivoleModelMember extends JModelItem
     }
   }
   
+  public function saveMember($formData = null)
+  {
+	$app  = JFactory::getApplication();
+	$id   = $id ? $id : $formData['member_id'];
+
+	$member = JTable::getInstance('Member','Table');
+	$member->load($id);
+
+	$member->firstname = $formData['firstname'];
+	$member->lastname = $formData['lastname'];
+	$member->email = $formData['email'];
+	$member->birthdate = $formData['birthdate'];
+	$member->address = $formData['address'];
+	$member->npa = $formData['npa'];
+	$member->city = $formData['city'];
+	$member->tshirtsize = $formData['tshirtsize'];
+	$member->modified = date("Y-m-d H:i:s");
+
+	if($member->store()) 
+	{
+	  return true;
+	} else {
+	  return false;
+	}
+  }
+  
   /**
   * Delete a member
   * @param int      ID of the member to delete

@@ -15,13 +15,13 @@ class EstivoleViewMember extends JViewLegacy
 		$this->member	= $model->getItem($this->user->id);
 		$this->form		= $this->get('Form');
 		
-		// $modelcalendars = new estivolemodelcalendars();
-		// $modeldaytime = new estivolemodeldaytime();
-		// $this->calendars = $modelcalendars->listitems();
-		
-		// for($i=0; $i<count($this->calendars); $i++){
-			// $this->calendars[$i]->member_daytimes = $modeldaytime->getmemberdaytimes($this->member->member_id, $this->calendars[$i]->calendar_id);
-		// }
+		$modelcalendars = new estivolemodelcalendars();
+		$modeldaytime = new estivolemodeldaytime();
+		$this->calendars = $modelcalendars->listitems();
+
+		for($i=0; $i<count($this->calendars); $i++){
+			$this->calendars[$i]->member_daytimes = $modeldaytime->getmemberdaytimes($this->member->member_id, $this->calendars[$i]->calendar_id);
+		}
 
 		//display
 		return parent::display($tpl);

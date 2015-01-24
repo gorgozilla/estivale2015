@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
   require_once JPATH_COMPONENT . '/models/member.php';
   
-class EstivoleControllerMember extends JControllerForm
+class EstivoleControllerMember extends JControllerLegacy
 {
 	public $formData = null;
 	public $model = null;
@@ -18,18 +18,8 @@ class EstivoleControllerMember extends JControllerForm
 		//Get model class
 		$this->model = $this->getModel($modelName);
 
-		if($task=='deleteAvailibility'){
-			$member_daytime_id = $input->get('member_daytime_id'); 
-			$this->deleteAvailibility($member_daytime_id);
-		}else if($task=='edit'){
-			parent::edit();
-		}else if($task=='apply'){
-			parent::save(); // If ok, redirect to the return page.
-			$app->redirect( $_SERVER['HTTP_REFERER']);
-		}else if($task=='save'){
-			parent::save();
-		}else if($task=='cancel'){
-			parent::cancel();
+		if($task=='modifyProfile'){
+			$this->modifyProfile($this->formData);
 		}else{
 			$this->display();
 		}
@@ -51,12 +41,9 @@ class EstivoleControllerMember extends JControllerForm
 		// Get and render the view.
 		if ($view = $this->getView($vName, $vFormat))
 		{
-			// Get the model for the view.
-
 			// Push the model into the view (as default).
-			$view->setModel($model, true);
+			$view->setModel($this->model, true);
 			$view->setLayout($lName);
-
 
 			// Push document object into the view.
 			$view->document = $document;
@@ -67,17 +54,15 @@ class EstivoleControllerMember extends JControllerForm
 		return $this;
 	}
 
-	public function deleteAvailibility($member_daytime_id)
+	public function modifyProfile($formData)
 	{
+		$app      = JFactory::getApplication();
 		$return = array("success"=>false);
  
-		if($this->model->deleteAvailibility($member_daytime_id)){
+		if($this->model->saveMember($formData)){
 			$return['success'] = true;
 			$return['msg'] = 'Yes';
-			$return['calendar_dates'] = $this->daytimes;
 		}
-		
-		echo json_encode($return);
-		exit;
+		$app->redirect( $_SERVER['HTTP_REFERER']);
 	}
 }

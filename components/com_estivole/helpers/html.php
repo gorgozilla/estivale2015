@@ -75,4 +75,13 @@ class EstivoleHelpersHtml
 		## Create <select name="month" class="inputbox"></select> ##
 		return JHTML::_('select.genericlist', $options, 'jform[daytime]', 'class="inputbox" id="jform_daytime"', 'value', 'text', $default);
 	}
+	
+	function tshirtSizeList($default)
+	{
+		$options = array('S' => 'S', 'M' => 'M', 'L' => 'L', 'XL' => 'XL', 'XXL' => 'XXL');
+		## Initialize array to store dropdown options ##
+		
+		## Create <select name="month" class="inputbox"></select> ##
+		return JHTML::_('select.genericlist', $options, 'jform[tshirtsize]', 'class="inputbox" id="tshirtsize"', 'value', 'text', $default);
+	}
 }
