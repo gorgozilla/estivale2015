@@ -22,8 +22,7 @@ defined('_JEXEC') or die;
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>">
 
 <head>
-
-	<link rel="stylesheet" href="/estivale2015/media/jui/css/bootstrap.min.css" type="text/css" />
+	
     <?php //gen head base on theme info
     $this->showBlock ('head');
     ?>

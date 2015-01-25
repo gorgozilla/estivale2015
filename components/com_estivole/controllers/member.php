@@ -20,6 +20,9 @@ class EstivoleControllerMember extends JControllerLegacy
 
 		if($task=='modifyProfile'){
 			$this->modifyProfile($this->formData);
+		}elseif($task=='deleteAvailibility'){
+			$member_daytime_id = $input->get('member_daytime_id'); 
+			$this->deleteAvailibility($member_daytime_id);
 		}else{
 			$this->display();
 		}
@@ -64,5 +67,19 @@ class EstivoleControllerMember extends JControllerLegacy
 			$return['msg'] = 'Yes';
 		}
 		$app->redirect( $_SERVER['HTTP_REFERER']);
+	}
+	
+	public function deleteAvailibility($member_daytime_id)
+	{
+		$return = array("success"=>false);
+ 
+		if($this->model->deleteAvailibility($member_daytime_id)){
+			$return['success'] = true;
+			$return['msg'] = 'Yes';
+			$return['calendar_dates'] = $this->daytimes;
+		}
+		
+		echo json_encode($return);
+		exit;
 	}
 }

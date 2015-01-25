@@ -1,6 +1,5 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
 require_once JPATH_COMPONENT . '/models/daytime.php';
-require_once JPATH_COMPONENT . '/models/services.php';
 require_once JPATH_COMPONENT . '/models/calendars.php';
 require_once JPATH_COMPONENT . '/models/member.php';
 

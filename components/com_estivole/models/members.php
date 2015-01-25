@@ -95,7 +95,7 @@ class EstivoleModelMembers extends JModelLegacy
 		$db = JFactory::getDBO();
 		$query->order($db->escape($this->getState('list.ordering', 'b.lastname')).' '.$db->escape($this->getState('list.direction', 'ASC')));
 		$db->setQuery($query, $limitstart, $limit);
-		echo $query;
+
 		$result = $db->loadObjectList();
 		return $result;
 	}

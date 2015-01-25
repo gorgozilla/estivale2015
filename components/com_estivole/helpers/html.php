@@ -72,6 +72,14 @@ class EstivoleHelpersHtml
 		## Initialize array to store dropdown options ##
 		$options = array();
 		
+		$daytimeModel = new EstivoleModelDaytime();
+		$this->daytimes = $daytimeModel->listItems();
+		
+		foreach($this->daytimes as $daytime) :
+			## Create $value ##
+			$options[] = JHTML::_('select.option', $daytime->daytime_day, date('d-m-Y',strtotime($daytime->daytime_day)));
+		endforeach;
+		
 		## Create <select name="month" class="inputbox"></select> ##
 		return JHTML::_('select.genericlist', $options, 'jform[daytime]', 'class="inputbox" id="jform_daytime"', 'value', 'text', $default);
 	}
@@ -82,6 +90,6 @@ class EstivoleHelpersHtml
 		## Initialize array to store dropdown options ##
 		
 		## Create <select name="month" class="inputbox"></select> ##
-		return JHTML::_('select.genericlist', $options, 'jform[tshirtsize]', 'class="inputbox" id="tshirtsize"', 'value', 'text', $default);
+		return JHTML::_('select.genericlist', $options, 'jform[tshirtsize]', 'class="form-control" id="tshirtsize"', 'value', 'text', $default);
 	}
 }

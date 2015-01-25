@@ -17,30 +17,24 @@ defined('_JEXEC') or die;
 	
 	<p>Nous avons toujours de nombreux postes à pourvoir, et de quoi faire pour toutes les personnes intéressées, tous les gabarits, tous les agendas, et toutes les compétences. Alors viens parfaire cette équipe motivée et enthousiaste, et participer à cette belle et très enrichissante aventure !! Pour la mise sur pied de cette édition et/ou des suivantes, nous sommes notamment à la recherche de chef(fe)s ou de membres pour les équipes suivantes :</p> 
 	<br />
-	
+	<br />
 	<ul>
-		<div class="col-md-4">
 		<li>Bars</li>
 		<li>Camping</li>
 		<li>Cuisine</li>
 		<li>Promotion</li>
-		</div>
-		<div class="col-md-4">
 		<li>Montage / Infrastructure</li>
 		<li>Sécurité</li>
 		<li>Ravitaillements</li>
 		<li>Backstage</li>
-		</div>
-		<div class="col-md-4">
 		<li>Electricité</li>
 		<li>Entretien et gestion des déchets</li>
 		<li>Electricité</li>
-		</div>
 	</ul>
 
 	<p>Et si rien de tout ça ne te parle mais que tu as quand-même envie d’en faire un peu plus, nous sommes bien-sûr ouverts à d’autres propositions. On peut aussi faire de la place dans les équipes complètes!</p> 
 	 
 	<p>Alors ? Envie de monter à bord ?! Des questions ? Une seule adresse : benevoles@estivale.ch. On se réjouit de t’accueillir dans l’équipe!</p> 
 	
-	<a class="btn btn-info" href="index.php?option=com_estivole&view=member">M'inscrire comme bénévole</a>
+	<a class="btn btn-info" href="index.php?option=com_estivole&view=member">Accéder à l'espace bénévole</a>
 </div>
