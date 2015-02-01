@@ -36,7 +36,7 @@ class JConfig {
 	public $sendmail = '/usr/sbin/sendmail';
 	public $smtpauth = '1';
 	public $smtpuser = 'webmaster@estivale.ch';
-	public $smtppass = 'azrael00';
+	public $smtppass = 'azrael00@';
 	public $smtphost = 'mail.infomaniak.ch';
 	public $smtpsecure = 'none';
 	public $smtpport = '587';

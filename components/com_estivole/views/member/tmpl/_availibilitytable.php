@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 		<thead>
 			<tr>
 				<th class="center" colspan="4">
-					<h4><?php echo date('d-m-Y', strtotime($this->_daytime_day)); ?></h4>
+					<h4>Faites votre choix dans la liste des tranches horaires ci-dessous pour le secteur et la date sélectionnée</h4>
 				</th>
 			</tr>
 			<tr>
@@ -35,21 +35,26 @@ defined('_JEXEC') or die;
 		</thead>
 		<tbody>
 		<?php foreach ($this->daytimes as $item) : ?>
-			<tr>
+			
+			<tr <?php if ($item->isAvailable!=null){ ?>style="background-color:#00ff00;"<?php }elseif($item->isComplete){ ?>style="background-color:#ff0000;"<?php } ?>>
 				<td>
+					<?php if ($item->isAvailable!=null){ ?>
+						<i class="icon-ok"></i>
+					<?php }elseif($item->isComplete){ ?>
+						<i class="icon-remove"></i>
+					<?php } ?>
 					<?php echo date('H:i', strtotime($item->daytime_hour_start)); ?>
 				</td>
 				<td>
 					<?php echo date('H:i', strtotime($item->daytime_hour_end)); ?>
 				</td>
 				<td>
-					<?php //echo $item->filledQuota !='' ? $item->filledQuota : '0'; echo ' / '.JText::_($item->quota); ?>
+					<?php echo $item->filledQuota !='' ? $item->filledQuota : '0'; echo ' / '.JText::_($item->quota); ?>
 				</td>
 				<td>
-					<?php //if ($canEdit) : ?>
-						<!--<input type="checkbox" id="cb2" name="cid[]" value="" onclick="Joomla.isChecked(this.checked);"/>-->
+					<?php if ($item->isAvailable==null && $item->isComplete!=true) : ?>
 						<?php echo JHtml::_('grid.id', $i, $item->daytime_id); ?>
-					<?php //endif; ?>
+					<?php endif; ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>

@@ -19,6 +19,7 @@ JHtml::_('formbehavior.chosen', 'select');
 			var service_id = jQuery("#addDayTimeForm #jformservice_id").chosen().val();
 			var calendar_id = jQuery("#addDayTimeForm #calendar_id").val();
 			getCalendarDaytimes(calendar_id, daytime, service_id);
+			getDaytimesByService(calendar_id, service_id);
 			
 			jQuery("#addDayTimeForm #jformdaytime, #addDayTimeForm #jformservice_id").chosen().change(function() {
 				var daytime = jQuery("#addDayTimeForm #jformdaytime").chosen().val();
@@ -26,11 +27,18 @@ JHtml::_('formbehavior.chosen', 'select');
 				var calendar_id = jQuery("#addDayTimeForm #calendar_id").val();
 				getCalendarDaytimes(calendar_id, daytime, service_id);
 			});
+			
+			jQuery("#addDayTimeForm #jformservice_id").chosen().change(function() {
+				var service_id = jQuery("#addDayTimeForm #jformservice_id").chosen().val();
+				var calendar_id = jQuery("#addDayTimeForm #calendar_id").val();
+				getDaytimesByService(calendar_id, service_id);
+			});
 		});
 	</script>
 	<h2>Ajouter une disponibilité</h2>
 	<form id="addDayTimeForm" method="POST" action="index.php?option=com_estivole&task=add.add_member_daytime&controller=add&tmpl=component">
 		<div id="availibility-modal-info" class="media"></div>
+		<p>Sélectionnez le secteur de votre choix dans la liste ci-dessous. La liste des dates d'inscription sera automatiquement adaptée en fonction du secteur sélectionné.</p>
 		<div class="control-group ">
 			<div class="control-label">
 				<label id="jform_service_id" for="jform_service_id" class="required">Secteur : </label>
@@ -39,12 +47,14 @@ JHtml::_('formbehavior.chosen', 'select');
 				<?php echo EstivoleHelpersHtml::servicesList(); ?>
 			</div>
 		</div>
+		
+		<p>Sélectionnez la date pour laquelle vous souhaitez participer comme bnévole.</p>
 		<div class="control-group ">
 			<div class="control-label">
 				<label id="jform_daytime_id" for="jform_daytime_id" class="required">Date : </label>
 			</div>
 			<div class="controls">
-				<?php echo EstivoleHelpersHtml::datesList($this->calendars[0]->calendar_id); ?>
+				<?php echo EstivoleHelpersHtml::datesList($this->calendars[0]->calendar_id,$this->calendars[0]->service_id); ?>
 			</div>
 		</div>
 		

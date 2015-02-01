@@ -25,6 +25,8 @@ defined('_JEXEC') or die;
 	
     <?php //gen head base on theme info
     $this->showBlock ('head');
+	$document = JFactory::getDocument();
+	$document->addStyleSheet(JURI::base(). 'media/jui/css/bootstrap.min.css');
     ?>
 
     <?php
@@ -35,6 +37,7 @@ defined('_JEXEC') or die;
     ?>
 
     <?php echo $this->showBlock ('css') ?>
+	
 </head>
 
 <body id="bd" class="<?php if (!T3Common::mobile_device_detect()):?>bd<?php endif;?> <?php echo $this->getBodyClass();?>">

@@ -51,8 +51,8 @@ class EstivoleControllerAdd extends JControllerForm
 				$this->formData['daytime_id']=$daytime_id;
 
 				if($this->model->saveMemberDaytime($this->formData)){
-					EstivoleHelpersMail::sendMemberDaytime();
-					$app->enqueueMessage('Date ajoutée avec succès!');
+					EstivoleHelpersMail::sendMemberDaytimeToAdmin($this->formData['member_id'], $this->formData['service_id'], $this->formData['daytime_id']);
+					$app->enqueueMessage('Date ajoutée avec succès!<br />Un email a été envoyé à notre responsable bénévoles afin de valider votre inscription. Ce dernier vous recontactera dans les plus brefs délais.');
 				}else{
 					$app->enqueueMessage('Vous êtes déjà inscrit pour ce secteur et cette tranche horaire!', 'error');
 				}

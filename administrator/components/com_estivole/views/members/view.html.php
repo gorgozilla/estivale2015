@@ -6,7 +6,6 @@ class EstivoleViewMembers extends JViewLegacy
 	function display($tpl=null)
 	{
 		$app = JFactory::getApplication();
-		
 		$this->state	= $this->get('State');
 
 		//retrieve task list from model

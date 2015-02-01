@@ -15,7 +15,6 @@ class EstivoleModelMember extends JModelItem
     $app = JFactory::getApplication();
     $this->_member_id = $app->input->get('member_id', null);
     $this->_user_id = $app->input->get('user_id', null);
-    
     parent::__construct();       
   }
  
@@ -71,7 +70,7 @@ class EstivoleModelMember extends JModelItem
 	public function getItem($user_id)
 	{
 		$db = JFactory::getDBO();
-
+		$this->_user_id = $user_id;
 		$query = $this->_buildQuery();
 		$this->_buildWhere($query);
 		$db->setQuery($query);
@@ -139,6 +138,7 @@ class EstivoleModelMember extends JModelItem
 	$member->npa = $formData['npa'];
 	$member->city = $formData['city'];
 	$member->tshirtsize = $formData['tshirtsize'];
+	$member->comment = $formData['comment'];
 	$member->modified = date("Y-m-d H:i:s");
 
 	if($member->store()) 

@@ -20,6 +20,7 @@ class EstivoleControllerAdd extends JControllerForm
 
 		if($task=='add_member_daytime'){
 			$this->add_member_daytime();
+			$app->enqueueMessage('Assignation ajoutée avec succès!');
 		}else{
 			if ( $row = $this->model->saveTime($this->formData) ){
 				$app->enqueueMessage('Date ajoutée avec succès!');
@@ -49,9 +50,7 @@ class EstivoleControllerAdd extends JControllerForm
 		{
 			foreach($cid as $daytime_id){
 				$this->formData['daytime_id']=$daytime_id;
-
 				$this->model->saveMemberDaytime($this->formData);
-				$app->enqueueMessage('Date ajoutée avec succès!');
 			}
 		}
 	}

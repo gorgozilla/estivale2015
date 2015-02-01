@@ -17,7 +17,7 @@ class EstivoleModelDaytime extends JModelAdmin
 	$this->_calendar_id = $app->input->get('calendar_id', null);
 	$this->_service_id = $app->input->get('service_id', null);
 	$this->_daytime_day = $app->input->get('daytime', null);
-    
+    $this->_member_daytime_id = $app->input->get('member_daytime_id', null);
     parent::__construct();       
   }
   
@@ -83,7 +83,6 @@ class EstivoleModelDaytime extends JModelAdmin
     {
       $query->where("b.service_id = '".(int) $this->_service_id."'");
     }
-	
     return $query;
   }
   
@@ -92,6 +91,13 @@ class EstivoleModelDaytime extends JModelAdmin
 		$item = parent::getItem($pk);
 		return $item;
 	}
+	
+  public function getMemberDaytime($member_daytime)
+  {
+    $daytime = JTable::getInstance('MemberDaytime','Table');
+    $daytime->load($member_daytime);
+	return $daytime;
+  }
   
   /**
   * Gets an array of objects from the results of database query.
@@ -221,13 +227,9 @@ class EstivoleModelDaytime extends JModelAdmin
   
   public function saveMemberDaytime($formData = null)
   {
-    $app  = JFactory::getApplication();
     $id   = $id ? $id : $formData['member_daytime_id'];
-
     $daytime = JTable::getInstance('MemberDaytime','Table');
-
     $daytime->load($id);
-
     $daytime->member_id = $formData['member_id'];
 	$daytime->service_id = $formData['service_id'];
 	$daytime->daytime_id = $formData['daytime_id'];
@@ -240,5 +242,17 @@ class EstivoleModelDaytime extends JModelAdmin
 	}
   }
   
+	public function changeStatusDaytime($member_daytime_id, $status_id)
+	{
+		$daytime = JTable::getInstance('MemberDaytime','Table');
+		$daytime->load($member_daytime_id);
+		$daytime->status_id = $status_id;
 
+		if($daytime->store()) 
+		{
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

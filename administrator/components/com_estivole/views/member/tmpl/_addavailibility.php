@@ -12,6 +12,29 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
 ?>
+	<script type="text/javascript" language="javascript">
+		jQuery(document).ready(function() {
+			var daytime = jQuery("#addDayTimeForm #jformdaytime").chosen().val();
+			var service_id = jQuery("#addDayTimeForm #jformservice_id").chosen().val();
+			var calendar_id = jQuery("#addDayTimeForm #calendar_id").val();
+			
+			getCalendarDaytimes(calendar_id, daytime, service_id);
+			getDaytimesByService(calendar_id, service_id);
+			
+			jQuery("#addDayTimeForm #jformdaytime, #addDayTimeForm #jformservice_id").chosen().change(function() {
+				var daytime = jQuery("#addDayTimeForm #jformdaytime").chosen().val();
+				var service_id = jQuery("#addDayTimeForm #jformservice_id").chosen().val();
+				var calendar_id = jQuery("#addDayTimeForm #calendar_id").val();
+				getCalendarDaytimes(calendar_id, daytime, service_id);
+			});
+			
+			jQuery("#addDayTimeForm #jformservice_id").chosen().change(function() {
+				var service_id = jQuery("#addDayTimeForm #jformservice_id").chosen().val();
+				var calendar_id = jQuery("#addDayTimeForm #calendar_id").val();
+				getDaytimesByService(calendar_id, service_id);
+			});
+		});
+	</script>
 <div id="addAvailibilityModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newAvailibilityModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -42,7 +65,7 @@ JHtml::_('formbehavior.chosen', 'select');
 						<label id="jform_daytime_id" for="jform_daytime_id" class="required">Date : </label>
 					</div>
 					<div class="controls">
-						<?php echo EstivoleHelpersHtml::datesList($this->calendar->calendar_id); ?>
+						<?php echo EstivoleHelpersHtml::datesList($this->calendars[0]->calendar_id, 1); ?>
 					</div>
 				</div>
 				
@@ -54,6 +77,7 @@ JHtml::_('formbehavior.chosen', 'select');
 				<input type="hidden" name="model" value="daytime" />
 				<input type="hidden" name="task" value="add.add_member_daytime" />
 				<input type="hidden" name="jform[member_id]" id="member_id" value="" />
+				<input type="hidden" name="jform[calendar_id]" id="calendar_id" value="<?php echo $this->calendar->calendar_id; ?>" />
 				<input type="hidden" name="jform[member_daytime_id]" id="member_daytime_id" value="" />
 				<?php echo JHtml::_('form.token'); ?>
 		</div>

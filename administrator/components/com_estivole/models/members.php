@@ -2,7 +2,7 @@
 
 defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class EstivoleModelMembers extends JModelLegacy
+class EstivoleModelMembers extends JModelList
 {
 	function __construct()
 	{
@@ -10,7 +10,10 @@ class EstivoleModelMembers extends JModelLegacy
 		$this->_member_id = $app->input->get('member_id', null);
 	
 		$config['filter_fields'] = array(
-			'b.lastname'
+			'b.lastname',
+			'b.firstname',
+			'b.email',
+			'b.city'
 		);
 		parent::__construct($config);     
 	}
@@ -91,11 +94,9 @@ class EstivoleModelMembers extends JModelLegacy
 	*/
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
-		$this->getState('list.direction');
 		$db = JFactory::getDBO();
 		$query->order($db->escape($this->getState('list.ordering', 'b.lastname')).' '.$db->escape($this->getState('list.direction', 'ASC')));
 		$db->setQuery($query, $limitstart, $limit);
-		echo $query;
 		$result = $db->loadObjectList();
 		return $result;
 	}

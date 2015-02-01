@@ -26,8 +26,6 @@ class EstivoleControllerMember extends JControllerLegacy
 		}else{
 			$this->display();
 		}
-		 //Redirect on referer page
-		//$app->redirect( $_SERVER['HTTP_REFERER']);
 	}
 	
 	public function display($cachable = false, $urlparams = false)

@@ -10,6 +10,7 @@ class EstivoleHelpersStyle
 
 		// //stylesheets
 		$document->addStylesheet(JURI::base().'components/com_estivole/assets/css/bootstrap-datetimepicker.min.css');
+		$document->addStyleSheet('/estivale2015/media/jui/css/bootstrap.min.css');
 
 		//javascripts
 		$document->addScript(JURI::base().'components/com_estivole/assets/js/estivole.js');

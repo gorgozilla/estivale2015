@@ -2,7 +2,7 @@
 
 defined('_JEXEC') or die;
  
-class EstivoleModelDaytime extends JModelAdmin
+class EstivoleModelDaytime extends JModelItem
 {
 
   /**
@@ -20,23 +20,6 @@ class EstivoleModelDaytime extends JModelAdmin
     
     parent::__construct();       
   }
-  
-    public function getForm($data = array(), $loadData = true)
-    {
-        //Get the form
-        $form = $this->loadForm('com_estivole.daytime', 'daytime', array('control' => 'jform', 'load_data' => $loadData));
-        if (!$form) {
-            return false;
-        } else {
-            return $form;
-        }
-    }
-    public function loadFormData()
-    {
-        //load form data
-        $data = $this->getitem();
-        return $data;
-    }
  
   /**
   * Builds the query to be used by the member model
@@ -150,7 +133,7 @@ class EstivoleModelDaytime extends JModelAdmin
     return $result;
   }
 
-  public function isdaytimeavailableformember($member_id, $daytime_id)
+  public function isDaytimeAvailableForMember($member_id, $daytime_id)
   {
     $query = $this->_buildquery();   
     $db = jfactory::getdbo();
@@ -161,9 +144,32 @@ class EstivoleModelDaytime extends JModelAdmin
 	$query->where('md.member_id = ' . $member_id);
 	$query->where('md.daytime_id = ' . $daytime_id);
     $db->setquery($query, 0, 0);
-    $result = $db->loadobject();
+    $result = $db->loadObject();
  
     return $result;
+  }
+  
+  public function isDaytimeComplete($daytime_id, $filledQuota)
+  {
+
+    $query = $this->_buildquery();   
+    $db = jfactory::getdbo();
+    $query = $db->getquery(true);
+	
+	$query->select('*');
+	$query->from('#__estivole_daytimes as md');
+	$query->where('md.daytime_id = ' . (int) $daytime_id);
+
+    $db->setquery($query, 0, 0);
+    $result = $db->loadObject();
+
+	if($filledQuota==$result->quota){
+		return true;
+	}else{
+
+		return false;
+	}
+
   }
   
   public function getQuotasByDaytime($daytime_id, $member_id)

@@ -47,10 +47,10 @@ function tableOrdering( order, dir, task )
 						<?php echo JHTML::_( 'grid.sort', 'Nom', 'b.lastname', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
-						<?php echo JText::_('Prénom'); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Prénom', 'b.firstname', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
-						<?php echo JText::_('Email'); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Email', 'b.email', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
 						<?php echo JText::_('Tél.'); ?>
@@ -59,7 +59,7 @@ function tableOrdering( order, dir, task )
 						<?php echo JText::_('Adresse'); ?>
 					</th>
 					<th class="left">
-						<?php echo JText::_('NPA / Ville'); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Ville', 'b.city', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 				</tr>
 			</thead>

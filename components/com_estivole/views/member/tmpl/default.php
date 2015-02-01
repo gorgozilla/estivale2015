@@ -72,7 +72,13 @@ if($this->user->guest){
 				<div class="controls">
 					<?php echo EstivoleHelpersHtml::tshirtSizeList($this->member->tshirtsize); ?>
 				</div>
-			</div>		
+			</div>	
+			<div class="control-group">
+				<label for="inputComment" class="control-label">Commentaire :</label>
+				<div class="controls">
+					<textarea class="textarea-xxlarge" name="jform[comment]" rows="5"><?php echo $this->member->comment; ?></textarea>
+				</div>
+			</div>			
 			<div class="control-group">
 				<input type="hidden" name="jform[member_id]" value="<?php echo $this->member->member_id; ?>" />
 				<input type="hidden" name="task" value="member.modifyProfile" />

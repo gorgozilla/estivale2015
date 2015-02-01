@@ -2,7 +2,7 @@
 
 defined('_JEXEC') or die;
  
-class EstivoleModelService extends JModelAdmin
+class EstivoleModelService extends JModelItem
 {
 
   /**
@@ -18,23 +18,6 @@ class EstivoleModelService extends JModelAdmin
     
     parent::__construct();       
   }
-  
-    public function getForm($data = array(), $loadData = true)
-    {
-        // Get the form
-        $form = $this->loadForm('com_estivole.service', 'service', array('control' => 'jform', 'load_data' => $loadData));
-        if (!$form) {
-            return false;
-        } else {
-            return $form;
-        }
-    }
-    public function loadFormData()
-    {
-        // Load form data
-        $data = $this->getItem();
-        return $data;
-    }
  
   /**
   * Builds the query to be used by the member model
@@ -49,15 +32,6 @@ class EstivoleModelService extends JModelAdmin
 
     $query->select('*');
     $query->from('#__estivole_services as b');
-
-    // $query->select('w.waitlist_id, w.user_id as borrower_id');
-    // $query->leftjoin('#__estivole_waitlists as w on w.member_id = b.member_id AND w.fulfilled = 0');
-
-    // $query->select('l.name as borrower');
-    // $query->leftjoin('#__users as l on l.id = b.lent_uid');
-
-    // $query->select('u.name as waitlist_user');
-    // $query->leftjoin('#__users AS u on u.id = w.user_id');
 
     return $query;
   }

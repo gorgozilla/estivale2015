@@ -21,6 +21,7 @@ JHtml::_('formbehavior.chosen', 'select');
 		}
 	}
 </script>
+
 <div id="j-main-container" class="span12">
 	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=member&layout=edit&member_id=' . (int) $this->member->member_id);?>" method="post" name="adminForm" id="member-form" class="form-validate">
 		<div class="form-inline form-inline-header">
@@ -40,7 +41,7 @@ JHtml::_('formbehavior.chosen', 'select');
 	
 	<?php
 	foreach($this->calendars as $calendar){
-		echo '<h3>'.$calendar->name.'</h3>';
+		echo '<h3>Calendrier "'.$calendar->name.'"</h3>';
 	?>
 
 	<table class="table table-striped">
@@ -54,6 +55,9 @@ JHtml::_('formbehavior.chosen', 'select');
 				</th>
 				<th class="left">
 					<?php echo JText::_('Tranche horaire'); ?>
+				</th>
+				<th class="center">
+					<?php echo JText::_('Status'); ?>
 				</th>
 				<th class="center">
 					<?php echo JText::_('Actions'); ?>
@@ -87,6 +91,17 @@ JHtml::_('formbehavior.chosen', 'select');
 					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
 						<?php echo date('H:i', strtotime($item->daytime_hour_start)).' - '.date('H:i', strtotime($item->daytime_hour_end));  ?>
 					</a>
+				</td>
+				<td class="center">
+					<?php if($item->status_id==0){ ?>
+						<a href="index.php?option=com_estivole&controller=daytime&task=daytime.changeStatusDaytime&member_daytime_id=<?php echo $item->member_daytime_id; ?>&status_id=1" title="Confirmer la disponibilité">
+							<span class="badge-warning"><i class="icon-time"></i></span>
+						</a>
+					<?php }else{ ?>
+						<a href="index.php?option=com_estivole&controller=daytime&task=daytime.changeStatusDaytime&member_daytime_id=<?php echo $item->member_daytime_id; ?>&status_id=0" title="Remttre le status en attente de validation">
+							<span class="badge-success"><i class="icon-ok"></i></span>
+						</a>
+					<?php } ?>
 				</td>
 				<td class="center">
 					<button type="button" class="btn" onclick="deleteAvailibility('<?php echo $item->member_daytime_id; ?>')">

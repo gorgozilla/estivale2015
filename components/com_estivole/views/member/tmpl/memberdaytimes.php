@@ -20,11 +20,18 @@ JHTML::_('behavior.modal');
 	}
 }else{
 	// Else display member edit form ?>
+	<script type="text/javascript" language="javascript">
+		jQuery(document).ready(function() {
+			jQuery('#memberDaytimesTable').WATable({
+				data: generateSampleData(2)
+			});
+		});
+	</script>
 	<h1>Espace benevole > Mon calendrier</h1>
 	
 	<h2>Calendrier "<?php echo $this->calendars[0]->name; ?>"</h2>
 	
-	<table class="table">
+	<table class="table" id="memberDaytimesTable">
 		<tr>
 			<th>Date</th>
 			<th>Secteur</th>
@@ -43,13 +50,23 @@ JHTML::_('behavior.modal');
 			foreach($this->calendars[0]->member_daytimes as $daytime) :
 		?>
 			<tr>
-				<td><?php echo date('d-m-Y',strtotime($daytime->daytime_day)); ?></td>
+				<td>
+					<?php if($daytime->status_id==0){ ?>
+						<a title="Date en attente de confirmation"><span class="badge-warning"><i class="icon-time"></i></span></a>
+					<?php }else{ ?>
+						<a title="Date confirmée"><span class="badge-success">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+					<?php } ?>
+					
+					<?php echo date('d-m-Y',strtotime($daytime->daytime_day)); ?>
+				</td>
 				<td><?php echo $daytime->name; ?></td>
 				<td><?php echo date('H:i', strtotime($daytime->daytime_hour_start)).' - '.date('H:i', strtotime($daytime->daytime_hour_end));  ?></td>
 				<td class="center">
-					<button type="button" class="btn" onclick="deleteAvailibility('<?php echo $daytime->member_daytime_id; ?>')">
-						<i class="icon-trash"></i>
-					</button>
+					<?php if($daytime->status_id==0){ ?>
+						<button type="button" class="btn" onclick="deleteAvailibility('<?php echo $daytime->member_daytime_id; ?>')">
+							<i class="icon-trash"></i>
+						</button>
+					<?php } ?>
 				</td>
 			</tr>
 		<?php endforeach;

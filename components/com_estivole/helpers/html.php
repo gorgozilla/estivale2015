@@ -67,11 +67,11 @@ class EstivoleHelpersHtml
 		return JHTML::_('select.genericlist', $options, 'jform[service_id]', 'class="inputbox" id="service_id"', 'value', 'text', $default);
 	}
 	
-	function datesList($calendar_id)
+	function datesList($calendar_id, $service_id)
 	{	
 		## Initialize array to store dropdown options ##
 		$options = array();
-		
+
 		$daytimeModel = new EstivoleModelDaytime();
 		$this->daytimes = $daytimeModel->listItems();
 		

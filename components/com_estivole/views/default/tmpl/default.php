@@ -16,8 +16,7 @@ defined('_JEXEC') or die;
 	<p>Estivale Open Air, c’est un magnifique festival gratuit sur une plage, qui propose sur 4 jours une trentaine de concerts. C’est aussi, en plus de ses 250 bénévoles, un comité et un staff de 60 personnes qui mettent la main à la pâte tout au long de l’année pour préparer et mettre en place cette superbe fête!</p>
 	
 	<p>Nous avons toujours de nombreux postes à pourvoir, et de quoi faire pour toutes les personnes intéressées, tous les gabarits, tous les agendas, et toutes les compétences. Alors viens parfaire cette équipe motivée et enthousiaste, et participer à cette belle et très enrichissante aventure !! Pour la mise sur pied de cette édition et/ou des suivantes, nous sommes notamment à la recherche de chef(fe)s ou de membres pour les équipes suivantes :</p> 
-	<br />
-	<br />
+
 	<ul>
 		<li>Bars</li>
 		<li>Camping</li>
