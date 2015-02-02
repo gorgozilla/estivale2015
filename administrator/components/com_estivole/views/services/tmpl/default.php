@@ -19,23 +19,7 @@ JHtml::_('behavior.modal', 'a.modal');
 // $loggeduser = JFactory::getUser();
 // $sortFields = $this->getSortFields();
 ?>
-<script type="text/javascript">
-	// Joomla.orderTable = function()
-	// {
-		// table = document.getElementById("sortTable");
-		// direction = document.getElementById("directionTable");
-		// order = table.options[table.selectedIndex].value;
-		// if (order != '<?php echo $listOrder; ?>')
-		// {
-			// dirn = 'asc';
-		// }
-		// else
-		// {
-			// dirn = direction.options[direction.selectedIndex].value;
-		// }
-		// Joomla.tableOrdering(order, dirn, '');
-	// }
-</script>
+
 <div id="j-sidebar-container" class="span2">
 	<?php echo $this->sidebar; ?>
 </div>
@@ -56,17 +40,7 @@ JHtml::_('behavior.modal', 'a.modal');
 				</tr>
 			</thead>
 			<tbody>
-			<?php foreach ($this->services as $i => $item) :
-				// $canEdit   = $this->canDo->get('core.edit');
-				// $canChange = $loggeduser->authorise('core.edit.state',	'com_users');
-
-				// // If this group is super admin and this user is not super admin, $canEdit is false
-				// if ((!$loggeduser->authorise('core.admin')) && JAccess::check($item->id, 'core.admin'))
-				// {
-					// $canEdit   = false;
-					// $canChange = false;
-				// }
-			?>
+			<?php foreach ($this->services as $i => $item) : ?>
 				<tr class="row<?php echo $i % 2; ?>">
 					<td class="center hidden-phone">
 						<?php //if ($canEdit) : ?>
@@ -85,9 +59,6 @@ JHtml::_('behavior.modal', 'a.modal');
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-
-		<?php //Load the batch processing form. ?>
-		<?php //echo $this->loadTemplate('batch'); ?>
 
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />

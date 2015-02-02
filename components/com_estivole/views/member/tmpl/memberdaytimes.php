@@ -23,7 +23,7 @@ JHTML::_('behavior.modal');
 	<script type="text/javascript" language="javascript">
 		jQuery(document).ready(function() {
 			jQuery('#memberDaytimesTable').WATable({
-				data: generateSampleData(2)
+				url:'index.php?option=com_estivole&controller=daytime&task=daytime.getMemberDaytimes&member_id=8&calendar_id=<?php echo $this->calendars[0]->calendar_id; ?>'
 			});
 		});
 	</script>
@@ -63,9 +63,9 @@ JHTML::_('behavior.modal');
 				<td><?php echo date('H:i', strtotime($daytime->daytime_hour_start)).' - '.date('H:i', strtotime($daytime->daytime_hour_end));  ?></td>
 				<td class="center">
 					<?php if($daytime->status_id==0){ ?>
-						<button type="button" class="btn" onclick="deleteAvailibility('<?php echo $daytime->member_daytime_id; ?>')">
+						<a href="index.php?option=com_estivole&controller=member&task=member.deleteAvailibility&member_daytime_id=<?php echo $daytime->member_daytime_id; ?>" class="btn">
 							<i class="icon-trash"></i>
-						</button>
+						</a>
 					<?php } ?>
 				</td>
 			</tr>

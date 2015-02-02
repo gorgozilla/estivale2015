@@ -69,15 +69,16 @@ class EstivoleControllerMember extends JControllerLegacy
 	
 	public function deleteAvailibility($member_daytime_id)
 	{
+		$app      = JFactory::getApplication();
 		$return = array("success"=>false);
- 
 		if($this->model->deleteAvailibility($member_daytime_id)){
 			$return['success'] = true;
 			$return['msg'] = 'Yes';
 			$return['calendar_dates'] = $this->daytimes;
+			$app->enqueueMessage('Date supprimée avec succès!');
+		}else{
+			$app->enqueueMessage('Erreur!');
 		}
-		
-		echo json_encode($return);
-		exit;
+		$app->redirect( $_SERVER['HTTP_REFERER']);
 	}
 }

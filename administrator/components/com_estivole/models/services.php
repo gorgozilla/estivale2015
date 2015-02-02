@@ -33,15 +33,6 @@ class EstivoleModelServices extends JModelLegacy
     $query->select('*');
     $query->from('#__estivole_services as b');
 
-    // $query->select('w.waitlist_id, w.user_id as borrower_id');
-    // $query->leftjoin('#__estivole_waitlists as w on w.member_id = b.member_id AND w.fulfilled = 0');
-
-    // $query->select('l.name as borrower');
-    // $query->leftjoin('#__users as l on l.id = b.lent_uid');
-
-    // $query->select('u.name as waitlist_user');
-    // $query->leftjoin('#__users AS u on u.id = w.user_id');
-
     return $query;
   }
 

@@ -28,7 +28,10 @@ JHtml::_('formbehavior.chosen', 'select');
 			<div class="span9">
 				<div class="form-vertical">
 					<?php echo $this->form->getControlGroup('name'); ?>
-					<?php echo $this->form->getControlGroup('summary'); ?>
+					<?php 
+						 $editor = JFactory::getEditor();
+						 echo $editor->display('jform[summary]', $this->service->summary, '550', '400', '60', '20', false);
+					?>
 					<input type="hidden" name="task" value="" />
 					<?php echo JHtml::_('form.token'); ?>
 				</div>

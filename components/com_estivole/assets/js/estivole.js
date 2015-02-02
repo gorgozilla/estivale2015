@@ -32,7 +32,15 @@ function getDaytimesByService(calendar_id, service_id)
 			jQuery("#addDayTimeForm #jformdaytime").empty();
 			jQuery("#addDayTimeForm #jformdaytime").trigger('liszt:updated');
 			jQuery.each(data, function(index, item) {
-				jQuery("#addDayTimeForm #jformdaytime").append(jQuery('<option></option>').val(item.daytime_day).text(item.daytime_day));
+				var formattedDate = new Date(item.daytime_day);
+				var d = formattedDate.getDate();
+				var m =  formattedDate.getMonth();
+				m += 1;  // JavaScript months are 0-11
+				if(m<10)m='0'+m;
+				var y = formattedDate.getFullYear();
+				formattedDate = d + "-" + m + "-" + y;
+				
+				jQuery("#addDayTimeForm #jformdaytime").append(jQuery('<option></option>').val(item.daytime_day).text(formattedDate));
 			});
 			jQuery("#addDayTimeForm #jformdaytime").trigger('liszt:updated');
 			
