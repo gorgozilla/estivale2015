@@ -32,22 +32,6 @@ JHtml::_('formbehavior.chosen', 'select');
 						<?php echo JHTML::calendar(date("Y-m-d"),'jform[daytime_day]', 'jform_daytime_day', '%Y-%m-%d',array('size'=>'8','maxlength'=>'10','class'=>'required')); ?>
 					</div>
 				</div>
-				<div class="control-group ">
-					<div class="control-label">
-						<label id="jform_daytime_start_hour-lbl" for="jform_daytime_start_hour" class="required">
-					</div>
-					<div class="controls">
-						<?php echo $this->_dayTimeStartList; ?>
-					</div>
-				</div>
-				<div class="control-group ">
-					<div class="control-label">
-						<label id="jform_daytime_end_hour-lbl" for="jform_daytime_end_hour" class="required">
-					</div>
-					<div class="controls">
-						<?php echo $this->_dayTimeEndList; ?>
-					</div>
-				</div>
 				
 				<input type="hidden" name="jform[calendar_id]" id="calendar_id" value="<?php echo $this->calendar->calendar_id; ?>" />
 				<input type="hidden" name="table" value="daytime" />

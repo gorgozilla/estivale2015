@@ -9,10 +9,10 @@ class EstivoleHelpersStyle
 		$document = JFactory::getDocument();
 
 		// //stylesheets
-		$document->addStylesheet(JURI::base().'components/com_estivole/assets/css/watable.css');
+		$document->addStylesheet(JURI::base().'components/com_estivole/assets/css/jquery.dataTables.min.css');
 		
 		//javascripts
 		$document->addScript(JURI::base().'components/com_estivole/assets/js/estivole.js');
-		$document->addScript(JURI::base().'components/com_estivole/assets/js/jquery.watable.js');
+		$document->addScript(JURI::base().'components/com_estivole/assets/js/jquery.dataTables.min.js');
 	}
 }

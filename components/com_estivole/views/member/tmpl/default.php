@@ -22,7 +22,22 @@ if($this->user->guest){
 // Else display member edit form 
 }else{
 ?>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script src="http://jqueryui.com/resources/demos/datepicker/datepicker-fr.js"></script>
+	<script type="text/javascript" language="javascript">
+		jQuery(document).ready(function() {
+			jQuery.datepicker.setDefaults( jQuery.datepicker.regional[ "fr" ] );
+			jQuery("#birthdate").datepicker({
+				changeMonth: true,
+				changeYear: true,
+				yearRange: "-100:+0",
+				dateFormat: 'yy-mm-dd'
+			});
+		});
+	</script>
 	<h1>Espace benevole > Profil <?php echo $this->member->firstname.' '.$this->member->lastname; ?></h1>
+	<p>Merci de compléter le formulaire ci-dessous afin de finlaiser votre inscription.</p>
 	<form class="form-horizontal" action="<?php echo JRoute::_('index.php?option=com_estivole&view=member&member_id=' . (int) $this->member->member_id);?>" method="post">
 		<div class="col-md-6">
 			<div class="control-group">
@@ -46,7 +61,7 @@ if($this->user->guest){
 			<div class="control-group">
 				<label for="inputBirthdate" class="control-label">Date de naissance</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" name="jform[birthdate]" placeholder="Date de naissance" value="<?php echo $this->member->birthdate; ?>">
+					<input type="text" class="input-xlarge" id="birthdate" name="jform[birthdate]" placeholder="Date de naissance" value="<?php echo $this->member->birthdate; ?>">
 				</div>
 			</div>
 			<div class="control-group">

@@ -8,12 +8,17 @@ class EstivoleViewMember extends JViewLegacy
 	{
 		// Get the document object.
 		$document = JFactory::getDocument();
+		$app = JFactory::getApplication();
 		
 		// Get the model for the view.
 		$modelDaytime = new EstivoleModelDaytime();
+		$this->member_id = $app->input->get('member_id', null);
+		
 		$this->daytimes = $modelDaytime->listItems();
 		for($i=0; $i<count($this->daytimes); $i++){
 			$this->daytimes[$i]->filledQuota = count($modelDaytime->getQuotasByDaytime($this->daytimes[$i]->daytime_id));
+			$this->daytimes[$i]->isAvailable = $modelDaytime->isDaytimeAvailableForMember($this->member_id, $this->daytimes[$i]->daytime_id);
+			$this->daytimes[$i]->isComplete = $modelDaytime->isDaytimeComplete($this->daytimes[$i]->daytime_id, $this->daytimes[$i]->filledQuota);
 		}
 
         // Call parent

@@ -21,6 +21,9 @@ class EstivoleControllerMember extends JControllerForm
 		if($task=='deleteAvailibility'){
 			$member_daytime_id = $input->get('member_daytime_id'); 
 			$this->deleteAvailibility($member_daytime_id);
+		}else if($task=='delete'){
+			$member_id = $input->get('member_id');
+			$this->delete($member_id);
 		}else if($task=='edit'){
 			parent::edit();
 		}else if($task=='apply'){
@@ -66,18 +69,34 @@ class EstivoleControllerMember extends JControllerForm
 
 		return $this;
 	}
+	
+	public function delete($member_id)
+	{
+		$app      = JFactory::getApplication();
+		$return = array("success"=>false);
+
+		if($this->model->deleteMember($member_id)){
+			$return['success'] = true;
+			$return['msg'] = 'Yes';
+			$app->enqueueMessage('Bénévole supprimée avec succès!');
+		}else{
+			$app->enqueueMessage('Erreur!');
+		}
+		$app->redirect( $_SERVER['HTTP_REFERER']);
+	}
 
 	public function deleteAvailibility($member_daytime_id)
 	{
+		$app      = JFactory::getApplication();
 		$return = array("success"=>false);
- 
 		if($this->model->deleteAvailibility($member_daytime_id)){
 			$return['success'] = true;
 			$return['msg'] = 'Yes';
 			$return['calendar_dates'] = $this->daytimes;
+			$app->enqueueMessage('Date supprimée avec succès!');
+		}else{
+			$app->enqueueMessage('Erreur!');
 		}
-		
-		echo json_encode($return);
-		exit;
+		$app->redirect( $_SERVER['HTTP_REFERER']);
 	}
 }

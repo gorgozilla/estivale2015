@@ -74,4 +74,12 @@ class EstivoleController extends JControllerLegacy
 
 		echo json_encode($return);
   }
+  
+	public function getDaytime($daytime_id)
+	{
+		$model = $this->getModel('daytime');
+		$daytime = $model->getItem($daytime_id);
+		echo json_encode($daytime);
+		exit;
+	}
 }

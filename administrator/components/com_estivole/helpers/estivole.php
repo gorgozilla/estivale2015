@@ -60,5 +60,10 @@ class EstivoleHelpersEstivole extends JHelperContent
             'index.php?option=com_estivole&view=calendars',
             $vName == 'calendars'
         );
+		JHtmlSidebar::addEntry(
+            'Inscriptions',
+            'index.php?option=com_estivole&view=daytimes',
+            $vName == 'daytimes'
+        );
     }
 }

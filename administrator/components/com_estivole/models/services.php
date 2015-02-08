@@ -32,7 +32,6 @@ class EstivoleModelServices extends JModelLegacy
 
     $query->select('*');
     $query->from('#__estivole_services as b');
-
     return $query;
   }
 
@@ -91,6 +90,7 @@ class EstivoleModelServices extends JModelLegacy
   {
     $query = $this->_buildQuery();    
     $query = $this->_buildWhere($query);
+	$query->order('b.name ASC');
     $list = $this->_getList($query, $this->limitstart, $this->limit);
 
     return $list;

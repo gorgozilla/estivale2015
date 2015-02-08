@@ -63,6 +63,7 @@ class EstivoleControllerMember extends JControllerLegacy
 		if($this->model->saveMember($formData)){
 			$return['success'] = true;
 			$return['msg'] = 'Yes';
+			$app->enqueueMessage('Profil modifié avec succès!');
 		}
 		$app->redirect( $_SERVER['HTTP_REFERER']);
 	}

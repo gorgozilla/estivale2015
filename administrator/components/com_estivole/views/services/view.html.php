@@ -45,7 +45,6 @@ class EstivoleViewServices extends JViewLegacy
         // if ($canDo->get('core.admin'))
         // {
             JToolbarHelper::addNew('service.add');
-			JToolbarHelper::editList();
         // }
     }
 }

@@ -10,11 +10,13 @@
             label="Nom"
             size="40"
             class="inputbox" />
-        <field 
-            name="summary" 
-            type="text" 
-            label="Description"
-            size="40"
-            class="inputbox" />
+		<field
+				name="summary"
+				type="editor"
+				label="Description"
+				description="This is the description"
+				filter="safehtml"
+				class="inputbox"
+				default="" />
     </fieldset>
 </form>

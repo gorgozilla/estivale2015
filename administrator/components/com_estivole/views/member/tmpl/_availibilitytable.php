@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 ?>
-	<table id="availibilityTable" class="table table-striped">
+	<table id="availibilityTable" class="table">
 		<thead>
 			<tr>
 				<th class="center" colspan="4">
@@ -44,21 +44,29 @@ defined('_JEXEC') or die;
 				// $canChange = false;
 			// }
 		?>
-			<tr class="row<?php echo $i % 2; ?>">
-				<td class="left">
+			<tr <?php if ($item->isAvailable!=null && $item->status_id==0){ ?>style="background-color:#F89406;"<?php }elseif($item->isAvailable!=null && $item->status_id==1){ ?>style="background-color:#00ff00;"<?php }elseif($item->isComplete){ ?>style="background-color:#ff0000;"<?php } ?>>
+				<td>
+					<?php if ($item->isAvailable!=null){ ?>
+						<?php if($item->status_id==0){ ?>
+							<i class="icon-time"></i>
+						<?php }else{ ?>
+							<i class="icon-ok"></i>
+						<?php } ?>
+					<?php }elseif($item->isComplete){ ?>
+						<i class="icon-remove"></i>
+					<?php } ?>
 					<?php echo date('H:i', strtotime($item->daytime_hour_start)); ?>
 				</td>
-				<td class="left">
+				<td>
 					<?php echo date('H:i', strtotime($item->daytime_hour_end)); ?>
 				</td>
-				<td class="left">
+				<td>
 					<?php echo $item->filledQuota !='' ? $item->filledQuota : '0'; echo ' / '.JText::_($item->quota); ?>
 				</td>
-				<td class="center hidden-phone">
-					<?php //if ($canEdit) : ?>
-						<!--<input type="checkbox" id="cb2" name="cid[]" value="" onclick="Joomla.isChecked(this.checked);"/>-->
+				<td>
+					<?php if ($item->isAvailable==null && $item->isComplete!=true) : ?>
 						<?php echo JHtml::_('grid.id', $i, $item->daytime_id); ?>
-					<?php //endif; ?>
+					<?php endif; ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>

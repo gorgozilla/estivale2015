@@ -31,11 +31,14 @@ JHtml::_('behavior.modal', 'a.modal');
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th width="1%" class="nowrap center hidden-phone">
-					<?php echo JHtml::_('grid.checkall'); ?>
-				</th>
 				<th class="left">
 					<?php echo JText::_('Jour'); ?>
+				</th>
+				<th class="left">
+					<?php echo JText::_('Secteur'); ?>
+				</th>
+				<th class="left">
+					<?php echo JText::_('Tâche'); ?>
 				</th>
 				<th class="left">
 					<?php echo JText::_('Heure début'); ?>
@@ -49,25 +52,16 @@ JHtml::_('behavior.modal', 'a.modal');
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($this->daytimes as $i => $item) :
-			// $canEdit   = $this->canDo->get('core.edit');
-			// $canChange = $loggeduser->authorise('core.edit.state',	'com_users');
-
-			// // If this group is super admin and this user is not super admin, $canEdit is false
-			// if ((!$loggeduser->authorise('core.admin')) && JAccess::check($item->id, 'core.admin'))
-			// {
-				// $canEdit   = false;
-				// $canChange = false;
-			// }
-		?>
+		<?php foreach ($this->daytimes as $i => $item) : ?>
 			<tr class="row<?php echo $i % 2; ?>">
-				<td class="center hidden-phone">
-					<?php //if ($canEdit) : ?>
-						<?php echo JHtml::_('grid.id', $i, $item->daytime_id); ?>
-					<?php //endif; ?>
+				<td class="left">
+					<a href="javascript:void();" onclick="addDayTimeModal('<?php echo $item->daytime_id; ?>');"><?php echo date('d-m-Y',strtotime($item->daytime_day)); ?></a>
 				</td>
 				<td class="left">
-					<a href="javascript:void();" onclick="addDayTimeModal('<?php echo $item->daytime_id; ?>','<?php echo $item->service_id; ?>','<?php echo $item->daytime_hour_start; ?>', '<?php echo $item->daytime_hour_end; ?>', '<?php echo $item->quota; ?>');"><?php echo date('d-m-Y',strtotime($item->daytime_day)); ?></a>
+					<?php echo $item->service->name;  ?>
+				</td>
+				<td class="left">
+					<?php echo $item->description; ?>
 				</td>
 				<td class="left">
 					<?php echo date('H:i', strtotime($item->daytime_hour_start));  ?>
@@ -76,7 +70,7 @@ JHtml::_('behavior.modal', 'a.modal');
 					<?php echo date('H:i', strtotime($item->daytime_hour_end));  ?>
 				</td>
 				<td class="left">
-					<?php echo $item->filledQuota!=''?$item->filledQuota:'0'.' / '.JText::_($item->quota); ?>
+					<?php echo $item->filledQuota !='' ? $item->filledQuota : '0'; echo ' / '.JText::_($item->quota); ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>

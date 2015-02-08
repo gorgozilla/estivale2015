@@ -38,8 +38,8 @@
 	<administration>
 		<menu link="option=com_estivole" img="components/com_estivole/assets/images/estivole_icon.png">COM_ESTIVOLE</menu>
 		<submenu>
-			<menu view="settings" img="components/com_estivole/assets/images/settings_icon.png" 
-				alt="ESTIVOLE/Settings">COM_ESTIVOLE_SETTINGS</menu>
+			<menu view="members" img="components/com_estivole/assets/images/settings_icon.png" 
+				alt="ESTIVOLE/members">COM_ESTIVOLE_SETTINGS</menu>
 		</submenu>
 
 		<files folder="admin">
@@ -54,11 +54,6 @@
 			<filename>index.html</filename>
 			<filename>install.mysql.sql</filename>
 		</files>  
-
-		<languages folder="admin">
-			<language tag="en-GB">languages/en-GB/en-GB.com_estivole.ini</language>
-			<language tag="en-GB">languages/en-GB/en-GB.com_estivole.sys.ini</language>
-		</languages>
 
 	</administration>
 	

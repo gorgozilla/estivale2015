@@ -157,6 +157,44 @@ class EstivoleModelDaytime extends JModelAdmin
     return $result;
   }
   
+  public function isDaytimeAvailableForMember($member_id, $daytime_id)
+  {
+    $query = $this->_buildquery();   
+    $db = jfactory::getdbo();
+    $query = $db->getquery(true);
+
+	$query->select('*');
+	$query->from('#__estivole_members_daytimes as md');
+	$query->where('md.member_id = ' . $member_id);
+	$query->where('md.daytime_id = ' . $daytime_id);
+    $db->setquery($query, 0, 0);
+    $result = $db->loadObject();
+
+    return $result;
+  }
+  
+  public function isDaytimeComplete($daytime_id, $filledQuota)
+  {
+
+    $query = $this->_buildquery();   
+    $db = jfactory::getdbo();
+    $query = $db->getquery(true);
+	
+	$query->select('*');
+	$query->from('#__estivole_daytimes as md');
+	$query->where('md.daytime_id = ' . (int) $daytime_id);
+
+    $db->setquery($query, 0, 0);
+    $result = $db->loadObject();
+
+	if($filledQuota==$result->quota){
+		return true;
+	}else{
+
+		return false;
+	}
+  }
+  
   public function getQuotasByDaytime($daytime_id, $member_id)
   {
     $query = $this->_buildQuery();   
@@ -215,6 +253,7 @@ class EstivoleModelDaytime extends JModelAdmin
 	$daytime->daytime_hour_end = $formData['daytime_hour_end'];
 	$daytime->calendar_id = $formData['calendar_id'];
 	$daytime->quota = $formData['quota'];
+	$daytime->description = $formData['description'];
 	$daytime->service_id = $formData['service_id'];
 	
 	if($daytime->store()) 

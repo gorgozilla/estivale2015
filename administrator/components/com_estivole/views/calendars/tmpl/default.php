@@ -48,35 +48,17 @@ JHtml::_('behavior.modal', 'a.modal');
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('grid.checkall'); ?>
+					<th class="left">
+						Nom
 					</th>
 					<th class="left">
-						<?php echo JText::_('Nom'); ?>
-					</th>
-					<th class="left">
-						<?php echo JText::_('Description'); ?>
+						Description
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-			<?php foreach ($this->calendars as $i => $item) :
-				// $canEdit   = $this->canDo->get('core.edit');
-				// $canChange = $loggeduser->authorise('core.edit.state',	'com_users');
-
-				// // If this group is super admin and this user is not super admin, $canEdit is false
-				// if ((!$loggeduser->authorise('core.admin')) && JAccess::check($item->id, 'core.admin'))
-				// {
-					// $canEdit   = false;
-					// $canChange = false;
-				// }
-			?>
+			<?php foreach ($this->calendars as $i => $item) : ?>
 				<tr class="row<?php echo $i % 2; ?>">
-					<td class="center hidden-phone">
-						<?php //if ($canEdit) : ?>
-							<?php echo JHtml::_('grid.id', $i, $item->calendar_id); ?>
-						<?php //endif; ?>
-					</td>
 					<td class="left">
 						<a href="<?php echo JRoute::_('index.php?option=com_estivole&task=calendar.edit&calendar_id='.(int) $item->calendar_id); ?>">
 						<?php echo JText::_($item->name); ?>
@@ -89,9 +71,6 @@ JHtml::_('behavior.modal', 'a.modal');
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-
-		<?php //Load the batch processing form. ?>
-		<?php //echo $this->loadTemplate('batch'); ?>
 
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />

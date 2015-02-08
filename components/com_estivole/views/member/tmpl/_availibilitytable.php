@@ -20,6 +20,9 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<th>
+					<?php echo JText::_('Tâche'); ?>
+				</th>
+				<th>
 					<?php echo JText::_('Heure début'); ?>
 				</th>
 				<th>
@@ -35,14 +38,20 @@ defined('_JEXEC') or die;
 		</thead>
 		<tbody>
 		<?php foreach ($this->daytimes as $item) : ?>
-			
-			<tr <?php if ($item->isAvailable!=null){ ?>style="background-color:#00ff00;"<?php }elseif($item->isComplete){ ?>style="background-color:#ff0000;"<?php } ?>>
+			<tr <?php if ($item->isAvailable!=null && $item->isAvailable->status_id==0){ ?>style="background-color:#F89406;"<?php }elseif($item->isAvailable!=null && $item->isAvailable->status_id==1){ ?>style="background-color:#00ff00;"<?php }elseif($item->isComplete){ ?>style="background-color:#ff0000;"<?php } ?>>
 				<td>
 					<?php if ($item->isAvailable!=null){ ?>
-						<i class="icon-ok"></i>
+						<?php if($item->isAvailable->status_id==0){ ?>
+							<i class="icon-time"></i>
+						<?php }else{ ?>
+							<i class="icon-ok"></i>
+						<?php } ?>
 					<?php }elseif($item->isComplete){ ?>
 						<i class="icon-remove"></i>
 					<?php } ?>
+					<?php echo $item->description; ?>
+				</td>
+				<td>
 					<?php echo date('H:i', strtotime($item->daytime_hour_start)); ?>
 				</td>
 				<td>

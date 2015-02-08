@@ -47,6 +47,7 @@ class EstivoleControllerDaytime extends JControllerForm
 		}
 	}
 	
+	
 	public function getDaytimesByService($calendar_id, $service_id)
 	{
 		$modeldaytime = new estivolemodeldaytime();

@@ -122,30 +122,32 @@ class EstivoleModelMember extends JModelAdmin
   }
 
   /**
-  * Delete a member
+  * Delete a member daytime
   * @param int      ID of the member to delete
   * @return boolean True if successfully deleted
   */
-  public function delete($id = null)
+  public function deleteMember($member_id = null)
   {
     $app  = JFactory::getApplication();
     $id   = $id ? $id : $app->input->get('member_id');
 
     $member = JTable::getInstance('Member','Table');
     $member->load($id);
-
-    $member->published = 0;
-
-    if($member->store()) 
-    {
-      return true;
-    } else {
-      return false;
-    }
+	
+	$userid = JRequest::getInt('id'); // getting user id from url
+	$user = JUser::getInstance($member->user_id);
+	if($user->delete())
+	{
+		if ($member->delete()) 
+		{
+			return true;
+		}  
+	}
+	return false;
   }
   
   /**
-  * Delete a member
+  * Delete a member daytime
   * @param int      ID of the member to delete
   * @return boolean True if successfully deleted
   */
@@ -163,4 +165,5 @@ class EstivoleModelMember extends JModelAdmin
 		return true;
 	}      
   }
+  
 }

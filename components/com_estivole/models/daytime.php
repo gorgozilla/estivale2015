@@ -169,7 +169,6 @@ class EstivoleModelDaytime extends JModelItem
 
 		return false;
 	}
-
   }
   
   public function getQuotasByDaytime($daytime_id, $member_id)
@@ -186,28 +185,20 @@ class EstivoleModelDaytime extends JModelItem
  
     return $result;
   }
-
-  /**
-  * Delete a member
-  * @param int      ID of the member to delete
-  * @return boolean True if successfully deleted
-  */
-  public function delete($id = null)
-  {
-    $app  = JFactory::getApplication();
-    $id   = $id ? $id : $app->input->get('daytime_id');
-
-    $member = JTable::getInstance('Daytime','Table');
-    $member->load($id);
-
-    $member->published = 0;
-
-    if($member->store()) 
-    {
-      return true;
-    } else {
-      return false;
-    }
+  
+  public function getDaytimesByService($calendar_id, $service_id)
+  {  
+    $db = JFactory::getDBO();
+    $query = $db->getQuery(TRUE);
+	
+	$query->select('*');
+	$query->from('#__estivole_daytimes as d, #__estivole_members_daytimes as md');
+	$query->where('md.daytime_id = ' . $daytime_id);
+	$query->where('md.daytime_id = d.daytime_id');
+    $db->setQuery($query, 0, 0);
+    $result = $db->loadObjectList();
+ 
+    return $result;
   }
   
   /**

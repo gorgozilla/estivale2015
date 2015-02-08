@@ -65,51 +65,51 @@ JHtml::_('formbehavior.chosen', 'select');
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($calendar->member_daytimes as $i => $item) :
-			// $canEdit   = $this->canDo->get('core.edit');
-			// $canChange = $loggeduser->authorise('core.edit.state',	'com_users');
-
-			// // If this group is super admin and this user is not super admin, $canEdit is false
-			// if ((!$loggeduser->authorise('core.admin')) && JAccess::check($item->id, 'core.admin'))
-			// {
-				// $canEdit   = false;
-				// $canChange = false;
-			// }
-		?>
-			<tr class="row<?php echo $i % 2; ?>">
-				<td class="left">
-					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
-						<?php echo date('d-m-Y', strtotime($item->daytime_day)); ?>
-					</a>
-				</td>
-				<td class="left">
-					<a href="index.php?option=com_estivole&view=service&layout=edit&service_id=<?php echo $item->service_id; ?>">
-						<?php echo JText::_($item->name); ?>
-					</a>
-				</td>
-				<td class="left">
-					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
-						<?php echo date('H:i', strtotime($item->daytime_hour_start)).' - '.date('H:i', strtotime($item->daytime_hour_end));  ?>
-					</a>
-				</td>
-				<td class="center">
-					<?php if($item->status_id==0){ ?>
-						<a href="index.php?option=com_estivole&controller=daytime&task=daytime.changeStatusDaytime&member_daytime_id=<?php echo $item->member_daytime_id; ?>&status_id=1" title="Confirmer la disponibilité">
-							<span class="badge-warning"><i class="icon-time"></i></span>
+		
+		<?php
+		if(count($calendar->member_daytimes)>0){
+			foreach ($calendar->member_daytimes as $i => $item) : ?>
+				<tr class="row<?php echo $i % 2; ?>">
+					<td class="left">
+						<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
+							<?php echo date('d-m-Y', strtotime($item->daytime_day)); ?>
 						</a>
-					<?php }else{ ?>
-						<a href="index.php?option=com_estivole&controller=daytime&task=daytime.changeStatusDaytime&member_daytime_id=<?php echo $item->member_daytime_id; ?>&status_id=0" title="Remttre le status en attente de validation">
-							<span class="badge-success"><i class="icon-ok"></i></span>
+					</td>
+					<td class="left">
+						<a href="index.php?option=com_estivole&view=service&layout=edit&service_id=<?php echo $item->service_id; ?>">
+							<?php echo JText::_($item->name); ?>
 						</a>
-					<?php } ?>
-				</td>
-				<td class="center">
-					<button type="button" class="btn" onclick="deleteAvailibility('<?php echo $item->member_daytime_id; ?>')">
-						<i class="icon-trash"></i>
-					</button>
-				</td>
-			</tr>
-			<?php endforeach; ?>
+					</td>
+					<td class="left">
+						<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
+							<?php echo date('H:i', strtotime($item->daytime_hour_start)).' - '.date('H:i', strtotime($item->daytime_hour_end));  ?>
+						</a>
+					</td>
+					<td class="center">
+						<?php if($item->status_id==0){ ?>
+							<a href="index.php?option=com_estivole&controller=daytime&task=daytime.changeStatusDaytime&member_daytime_id=<?php echo $item->member_daytime_id; ?>&status_id=1" title="Confirmer la disponibilité">
+								<span class="badge-warning"><i class="icon-time"></i></span>
+							</a>
+						<?php }else{ ?>
+							<a href="index.php?option=com_estivole&controller=daytime&task=daytime.changeStatusDaytime&member_daytime_id=<?php echo $item->member_daytime_id; ?>&status_id=0" title="Remttre le status en attente de validation">
+								<span class="badge-success"><i class="icon-ok"></i></span>
+							</a>
+						<?php } ?>
+					</td>
+					<td class="center">
+						<a class="btn" href="index.php?option=com_estivole&controller=member&task=member.deleteAvailibility&member_daytime_id=<?php echo $item->member_daytime_id; ?>">
+							<i class="icon-trash"></i>
+						</a>
+					</td>
+				</tr>
+				<?php endforeach;
+		}else{ ?>
+				<tr>
+					<td class="left" colspan="5">
+						<p>Pas de tranche horaire définie pour le moment.</p>
+					</td>
+				</tr>
+		<?php } ?>
 		</tbody>
 	</table>
 	<?php

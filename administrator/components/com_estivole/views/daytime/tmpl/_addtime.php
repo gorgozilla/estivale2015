@@ -56,6 +56,15 @@ JHtml::_('formbehavior.chosen', 'select');
 						<?php echo EstivoleHelpersHtml::hoursList($this->daytime->daytime_day, 'jform[daytime_hour_end]',$this->daytime->daytime_hour_end); ?>
 					</div>
 				</div>
+				<div class="control-group ">
+					<div class="control-label">
+						<label id="jform_daytime_description-lbl" for="jform_daytime_description" class="required">Description de la tâche : </label>
+					</div>
+					<div class="controls">
+						<textarea name="jform[description]" id="description"><?php echo $this->daytime->description; ?></textarea>
+					</div>
+				</div>
+
 				
 				<input type="hidden" name="table" value="daytime" />
 				<input type="hidden" name="model" value="daytime" />

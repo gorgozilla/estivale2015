@@ -1,25 +1,25 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
-require_once JPATH_COMPONENT . '/models/daytime.php';
 require_once JPATH_COMPONENT . '/helpers/estivole.php';
-
-class EstivoleViewCalendars extends JViewLegacy
+ 
+class EstivoleViewDaytimes extends JViewLegacy
 {
 	function display($tpl=null)
 	{
-
 		$app = JFactory::getApplication();
-		$model = new EstivoleModelCalendars();
-		$layout = $app->input->get('layout', 'default');
-		$this->calendars = $model->listItems();
+		$this->state	= $this->get('State');
+
+		//retrieve task list from model
+		$model = new EstivoleModelDaytimes();
+		$this->member_daytimes = $model->listItems();
 		
-		EstivoleHelpersEstivole::addSubmenu('calendars');
+		EstivoleHelpersEstivole::addSubmenu('daytimes');
 		$this->sidebar = JHtmlSidebar::render();
 
 		$this->addToolbar();
 
 		//display
 		return parent::display($tpl);
-	}
+	} 
 
     /**
      * Add the page title and toolbar.
@@ -33,11 +33,11 @@ class EstivoleViewCalendars extends JViewLegacy
         // Get the toolbar object instance
         $bar = JToolBar::getInstance('toolbar');
 
-		JToolbarHelper::title(JText::_('Gestion des bénévoles : Calendriers'));
+		JToolbarHelper::title(JText::_('Gestion des bénévoles : Inscriptions'));
                
         // if ($canDo->get('core.admin'))
         // {
-            JToolbarHelper::addNew('calendar.add');
+            JToolbarHelper::addNew('daytime.add');
         // }
     }
 }

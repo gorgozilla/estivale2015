@@ -11,13 +11,13 @@ defined('_JEXEC') or die;
 
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
-
 ?>
 	<script type="text/javascript" language="javascript">
 		jQuery(document).ready(function() {
 			var daytime = jQuery("#addDayTimeForm #jformdaytime").chosen().val();
 			var service_id = jQuery("#addDayTimeForm #jformservice_id").chosen().val();
 			var calendar_id = jQuery("#addDayTimeForm #calendar_id").val();
+			
 			getCalendarDaytimes(calendar_id, daytime, service_id);
 			getDaytimesByService(calendar_id, service_id);
 			
@@ -61,6 +61,12 @@ JHtml::_('formbehavior.chosen', 'select');
 		<div id="availibilityTableDiv">
 		
 		</div>
+		<p>
+			<i>Légende : </i><br />
+			<span style="background-color:#F89406;">&nbsp;<i class="icon-time"></i>&nbsp;</span> Date réservée en attente de validation<br />
+			<span style="background-color:#0f0;">&nbsp;<i class="icon-ok"></i>&nbsp;</span> Date réservée validée<br />
+			<span style="background-color:#f00;">&nbsp;<i class="icon-remove"></i>&nbsp;</span> Complet
+		</p>
 		
 		<input type="hidden" name="table" value="member_daytime" />
 		<input type="hidden" name="model" value="daytime" />
@@ -70,6 +76,6 @@ JHtml::_('formbehavior.chosen', 'select');
 		<input type="hidden" name="jform[member_daytime_id]" id="member_daytime_id" value="" />
 		<?php echo JHtml::_('form.token'); ?>
 		<div class="modal-footer">
-			<button class="btn" onclick="this.form.submit();"><?php echo JText::_('Ajouter la tranche horaire'); ?></button>
+			<button class="btn" onclick="this.form.submit();" id="btnAddTimeSchedule"><?php echo JText::_('Ajouter la tranche horaire'); ?></button>
 		</div>
 	</form>

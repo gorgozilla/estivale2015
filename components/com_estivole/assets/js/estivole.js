@@ -1,25 +1,3 @@
-function deleteAvailibility(member_daytime_id)
-{
-	jQuery.ajax({
-		url:'index.php?option=com_estivole&controller=member&task=member.deleteAvailibility',
-		type:'POST',
-		data: 'member_daytime_id='+member_daytime_id,
-		dataType: 'JSON',
-		success:function(data)
-		{
-			if(data.success)
-			{
-				
-			} else {
-				alert('ko');
-			}
-		},
-       error : function(resultat, statut, erreur){
-			alert(erreur);
-       }
-	});
-}
-
 function getDaytimesByService(calendar_id, service_id)
 {
 	jQuery.ajax({
@@ -34,6 +12,7 @@ function getDaytimesByService(calendar_id, service_id)
 			jQuery.each(data, function(index, item) {
 				var formattedDate = new Date(item.daytime_day);
 				var d = formattedDate.getDate();
+				if(d<10)d='0'+d;
 				var m =  formattedDate.getMonth();
 				m += 1;  // JavaScript months are 0-11
 				if(m<10)m='0'+m;

@@ -1,20 +1,36 @@
-function addDayTimeModal(daytime_id, service_id, start_hour, end_hour, quota)
+function addDayTimeModal(daytime_id)
 {
-	jQuery("#addDayTimeModal").modal('show');
+	
+	jQuery.ajax({
+		url:'index.php?option=com_estivole&task=getDaytime&tmpl=component',
+		type:'POST',
+		data: 'daytime_id='+daytime_id,
+		dataType: 'JSON',
+		success:function(data)
+		{
+			jQuery("#addDayTimeModal").modal('show');
 
-	if(daytime_id==''){
-		jQuery("#addDayTimeModal #daytime_id").val('');	
-		jQuery("#addDayTimeModal #quota").val('');	
-	}else{
-		jQuery("#addDayTimeModal #daytime_id").val(daytime_id);
-	}
-	jQuery("#addDayTimeModal #quota").val(quota);
-	jQuery("#addDayTimeModal #jformdaytime_hour_end").attr('value', end_hour);
-	jQuery("#addDayTimeModal #jformdaytime_hour_end").trigger("liszt:updated");
-	jQuery("#addDayTimeModal #jformdaytime_hour_start").attr('value', start_hour);
-	jQuery("#addDayTimeModal #jformdaytime_hour_start").trigger("liszt:updated");
-	jQuery("#addDayTimeModal #jformservice_id").attr('value', service_id);
-	jQuery("#addDayTimeModal #jformservice_id").trigger("liszt:updated");
+			if(daytime_id==''){
+				jQuery("#addDayTimeModal #daytime_id").val('');	
+				jQuery("#addDayTimeModal #quota").val('');	
+				jQuery("#addDayTimeModal #description").val('');	
+			}else{
+				jQuery("#addDayTimeModal #daytime_id").val(data.daytime_id);
+			}
+
+			jQuery("#addDayTimeModal #description").val(data.description);
+			jQuery("#addDayTimeModal #quota").val(data.quota);
+			jQuery("#addDayTimeModal #jformdaytime_hour_end").attr('value', data.daytime_hour_end);
+			jQuery("#addDayTimeModal #jformdaytime_hour_end").trigger("liszt:updated");
+			jQuery("#addDayTimeModal #jformdaytime_hour_start").attr('value', data.daytime_hour_start);
+			jQuery("#addDayTimeModal #jformdaytime_hour_start").trigger("liszt:updated");
+			jQuery("#addDayTimeModal #jformservice_id").attr('value', data.service_id);
+			jQuery("#addDayTimeModal #jformservice_id").trigger("liszt:updated");
+		},
+       error : function(resultat, statut, erreur){
+			alert(erreur);
+       }
+	});
 }
 
 function addAvailibilityModal(member_id, member_daytime_id)
@@ -90,10 +106,12 @@ function getCalendarDates(calendar_id)
 
 function getCalendarDaytimes(calendar_id, daytime, service_id)
 {
+	var member_id = jQuery("#addDayTimeForm #member_id").val();
+	
 	jQuery.ajax({
 		url:'index.php?option=com_estivole&controller=member&view=member&layout=_availibilitytable&format=raw&tmpl=component',
 		type:'POST',
-		data: 'calendar_id='+calendar_id+'&daytime='+daytime+'&service_id='+service_id,
+		data: 'calendar_id='+calendar_id+'&daytime='+daytime+'&service_id='+service_id+'&member_id='+member_id,
 		success:function(data)
 		{
 			var el = jQuery("#addAvailibilityModal #availibilityTableDiv");
@@ -119,6 +137,7 @@ function getDaytimesByService(calendar_id, service_id)
 			jQuery.each(data, function(index, item) {
 				var formattedDate = new Date(item.daytime_day);
 				var d = formattedDate.getDate();
+				if(d<10)d='0'+d;
 				var m =  formattedDate.getMonth();
 				m += 1;  // JavaScript months are 0-11
 				if(m<10)m='0'+m;

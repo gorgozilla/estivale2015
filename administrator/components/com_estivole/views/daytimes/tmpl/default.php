@@ -31,7 +31,7 @@ function tableOrdering( order, dir, task )
 </div>
 
 <div id="j-main-container" class="span10">
-	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=members');?>" method="post" name="adminForm" id="adminForm">
+	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=daytimes');?>" method="post" name="adminForm" id="adminForm">
 			<div id="j-main-container">
 			<?php
 			// Search tools bar
@@ -41,22 +41,22 @@ function tableOrdering( order, dir, task )
 			<thead>
 				<tr>
 					<th class="left">
-						<?php echo JHTML::_( 'grid.sort', 'Nom', 'b.lastname', $this->sortDirection, $this->sortColumn); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Nom', 'm.lastname', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
-						<?php echo JHTML::_( 'grid.sort', 'Prénom', 'b.firstname', $this->sortDirection, $this->sortColumn); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Prénom', 'm.firstname', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
-						<?php echo JHTML::_( 'grid.sort', 'Email', 'b.email', $this->sortDirection, $this->sortColumn); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Email', 'm.email', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
-						<?php echo JText::_('Tél.'); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Secteur', 's.name', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
-						<?php echo JText::_('Adresse'); ?>
+						<?php echo JText::_('Horaire'); ?>
 					</th>
 					<th class="left">
-						<?php echo JHTML::_( 'grid.sort', 'Ville', 'b.city', $this->sortDirection, $this->sortColumn); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Status', 'md.status_id', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="center">
 						<?php echo JText::_('Actions'); ?>
@@ -64,7 +64,7 @@ function tableOrdering( order, dir, task )
 				</tr>
 			</thead>
 			<tbody>
-			<?php foreach ($this->members as $i => $item) : ?>
+			<?php foreach ($this->member_daytimes as $i => $item) : ?>
 				<tr class="row<?php echo $i % 2; ?>">
 					<td class="left">
 						<a href="<?php echo JRoute::_('index.php?option=com_estivole&task=member.edit&member_id='.(int) $item->member_id); ?>">
@@ -82,16 +82,24 @@ function tableOrdering( order, dir, task )
 						</a>
 					</td>
 					<td class="left">
-						<?php echo JText::_($item->phone); ?>
+						<?php echo JText::_($item->name); ?>
 					</td>
 					<td class="left">
-						<?php echo JText::_($item->address); ?>
+						<?php echo date('H:i', strtotime($item->daytime_hour_start)).' - '.date('H:i', strtotime($item->daytime_hour_end)); ?>
 					</td>
 					<td class="left">
-						<?php echo JText::_($item->npa." / ".$item->city); ?>
+						<?php if($item->status_id==0){ ?>
+							<a href="index.php?option=com_estivole&controller=daytime&task=daytime.changeStatusDaytime&member_daytime_id=<?php echo $item->member_daytime_id; ?>&status_id=1" title="Confirmer la disponibilité">
+								<span class="badge-warning"><i class="icon-time"></i></span>
+							</a>
+						<?php }else{ ?>
+							<a href="index.php?option=com_estivole&controller=daytime&task=daytime.changeStatusDaytime&member_daytime_id=<?php echo $item->member_daytime_id; ?>&status_id=0" title="Remttre le status en attente de validation">
+								<span class="badge-success"><i class="icon-ok"></i></span>
+							</a>
+						<?php } ?>
 					</td>
 					<td class="center">
-						<a class="btn" href="index.php?option=com_estivole&controller=member&task=member.delete&member_id=<?php echo $item->member_id; ?>">
+						<a class="btn" href="index.php?option=com_estivole&controller=member&task=member.deleteAvailibility&member_daytime_id=<?php echo $item->member_daytime_id; ?>">
 							<i class="icon-trash"></i>
 						</a>
 					</td>

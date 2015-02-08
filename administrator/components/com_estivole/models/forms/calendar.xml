@@ -13,7 +13,7 @@
         <field 
             name="description" 
             type="text" 
-            label="Description"
+            label="Description "
             size="40"
             class="inputbox" />
     </fieldset>

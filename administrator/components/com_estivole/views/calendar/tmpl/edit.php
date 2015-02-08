@@ -38,9 +38,6 @@ JHtml::_('formbehavior.chosen', 'select');
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th width="1%" class="nowrap center hidden-phone">
-					<?php echo JHtml::_('grid.checkall'); ?>
-				</th>
 				<th class="left">
 					<?php echo JText::_('Jour'); ?>
 				</th>
@@ -59,11 +56,6 @@ JHtml::_('formbehavior.chosen', 'select');
 			// }
 		?>
 			<tr class="row<?php echo $i % 2; ?>">
-				<td class="center hidden-phone">
-					<?php //if ($canEdit) : ?>
-						<?php echo JHtml::_('grid.id', $i, $item->daytime_id); ?>
-					<?php //endif; ?>
-				</td>
 				<td class="left">
 					<a href="index.php?option=com_estivole&view=daytime&layout=edit&calendar_id=<?php echo $this->calendar->calendar_id; ?>&daytime=<?php echo $item->daytime_day; ?>">
 						<?php echo date('d-m-Y', strtotime($item->daytime_day)); ?>

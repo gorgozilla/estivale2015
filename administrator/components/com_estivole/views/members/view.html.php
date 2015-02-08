@@ -38,7 +38,6 @@ class EstivoleViewMembers extends JViewLegacy
         // if ($canDo->get('core.admin'))
         // {
             JToolbarHelper::addNew('member.add');
-			JToolbarHelper::editList();
         // }
     }
 }

@@ -76,8 +76,8 @@ JHtml::_('formbehavior.chosen', 'select');
 				<input type="hidden" name="table" value="member_daytime" />
 				<input type="hidden" name="model" value="daytime" />
 				<input type="hidden" name="task" value="add.add_member_daytime" />
-				<input type="hidden" name="jform[member_id]" id="member_id" value="" />
-				<input type="hidden" name="jform[calendar_id]" id="calendar_id" value="<?php echo $this->calendar->calendar_id; ?>" />
+				<input type="hidden" name="jform[member_id]" id="member_id" value="<?php echo $this->member->member_id; ?>" />
+				<input type="hidden" name="jform[calendar_id]" id="calendar_id" value="<?php echo $this->calendars[0]->calendar_id; ?>" />
 				<input type="hidden" name="jform[member_daytime_id]" id="member_daytime_id" value="" />
 				<?php echo JHtml::_('form.token'); ?>
 		</div>

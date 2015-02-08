@@ -1,5 +1,6 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
 require_once JPATH_COMPONENT . '/models/daytime.php';
+require_once JPATH_COMPONENT . '/models/service.php';
   
 class EstivoleViewDaytime extends JViewLegacy
 {
@@ -9,12 +10,15 @@ class EstivoleViewDaytime extends JViewLegacy
 		$app = JFactory::getApplication();
 		
 		$model = new EstivoleModelDaytime();
+		$modelService = new EstivoleModelService();
 
 		$this->daytimes = $model->listItems();
 		
 		for($i=0; $i<count($this->daytimes); $i++){
 			$this->daytimes[$i]->filledQuota = count($model->getQuotasByDaytime($this->daytimes[$i]->daytime_id));
+			$this->daytimes[$i]->service = $modelService->getItem($this->daytimes[$i]->service_id);
 		}
+		
 		$this->state	= $this->get('State');
 		$this->daytime	= $this->daytimes[0];
 		$this->form		= $this->get('Form');
