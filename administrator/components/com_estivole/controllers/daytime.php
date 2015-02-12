@@ -47,7 +47,6 @@ class EstivoleControllerDaytime extends JControllerForm
 		}
 	}
 	
-	
 	public function getDaytimesByService($calendar_id, $service_id)
 	{
 		$modeldaytime = new estivolemodeldaytime();
@@ -55,5 +54,25 @@ class EstivoleControllerDaytime extends JControllerForm
 		
 		echo json_encode($this->daytimes);
 		exit;
+	}
+	
+	/**
+	* Delete a member daytime
+	* @param int      ID of the member to delete
+	* @return boolean True if successfully deleted
+	*/
+	public function deleteDaytime()
+	{
+		$app  = JFactory::getApplication();
+		$id   = $id ? $id : $app->input->get('daytime_id');
+
+		$daytime = JTable::getInstance('Daytime','Table');
+		$daytime->load($id);
+
+		if ($daytime->delete()) 
+		{
+			return true;
+		}
+		return false;
 	}
 }

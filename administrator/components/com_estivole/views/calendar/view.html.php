@@ -11,8 +11,6 @@ class EstivoleViewCalendar extends JViewLegacy
 		$this->state	= $this->get('State');
 		$this->calendar		= $this->get('Item');
 		$this->form		= $this->get('Form');
-		$this->_dayTimeStartList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_start]');
-		$this->_dayTimeEndList = EstivoleHelpersHtml::hoursList('0000-00-00', 'jform[daytime_hour_end]');
 		
 		$modelDaytime = new EstivoleModelDaytime();
 		$this->daytimes = $modelDaytime->listItems();

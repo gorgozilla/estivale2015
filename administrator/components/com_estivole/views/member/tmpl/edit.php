@@ -37,8 +37,9 @@ JHtml::_('formbehavior.chosen', 'select');
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>
-	<h2>Assignation aux calendriers</h2>
 	
+<?php if($this->member->member_id!=null){ ?>
+	<h2>Assignation aux calendriers</h2>
 	<?php
 	foreach($this->calendars as $calendar){
 		echo '<h3>Calendrier "'.$calendar->name.'"</h3>';
@@ -118,3 +119,4 @@ JHtml::_('formbehavior.chosen', 'select');
 	<a href="javascript:void(0);" class="btn btn-large btn-success" role="button" onclick="addAvailibilityModal('<?php echo $this->member->member_id; ?>')"><?php echo JText::_('Assigner à un poste'); ?></a>
 </div>
 <?php include_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'member'.DIRECTORY_SEPARATOR.'tmpl'.DIRECTORY_SEPARATOR.'_addavailibility.php'); ?>
+<?php } ?>

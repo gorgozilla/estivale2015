@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
 ?>
+<?php if($this->member->member_id!=null){ ?>
 	<script type="text/javascript" language="javascript">
 		jQuery(document).ready(function() {
 			var daytime = jQuery("#addDayTimeForm #jformdaytime").chosen().val();
@@ -35,6 +36,7 @@ JHtml::_('formbehavior.chosen', 'select');
 			});
 		});
 	</script>
+<?php } ?>
 <div id="addAvailibilityModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newAvailibilityModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

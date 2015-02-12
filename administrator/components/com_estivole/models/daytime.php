@@ -195,7 +195,7 @@ class EstivoleModelDaytime extends JModelAdmin
 	}
   }
   
-  public function getQuotasByDaytime($daytime_id, $member_id)
+  public function getQuotasByDaytime($daytime_id)
   {
     $query = $this->_buildQuery();   
     $db = JFactory::getDBO();

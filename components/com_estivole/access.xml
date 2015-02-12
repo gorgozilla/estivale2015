@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<access component="com_estivole">
-	<section name="component">
-		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
-	</section>
-	<section name="component">
-		<action name="members.admin" title="MEMBRES" description="MEMBERS_DESC" />
-	</section>
-</access>

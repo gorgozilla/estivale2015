@@ -37,7 +37,7 @@ if($this->user->guest){
 		});
 	</script>
 	<h1>Espace benevole > Profil <?php echo $this->member->firstname.' '.$this->member->lastname; ?></h1>
-	<p>Merci de compléter le formulaire ci-dessous afin de finlaiser votre inscription.</p>
+	<p>Merci de compléter le formulaire ci-dessous afin de finaliser votre inscription.</p>
 	<form class="form-horizontal" action="<?php echo JRoute::_('index.php?option=com_estivole&view=member&member_id=' . (int) $this->member->member_id);?>" method="post">
 		<div class="col-md-6">
 			<div class="control-group">

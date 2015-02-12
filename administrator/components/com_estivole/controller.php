@@ -59,7 +59,7 @@ class EstivoleController extends JControllerLegacy
 		return $this;
 	}
 	
-  public function getCalendarDates($calendar_id)
+  public function getCalendarDates()
   {
 		$return = array("success"=>false);
 
@@ -75,7 +75,7 @@ class EstivoleController extends JControllerLegacy
 		echo json_encode($return);
   }
   
-	public function getDaytime($daytime_id)
+	public function getDaytime()
 	{
 		$model = $this->getModel('daytime');
 		$daytime = $model->getItem($daytime_id);

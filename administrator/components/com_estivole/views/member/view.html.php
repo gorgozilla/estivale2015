@@ -15,12 +15,13 @@ class EstivoleViewMember extends JViewLegacy
 		$this->member		= $this->get('Item');
 		$this->form		= $this->get('Form');
 		
-		$modelCalendars = new EstivoleModelCalendars();
-		$modelDaytime = new EstivoleModelDaytime();
-		$this->calendars = $modelCalendars->listItems();
-		
-		for($i=0; $i<count($this->calendars); $i++){
-			$this->calendars[$i]->member_daytimes = $modelDaytime->getMemberDaytimes($this->member->member_id, $this->calendars[$i]->calendar_id);
+		if($this->member->member_id!=null){
+			$modelCalendars = new EstivoleModelCalendars();
+			$modelDaytime = new EstivoleModelDaytime();
+			$this->calendars = $modelCalendars->listItems();
+			for($i=0; $i<count($this->calendars); $i++){
+				$this->calendars[$i]->member_daytimes = $modelDaytime->getMemberDaytimes($this->member->member_id, $this->calendars[$i]->calendar_id);
+			}
 		}
 
 		$this->addToolbar();

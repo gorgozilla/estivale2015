@@ -5,6 +5,7 @@ class EstivoleControllerMember extends JControllerForm
 {
 	public $formData = null;
 	public $model = null;
+	public $member_id = null;
 	
 	public function execute($task=null)
 	{
@@ -24,11 +25,16 @@ class EstivoleControllerMember extends JControllerForm
 		}else if($task=='delete'){
 			$member_id = $input->get('member_id');
 			$this->delete($member_id);
+		}else if($task=='add'){
+			parent::add();
 		}else if($task=='edit'){
 			parent::edit();
 		}else if($task=='apply'){
-			parent::save(); // If ok, redirect to the return page.
-			$app->redirect( $_SERVER['HTTP_REFERER']);
+			if(parent::save()){
+				$app->redirect('index.php?option=com_estivole&view=member&layout=edit&task=member.edit&controller=member&member_id='.$this->member_id);
+			}else{
+				$app->redirect($_SERVER['HTTP_REFERER']);
+			}
 		}else if($task=='save'){
 			parent::save();
 		}else if($task=='cancel'){
@@ -98,5 +104,20 @@ class EstivoleControllerMember extends JControllerForm
 			$app->enqueueMessage('Erreur!');
 		}
 		$app->redirect( $_SERVER['HTTP_REFERER']);
+	}
+	
+	public function postSaveHook($model, $validData)
+	{
+		$app      = JFactory::getApplication();
+		$item = $model->getItem();
+		$this->member_id=$item->get('member_id');
+		
+
+		$result = EstivoleHelpersUser::registerUser($item->get('lastname').' '.$item->get('firstname'), $item->get('firstname'), $item->get('email'), 'est1val3', null);
+		if(!$result->success){
+			$app->enqueueMessage($result->message, 'error');
+		}else{
+			$app->enqueueMessage('Succès!');
+		}
 	}
 }
