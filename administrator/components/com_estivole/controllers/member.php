@@ -30,9 +30,17 @@ class EstivoleControllerMember extends JControllerForm
 		}else if($task=='edit'){
 			parent::edit();
 		}else if($task=='apply'){
-			if(parent::save()){
-				$app->redirect('index.php?option=com_estivole&view=member&layout=edit&task=member.edit&controller=member&member_id='.$this->member_id);
+			if($this->formData['member_id']==null){
+				$result = EstivoleHelpersUser::registerUser($this->formData['lastname'].' '.$this->formData['firstname'], $this->formData['firstname'].'.'.$this->formData['lastname'], $this->formData['email'], 'est1val3', null, $this->formData);
+				if($result->success){
+					$app->enqueueMessage('YO');
+					$app->redirect('index.php?option=com_estivole&view=member&layout=edit&task=member.edit&controller=member&member_id='.$result->member_id);
+				}else{
+					$app->enqueueMessage($result->message, 'error');
+					$app->redirect($_SERVER['HTTP_REFERER']);
+				}
 			}else{
+				parent::save();
 				$app->redirect($_SERVER['HTTP_REFERER']);
 			}
 		}else if($task=='save'){
@@ -42,8 +50,6 @@ class EstivoleControllerMember extends JControllerForm
 		}else{
 			$this->display();
 		}
-		 //Redirect on referer page
-		//$app->redirect( $_SERVER['HTTP_REFERER']);
 	}
 	
 	public function display($cachable = false, $urlparams = false)
@@ -104,20 +110,5 @@ class EstivoleControllerMember extends JControllerForm
 			$app->enqueueMessage('Erreur!');
 		}
 		$app->redirect( $_SERVER['HTTP_REFERER']);
-	}
-	
-	public function postSaveHook($model, $validData)
-	{
-		$app      = JFactory::getApplication();
-		$item = $model->getItem();
-		$this->member_id=$item->get('member_id');
-		
-
-		$result = EstivoleHelpersUser::registerUser($item->get('lastname').' '.$item->get('firstname'), $item->get('firstname'), $item->get('email'), 'est1val3', null);
-		if(!$result->success){
-			$app->enqueueMessage($result->message, 'error');
-		}else{
-			$app->enqueueMessage('Succès!');
-		}
 	}
 }

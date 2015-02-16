@@ -1,4 +1,5 @@
 <?php
+  require_once JPATH_COMPONENT . '/models/member.php';
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_estivole
@@ -18,7 +19,7 @@ defined('_JEXEC') or die;
  */
 class EstivoleHelpersUser
 {
-    public static function registerUser($name, $username, $email, $password, $gender)
+    public static function registerUser($name, $username, $email, $password, $gender, $formData)
     {
         $mainframe =& JFactory::getApplication('site');
         $mainframe->initialise();
@@ -87,7 +88,31 @@ class EstivoleHelpersUser
                 $newUserID = $db->loadResult();
  
                 $user = JFactory::getUser($newUserID);
- 
+				
+				//Update member that has been created through user registration by plugin estivole
+				$user_id = $user->id;
+				$query="SELECT * FROM #__estivole_members WHERE user_id='$user_id'";
+
+                $db->setQuery($query);
+                $db->query();
+				$memberObj = $db->loadObject();
+				$member = JTable::getInstance('Member','Table');
+				$member->load($memberObj->member_id);
+				$member->firstname = $formData['firstname'];
+				$member->lastname = $formData['lastname'];
+				$member->birthday = $formData['birthday'];
+				$member->tshirtsize = $formData['tshirtsize'];
+				$member->city = $formData['city'];
+				$member->address = $formData['address'];
+				$member->npa = $formData['npa'];
+				
+				if(!$member->store()) 
+				{
+					$return->message = 'Problème update member!';
+					$return->success=false;
+					return $return;
+				}
+				
                 // Everything OK!               
                 if ($user->id != 0)
                 {                   
@@ -97,17 +122,22 @@ class EstivoleHelpersUser
                          
                         $emailSubject = 'Email Subject for registration successfully';
                         $emailBody = 'Email body for registration successfully';                       
-                        $return = JFactory::getMailer()->sendMail('sender email', 'sender name', $user->email, $emailSubject, $emailBody);
+                        $return = JFactory::getMailer()->sendMail('sender email', 'sender name', $user->email, $emailSubject, $emailBody);                             
+						$return->success=true;
+						$return->member_id=$memberObj->member_id;
+                        return $return;
  
                         // Your code here...
                     }
                     else if($useractivation == 1)
                     {
                         $emailSubject = 'Email Subject for activate the account';
-                        $emailBody = 'Email body for for activate the account';     
-                        $user_activation_url = JURI::base().JRoute::_('index.php?option=com_users&task=registration.activate&token=' . $user->activation, false);  // Append this URL in your email body
+                        $emailBody = 'Email body for for activate the account';
+						// Append this URL in your email body						
+                        $user_activation_url = JURI::base().JRoute::_('index.php?option=com_users&task=registration.activate&token=' . $user->activation, false);  
                         $return = JFactory::getMailer()->sendMail('sender email', 'sender name', $user->email, $emailSubject, $emailBody);                             
 						$return->success=true;
+						$return->member_id=$memberObj->member_id;
                         return $return;
                     }
                 }

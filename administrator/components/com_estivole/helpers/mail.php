@@ -56,8 +56,8 @@ useSMTP
 class EstivoleHelpersMail
 {	
 	function confirmMemberDaytime($member_id, $service_id, $daytime_id){
-		define("BodyConfirmMemberDaytime", "<h1>Confirmation d'inscription à une tranche horaire Estivale 2015</h1><p>Merci pour votre inscription en tant que bénévole. La tranche horaire suivante a été confirmée par notre responsable bénévole :</p><p><strong>Secteur :</strong> %s<br /><strong>Date :</strong> %s<br /><strong>Tranche horaire :</strong> %s</p><p><a href=\"http://127.0.0.1/estivale2015/index.php/votre-calendrier\">Cliquez ici</a> pour accéder à votre \"calendrier bénévole\" et ainsi voir toutes vos tranches horaires.</p>");
-		define("SubjectConfirmMemberDaytime", "Confirmation d'inscription bénévole Estivale 2015");
+		define("BodyConfirmMemberDaytime", "<h1>Confirmation d'inscription Ã  une tranche horaire Estivale 2015</h1><p>Merci pour votre inscription en tant que bÃ©nÃ©vole. La tranche horaire suivante a Ã©tÃ© confirmÃ©e par notre responsable bÃ©nÃ©vole :</p><p><strong>Secteur :</strong> %s<br /><strong>Date :</strong> %s<br /><strong>Tranche horaire :</strong> %s</p><p><a href=\"http://127.0.0.1/estivale2015/index.php/votre-calendrier\">Cliquez ici</a> pour accÃ©der Ã  votre \"calendrier bÃ©nÃ©vole\" et ainsi voir toutes vos tranches horaires.</p>");
+		define("SubjectConfirmMemberDaytime", "Confirmation d'inscription bÃ©nÃ©vole Estivale 2015");
 		
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(TRUE);

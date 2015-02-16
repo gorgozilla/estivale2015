@@ -34,6 +34,7 @@ JHtml::_('formbehavior.chosen', 'select');
 			<?php echo $this->form->getControlGroup('city'); ?>
 			<?php echo $this->form->getControlGroup('tshirtsize'); ?>
 			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="jform[member_id]" value="<?php echo $this->member->member_id; ?>" />
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>
