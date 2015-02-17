@@ -120,9 +120,10 @@ class EstivoleHelpersUser
                     if($useractivation == 0)
                     {
                          
-                        $emailSubject = 'Email Subject for registration successfully';
-                        $emailBody = 'Email body for registration successfully';                       
-                        $return = JFactory::getMailer()->sendMail('sender email', 'sender name', $user->email, $emailSubject, $emailBody);                             
+                        $emailSubject = 'Confirmation inscription bénévole Estivale Open Air';
+                        $emailBody = '<p>Merci pour votre inscription en tant que bénévole, prépare-toi à kiffer la vibe, du moins nous allons tout faire pour que ce soit le cas! :)</p>';
+										
+                        $return = JFactory::getMailer()->sendMail('benevoles@estivale.ch', 'Benevoles Estivale', $user->email, $emailSubject, $emailBody, true);                             
 						$return->success=true;
 						$return->member_id=$memberObj->member_id;
                         return $return;
@@ -131,11 +132,19 @@ class EstivoleHelpersUser
                     }
                     else if($useractivation == 1)
                     {
-                        $emailSubject = 'Email Subject for activate the account';
-                        $emailBody = 'Email body for for activate the account';
 						// Append this URL in your email body						
-                        $user_activation_url = JURI::base().JRoute::_('index.php?option=com_users&task=registration.activate&token=' . $user->activation, false);  
-                        $return = JFactory::getMailer()->sendMail('sender email', 'sender name', $user->email, $emailSubject, $emailBody);                             
+                        $user_activation_url = JURI::root().'index.php?option=com_users&task=registration.activate&token='.$user->activation; 
+                        $emailSubject = 'Activation compte Estivale Open Air';
+                        $emailBody = '	<p>Merci pour votre inscription en tant que bénévole, prépare-toi à kiffer la vibe, du moins nous allons tout faire pour que ce soit le cas! :)</p>
+										<p>Afin de finaliser votre inscription et valider votre compte, merci de cliquer sur le lien suivant :<br />'
+										.$user_activation_url.
+										'<p>Votre nom d\'utilisateur ainsi que votre mot de passe vous sont parvenus dans un email séparé. 
+										Utilisez ces derniers pour vous connecter à votre compte,
+										vous pourrez ensuite modifier vos paramètres et sélectionnez les dates auxquelles vous souhaitez vous inscrire.</p>
+										<p>Meilleures salutations et à bientôt,</p>
+										<p>Team Bénévoles Estivale Open Air</p>';
+ 
+                        $return = JFactory::getMailer()->sendMail('sender email', 'sender name', $user->email, $emailSubject, $emailBody, true);                             
 						$return->success=true;
 						$return->member_id=$memberObj->member_id;
                         return $return;

@@ -44,7 +44,18 @@ class EstivoleControllerMember extends JControllerForm
 				$app->redirect($_SERVER['HTTP_REFERER']);
 			}
 		}else if($task=='save'){
-			parent::save();
+			if($this->formData['member_id']==null){
+				$result = EstivoleHelpersUser::registerUser($this->formData['lastname'].' '.$this->formData['firstname'], $this->formData['firstname'].'.'.$this->formData['lastname'], $this->formData['email'], 'est1val3', null, $this->formData);
+				if($result->success){
+					$app->enqueueMessage('YO');
+					$app->redirect('index.php?option=com_estivole&view=members');
+				}else{
+					$app->enqueueMessage($result->message, 'error');
+					$app->redirect($_SERVER['HTTP_REFERER']);
+				}
+			}else{
+				parent::save();
+			}
 		}else if($task=='cancel'){
 			parent::cancel();
 		}else{
