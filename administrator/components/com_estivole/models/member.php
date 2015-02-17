@@ -1,6 +1,8 @@
-<?php // no direct access
-
+<?php 
+// no direct access
 defined('_JEXEC') or die;
+ 
+require_once JPATH_COMPONENT . '/models/daytime.php';
  
 class EstivoleModelMember extends JModelAdmin
 {
@@ -102,11 +104,24 @@ class EstivoleModelMember extends JModelAdmin
 	*/
 	public function deleteMember($member_id = null)
 	{
+
 		$app  = JFactory::getApplication();
-		$id   = $id ? $id : $app->input->get('member_id');
+		$id   = $id ? $id : $member_id;
 
 		$member = JTable::getInstance('Member','Table');
 		$member->load($id);
+		
+		$modelDaytime = new EstivoleModelDaytime();
+		$memberDaytimes = $modelDaytime->getMemberDaytimes($member_id, null);
+		
+		foreach($memberDaytimes as $memberDaytime){
+			$daytime = JTable::getInstance('Daytime','Table');
+			$daytime->load($memberDaytime->daytime_id);
+			if ($daytime->delete()) 
+			{
+				return false;
+			}
+		}
 
 		$userid = JRequest::getInt('id'); // getting user id from url
 		$user = JUser::getInstance($member->user_id);
