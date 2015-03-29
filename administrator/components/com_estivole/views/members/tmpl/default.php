@@ -9,10 +9,6 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.multiselect');
-JHtml::_('formbehavior.chosen', 'select');
-JHtml::_('behavior.modal', 'a.modal');
-
 $this->sortColumn	= $this->escape($this->state->get('list.ordering'));
 $this->sortDirection	= $this->escape($this->state->get('list.direction'));
 ?>
@@ -32,11 +28,7 @@ function tableOrdering( order, dir, task )
 
 <div id="j-main-container" class="span10">
 	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=members');?>" method="post" name="adminForm" id="adminForm">
-			<div id="j-main-container">
-			<?php
-			// Search tools bar
-			//echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
-			?>
+		<div id="j-main-container">
 		<table class="table table-striped">
 			<thead>
 				<tr>

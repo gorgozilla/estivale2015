@@ -1,11 +1,12 @@
 ﻿<?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
-require_once JPATH_COMPONENT . '/helpers/estivole.php';
  
 class EstivoleViewServices extends JViewLegacy
 {
 	function display($tpl=null)
 	{
 		$app = JFactory::getApplication();
+		$this->state	= $this->get('State');
+		
 		$model = new EstivoleModelServices();
 		$layout = $app->input->get('layout', 'edit');
 
@@ -30,21 +31,13 @@ class EstivoleViewServices extends JViewLegacy
 
     /**
      * Add the page title and toolbar.
-     *
-     * @since   1.6
      */
     protected function addToolbar()
     {
-        // $canDo  = EstivoleHelpersEstivole::getActions();
-
         // Get the toolbar object instance
         $bar = JToolBar::getInstance('toolbar');
-
 		JToolbarHelper::title(JText::_('Gestion des bénévoles : Secteurs'));
-               
-        // if ($canDo->get('core.admin'))
-        // {
-            JToolbarHelper::addNew('service.add');
-        // }
+        JToolbarHelper::addNew('service.add');
+		JToolbarHelper::deleteList('Etes-vous sûr de vouloir supprimer le secteur? Ceci supprimera également toutes les tranches horaires alloues à ce dernier. Alors?', 'services.delete');
     }
 }

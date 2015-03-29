@@ -23,3 +23,8 @@
 2015-02-11T18:30:42+00:00	INFO 127.0.0.1	joomlafailure	Le mot de passe ne correspond pas au nom d'utilisateur, ou vous n'avez pas encore de compte.
 2015-02-11T20:50:59+00:00	INFO 127.0.0.1	joomlafailure	Vous devez indiquer un mot de passe!
 2015-02-12T18:33:14+00:00	INFO 127.0.0.1	joomlafailure	Le nom d'utilisateur ne correspond pas au mot de passe, ou vous n'avez pas encore de compte.
+2015-02-17T21:34:55+00:00	INFO 127.0.0.1	joomlafailure	Le mot de passe ne correspond pas au nom d'utilisateur, ou vous n'avez pas encore de compte.
+2015-03-15T00:14:01+00:00	INFO 127.0.0.1	joomlafailure	Vous devez indiquer un mot de passe!
+2015-03-15T10:36:26+00:00	INFO 127.0.0.1	joomlafailure	Le mot de passe ne correspond pas au nom d'utilisateur, ou vous n'avez pas encore de compte.
+2015-03-18T21:43:52+00:00	INFO 127.0.0.1	joomlafailure	Le nom d'utilisateur ne correspond pas au mot de passe, ou vous n'avez pas encore de compte.
+2015-03-29T19:47:52+00:00	INFO 127.0.0.1	joomlafailure	Le mot de passe ne correspond pas au nom d'utilisateur, ou vous n'avez pas encore de compte.

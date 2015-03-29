@@ -1,5 +1,4 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
-require_once JPATH_COMPONENT . '/helpers/estivole.php';
  
 class EstivoleViewMembers extends JViewLegacy
 {
@@ -23,21 +22,12 @@ class EstivoleViewMembers extends JViewLegacy
 
     /**
      * Add the page title and toolbar.
-     *
-     * @since   1.6
      */
     protected function addToolbar()
     {
-        // $canDo  = EstivoleHelpersEstivole::getActions();
-
         // Get the toolbar object instance
         $bar = JToolBar::getInstance('toolbar');
-
 		JToolbarHelper::title(JText::_('Gestion des bénévoles : Bénévoles'));
-               
-        // if ($canDo->get('core.admin'))
-        // {
-            JToolbarHelper::addNew('member.add');
-        // }
+        JToolbarHelper::addNew('member.add');
     }
 }

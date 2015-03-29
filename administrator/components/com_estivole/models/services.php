@@ -2,7 +2,7 @@
 
 defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class EstivoleModelServices extends JModelLegacy
+class EstivoleModelServices extends JModelList
 {
 
   /**
@@ -15,9 +15,16 @@ class EstivoleModelServices extends JModelLegacy
     $app = JFactory::getApplication();
     $this->_service_id = $app->input->get('service_id', null);
 	
+	$config['filter_fields'] = array(
+		'b.name'
+	);
     
-    parent::__construct();       
+    parent::__construct($config);       
   }
+  
+	protected function populateState($ordering = null, $direction = null) {
+		parent::populateState('name', 'ASC');
+	}
  
   /**
   * Builds the query to be used by the member model
@@ -43,28 +50,11 @@ class EstivoleModelServices extends JModelLegacy
   */
   protected function _buildWhere(&$query)
   {
-
     if(is_numeric($this->_service_id)) 
     {
       $query->where('b.service_id = ' . (int) $this->_service_id);
     }
-
-    // if(is_numeric($this->_user_id)) 
-    // {
-      // $query->where('b.user_id = ' . (int) $this->_user_id);
-    // }
-
-    // if(is_numeric($this->_library_id)) 
-    // {
-      // $query->where('b.library_id = ' . (int) $this->_library_id);
-    // }
-
-    // if($this->_waitlist)
-    // {
-      // $query->where('w.waitlist_id <> ""');
-    // }
-
-    // $query->where('b.published = ' . (int) $this->_published);
+	
     return $query;
   }
   
@@ -90,7 +80,6 @@ class EstivoleModelServices extends JModelLegacy
   {
     $query = $this->_buildQuery();    
     $query = $this->_buildWhere($query);
-	$query->order('b.name ASC');
     $list = $this->_getList($query, $this->limitstart, $this->limit);
 
     return $list;
@@ -110,32 +99,10 @@ class EstivoleModelServices extends JModelLegacy
   protected function _getList($query, $limitstart = 0, $limit = 0)
   {
     $db = JFactory::getDBO();
-    $db->setQuery($query, $limitstart, $limit);
+	$query->order($db->escape($this->getState('list.ordering', 'b.name')).' '.$db->escape($this->getState('list.direction', 'ASC')));
+	$db->setQuery($query, $limitstart, $limit);
     $result = $db->loadObjectList();
  
     return $result;
-  }
-
-  /**
-  * Delete a member
-  * @param int      ID of the member to delete
-  * @return boolean True if successfully deleted
-  */
-  public function delete($id = null)
-  {
-    $app  = JFactory::getApplication();
-    $id   = $id ? $id : $app->input->get('member_id');
-
-    $member = JTable::getInstance('Member','Table');
-    $member->load($id);
-
-    $member->published = 0;
-
-    if($member->store()) 
-    {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

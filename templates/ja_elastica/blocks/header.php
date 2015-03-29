@@ -16,6 +16,9 @@ defined('_JEXEC') or die;
 <?php
 $app = JFactory::getApplication();
 $siteName = $app->getCfg('sitename');
+
+$lang =& JFactory::getLanguage()->getName();
+
 if ($this->getParam('logoType', 'image')=='image'): ?>
 <h1 class="logo">
     <a href="<?php JURI::base(true) ?>" title="<?php echo $siteName; ?>">
@@ -70,5 +73,10 @@ $sloganText = JText::_(trim($this->getParam('sloganText'))); ?>
 
 <div style="clear:both;"></div>
 <div class="logo-dates">
+<?php if($lang=='French (fr-FR)'){ ?>
 <h3>Du 30 juillet au 2 aout 2015 | Estavayer-le-Lac</h3>
+<?php }else{ ?>
+<h3>Vom 30. Juli bis 2. August 2015 | Estavayer-le-Lac</h3>
+<?php } ?>
+<jdoc:include type="modules" name="languages" />
 </div>

@@ -31,6 +31,7 @@ class EstivoleViewService extends JViewLegacy
 
 		JToolbarHelper::apply('service.apply');
 		JToolbarHelper::save('service.save');
+		JToolbarHelper::trash('delete.service');
 
 		if (empty($this->item->id))
 		{

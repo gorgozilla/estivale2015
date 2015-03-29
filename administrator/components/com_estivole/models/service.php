@@ -129,14 +129,12 @@ class EstivoleModelService extends JModelAdmin
   public function delete($id = null)
   {
     $app  = JFactory::getApplication();
-    $id   = $id ? $id : $app->input->get('member_id');
+    $id   = $id ? $id : $app->input->get('service_id');
 
-    $member = JTable::getInstance('Member','Table');
-    $member->load($id);
+    $service = JTable::getInstance('Service','Table');
+    $service->load($id);
 
-    $member->published = 0;
-
-    if($member->store()) 
+    if($service->store()) 
     {
       return true;
     } else {
