@@ -6,22 +6,39 @@ class EstivoleControllerServices extends JControllerAdmin
 	public $formData = null;
 	public $model = null;
 	
-	public function delete(){
+	public function execute($task=null)
+	{
 		$app      = JFactory::getApplication();
 		$modelName  = $app->input->get('model', 'Service');
+
+		// Required objects 
 		$input = JFactory::getApplication()->input; 
+		// Get the form data 
+		$this->formData = new JRegistry($input->get('jform','','array')); 
 
 		//Get model class
 		$this->model = $this->getModel($modelName);
-		
-		if($model->delete()){
-			$app->enqueueMessage('Disponibilité confirmée & validée, le bénévole ne peut plus supprimer cette tranche horaire!');
+
+		if($task=='deleteListService'){
+			$this->deleteListService();
 		}else{
-			$app->enqueueMessage('Problème lors de la suppression du secteur!');
+			$this->display();
 		}
-		 
-		//Redirect on referer page
-		$app->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	public function deleteListService($service_id)
+	{
+		$app      = JFactory::getApplication();
+		$return = array("success"=>false);
+
+		if($this->model->deleteService($service_id)){
+			$return['success'] = true;
+			$return['msg'] = 'Yes';
+			$app->enqueueMessage('Secteur supprimée avec succès!');
+		}else{
+			$app->enqueueMessage('Erreur!');
+		}
+		$app->redirect( $_SERVER['HTTP_REFERER']);
 	}
 	/**
 	 * Method to provide child classes the opportunity to process after the delete task.

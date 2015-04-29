@@ -126,19 +126,31 @@ class EstivoleModelService extends JModelAdmin
   * @param int      ID of the member to delete
   * @return boolean True if successfully deleted
   */
-  public function delete($id = null)
+  public function deleteService($id = null)
   {
-    $app  = JFactory::getApplication();
-    $id   = $id ? $id : $app->input->get('service_id');
+		$app  = JFactory::getApplication();
+		$id   = $id ? $id : $this->_service_id;
+		echo $id.'lol';exit;
 
-    $service = JTable::getInstance('Service','Table');
-    $service->load($id);
-
-    if($service->store()) 
-    {
-      return true;
-    } else {
-      return false;
-    }
+		$service = JTable::getInstance('Service','Table');
+		$service->load($id);
+		echo $id;exit;
+		
+		// $modelDaytime = new EstivoleModelDaytime();
+		// $memberDaytimes = $modelDaytime->getMemberDaytimes($member_id, null);
+		
+		/*foreach($memberDaytimes as $memberDaytime){
+			$daytime = JTable::getInstance('Daytime','Table');
+			$daytime->load($memberDaytime->daytime_id);
+			if ($daytime->delete()) 
+			{
+				return false;
+			}
+		}*/
+		if ($service->delete()) 
+		{
+			return true;
+		}
+		return false;
   }
 }

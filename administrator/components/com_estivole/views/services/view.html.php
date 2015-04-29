@@ -38,6 +38,6 @@ class EstivoleViewServices extends JViewLegacy
         $bar = JToolBar::getInstance('toolbar');
 		JToolbarHelper::title(JText::_('Gestion des bénévoles : Secteurs'));
         JToolbarHelper::addNew('service.add');
-		JToolbarHelper::deleteList('Etes-vous sûr de vouloir supprimer le secteur? Ceci supprimera également toutes les tranches horaires alloues à ce dernier. Alors?', 'services.delete');
+		JToolbarHelper::deleteList('Etes-vous sûr de vouloir supprimer le secteur? Ceci supprimera également toutes les tranches horaires alloues à ce dernier. Alors?', 'services.deleteListService');
     }
 }
