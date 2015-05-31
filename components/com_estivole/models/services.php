@@ -49,6 +49,8 @@ class EstivoleModelServices extends JModelLegacy
     {
       $query->where('b.service_id = ' . (int) $this->_service_id);
     }
+	
+	$query->where('b.published = 1');
 
     return $query;
   }
