@@ -53,6 +53,9 @@ function tableOrdering( order, dir, task )
 						<?php echo JHTML::_( 'grid.sort', 'Secteur', 's.name', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
+						<?php echo JText::_('Date'); ?>
+					</th>
+					<th class="left">
 						<?php echo JText::_('Horaire'); ?>
 					</th>
 					<th class="left">
@@ -83,6 +86,9 @@ function tableOrdering( order, dir, task )
 					</td>
 					<td class="left">
 						<?php echo JText::_($item->name); ?>
+					</td>
+					<td class="left">
+						<?php echo date('d-m-Y',strtotime($item->daytime_day)); ?>
 					</td>
 					<td class="left">
 						<?php echo date('H:i', strtotime($item->daytime_hour_start)).' - '.date('H:i', strtotime($item->daytime_hour_end)); ?>

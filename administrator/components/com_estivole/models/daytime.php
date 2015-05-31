@@ -50,8 +50,8 @@ class EstivoleModelDaytime extends JModelAdmin
     $query = $db->getQuery(TRUE);
 	
 	if($this->_daytime_day==''){
-		$query->select('distinct daytime_day');
-
+		$query->select('*');
+		$query->group('daytime_day');
 	}else{
 		$query->select('*');
 	}
@@ -159,6 +159,39 @@ class EstivoleModelDaytime extends JModelAdmin
  
     return $result;
   }
+  
+  public function getServiceDaytimes($service_id)
+  {
+
+    $query = $this->_buildQuery();   
+    $db = JFactory::getDBO();
+    $query = $db->getQuery(TRUE);
+
+	$query->select('*');
+	$query->from('#__estivole_members_daytimes as md');
+	$query->where('md.service_id = ' . $service_id);
+	
+    $db->setQuery($query, 0, 0);
+    $result = $db->loadObjectList();
+ 
+    return $result;
+  }
+  
+   public function getDaytimeDaytimes($daytime_id)
+  {
+    $query = $this->_buildQuery();   
+    $db = JFactory::getDBO();
+    $query = $db->getQuery(TRUE);
+
+	$query->select('*');
+	$query->from('#__estivole_members_daytimes as md');
+	$query->where('md.daytime_id = ' . $daytime_id);
+
+    $db->setQuery($query, 0, 0);
+    $result = $db->loadObjectList();
+ 
+    return $result;
+  } 
   
   public function isDaytimeAvailableForMember($member_id, $daytime_id)
   {
@@ -273,5 +306,21 @@ class EstivoleModelDaytime extends JModelAdmin
 		} else {
 			return false;
 		}
+	}
+	
+	public function deleteDaytime($daytime_id = null)
+	{
+
+		$app  = JFactory::getApplication();
+		$id   = $id ? $id : $daytime_id;
+
+		$daytime = JTable::getInstance('Daytime','Table');
+		$daytime->load($id);
+		
+		if ($daytime->delete()) 
+		{
+			return true;
+		}  
+		return false;
 	}
 }

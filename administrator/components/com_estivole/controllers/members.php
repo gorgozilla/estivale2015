@@ -1,15 +1,17 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
+ require_once JPATH_COMPONENT . '/models/service.php';
  require_once JPATH_COMPONENT . '/models/daytime.php';
  
-class EstivoleControllerCalendar extends JControllerForm
+class EstivoleControllerMembers extends JControllerAdmin
 {
 	public $formData = null;
 	public $model = null;
+	public $search_text = null;
 	
 	public function execute($task=null)
 	{
 		$app      = JFactory::getApplication();
-		$modelName  = $app->input->get('model', 'Calendar');
+		$modelName  = $app->input->get('model', 'Service');
 
 		// Required objects 
 		$input = JFactory::getApplication()->input; 
@@ -19,44 +21,52 @@ class EstivoleControllerCalendar extends JControllerForm
 		//Get model class
 		$this->model = $this->getModel($modelName);
 
-		if($task=='deleteListDaytime'){
-			$this->deleteListDaytime();
-		}elseif($task=='cancel'){
-			$this->cancel();
+		if($task=='deleteListService'){
+			$this->deleteListService();
 		}else{
-			$this->edit();
+			$this->display();
 		}
 	}
 	
-	public function deleteListDaytime()
+	public function deleteListService()
 	{
 		$app      = JFactory::getApplication();
-		$daytime_id  = $app->input->get('daytime_id');
+		$service_id  = $app->input->get('service_id');
 		$return = array("success"=>false);
 		
 		$modelDaytime = new EstivoleModelDaytime();
 
-		$memberDaytimes = $modelDaytime->getDaytimeDaytimes($daytime_id);
-
+		$memberDaytimes = $modelDaytime->getServiceDaytimes($service_id);
+		
 		foreach($memberDaytimes as $memberDaytime){
-			echo $memberDaytime->member_daytime_id;
 			$daytime = JTable::getInstance('MemberDaytime','Table');
 			$daytime->load($memberDaytime->member_daytime_id);
-
 			if (!$daytime->delete()) 
 			{
 				return false;
 			}
 		}
 
-
-		if($modelDaytime->deleteDaytime($daytime_id)){
+		if($this->model->deleteService($service_id)){
 			$return['success'] = true;
 			$return['msg'] = 'Yes';
-			$app->enqueueMessage('Date supprimée avec succès!');
+			$app->enqueueMessage('Secteur supprimé avec succès!');
 		}else{
 			$app->enqueueMessage('Erreur!');
 		}
 		$app->redirect( $_SERVER['HTTP_REFERER']);
+	}
+	/**
+	 * Method to provide child classes the opportunity to process after the delete task.
+	 *
+	 * @param   JModelLegacy  $model  The model for the component
+	 * @param   mixed         $ids    array of ids deleted.
+	 *
+	 * @return  void
+	 *
+	 * @since   3.1
+	 */
+	protected function postDeleteHook(JModelLegacy $model, $ids = null)
+	{
 	}
 }

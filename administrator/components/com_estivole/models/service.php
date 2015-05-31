@@ -130,23 +130,10 @@ class EstivoleModelService extends JModelAdmin
   {
 		$app  = JFactory::getApplication();
 		$id   = $id ? $id : $this->_service_id;
-		echo $id.'lol';exit;
 
 		$service = JTable::getInstance('Service','Table');
 		$service->load($id);
-		echo $id;exit;
-		
-		// $modelDaytime = new EstivoleModelDaytime();
-		// $memberDaytimes = $modelDaytime->getMemberDaytimes($member_id, null);
-		
-		/*foreach($memberDaytimes as $memberDaytime){
-			$daytime = JTable::getInstance('Daytime','Table');
-			$daytime->load($memberDaytime->daytime_id);
-			if ($daytime->delete()) 
-			{
-				return false;
-			}
-		}*/
+
 		if ($service->delete()) 
 		{
 			return true;
@@ -154,3 +141,21 @@ class EstivoleModelService extends JModelAdmin
 		return false;
   }
 }
+
+function publish($cid, $publish) {
+
+	if (count( $cid ))
+	{
+	 JArrayHelper::toInteger($cid);
+	 $cids = implode( ',', $cid );
+	 $query = 'UPDATE #__estivole_services'
+		   . ' SET published = '.(int) $publish
+		   . ' WHERE service_id IN ( '.$cids.' )';
+		  $this->_db->setQuery( $query );
+		if (!$this->_db->query()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		 }
+	}
+	return true;
+ }

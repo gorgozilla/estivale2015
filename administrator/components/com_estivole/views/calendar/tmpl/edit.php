@@ -41,6 +41,7 @@ JHtml::_('formbehavior.chosen', 'select');
 				<th class="left">
 					<?php echo JText::_('Jour'); ?>
 				</th>
+
 			</tr>
 		</thead>
 		<tbody>
@@ -61,6 +62,11 @@ JHtml::_('formbehavior.chosen', 'select');
 						<?php echo date('d-m-Y', strtotime($item->daytime_day)); ?>
 					</a>
 				</td>
+					<td class="center">
+						<a class="btn" onClick="javascript:return confirm('Supprimera également toutes les inscriptions associées à cette date. Êtes-vous sûr?')" href="index.php?option=com_estivole&task=calendar.deleteListDaytime&daytime_id=<?php echo $item->daytime_id; ?>">
+							<i class="icon-trash"></i>
+						</a>
+					</td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
