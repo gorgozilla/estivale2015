@@ -59,13 +59,16 @@ function tableOrdering( order, dir, task )
 						<?php echo JText::_($item->summary); ?>
 					</td>
 					<td class="center">
-						<?php echo JHtml::_('job.publish', $item->published, $i); ?>
+					
+						<?php echo JHtml::_('job.publishList', $item->published, $i); ?>
+						<!--<a class="btn" href="index.php?option=com_estivole&task=services.deleteListService&service_id=<?php echo $item->service_id; ?>">
+							<i class="icon-publish"></i>
+						</a>-->
 						<a class="btn" onClick="javascript:return confirm('Supprimera également toutes les inscriptions associées au secteur. Êtes-vous sûr?')" href="index.php?option=com_estivole&task=services.deleteListService&service_id=<?php echo $item->service_id; ?>">
 							<i class="icon-trash"></i>
 						</a>
 					</td>
 				</tr>
-				<input type="hidden" name="cb<?php echo $i; ?>" id="cb<?php echo $i; ?>" value="<?php echo !$item->published; ?>" >
 				<?php endforeach; ?>
 
 			</tbody>

@@ -10,7 +10,6 @@ class EstivoleControllerServices extends JControllerAdmin
 	public function __construct($config = array())
     {
         parent::__construct($config);
-        $this->registerTask('unpublish', 'publish');
     }
 	
 	public function execute($task=null)
@@ -28,8 +27,8 @@ class EstivoleControllerServices extends JControllerAdmin
 
 		if($task=='deleteListService'){
 			$this->deleteListService();
-		}else if($task=='unpublish'){
-			$this->publish();
+		}else if($task=='publishList' || $task=='unpublishList'){
+			$this->publishList($task);
 		}else{
 			$this->display();
 		}
@@ -70,14 +69,14 @@ class EstivoleControllerServices extends JControllerAdmin
      * @return  void
      * @since   1.6
      */
-    function publish()
+    function publishList($task)
     {
-		
         // Initialise variables.
+		$app      = JFactory::getApplication();
         $user   = JFactory::getUser();
         $ids    = JRequest::getVar('cid', array(), '', 'array');
-        $values = array('publish' => 1, 'unpublish' => 0);
-        $task   = $this->getTask();
+        $values = array('publishList' => 1, 'unpublishList' => 0);
+
         $value  = JArrayHelper::getValue($values, $task, 0, 'int');
 
         if (empty($ids)) {
@@ -92,9 +91,8 @@ class EstivoleControllerServices extends JControllerAdmin
                 JError::raiseWarning(500, $model->getError());
             }
         }
-
-        $redirectTo = JRoute::_('index.php?option='.JRequest::getVar('option'));
-        $this->setRedirect($redirectTo);
+		$app->enqueueMessage('Publication modifiée avec succès!');
+		$app->redirect( $_SERVER['HTTP_REFERER']);
     }
 	/**
 	 * Method to provide child classes the opportunity to process after the delete task.

@@ -7,7 +7,7 @@ class EstivoleViewServices extends JViewLegacy
 	{
 		$app = JFactory::getApplication();
 		$model = new EstivoleModelServices();
-		$this->services = $model->listItems();
+		$this->services = $model->listItems(false);
 
 		//display
 		return parent::display($tpl);

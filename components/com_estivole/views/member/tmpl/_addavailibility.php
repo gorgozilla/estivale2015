@@ -48,7 +48,7 @@ JHtml::_('formbehavior.chosen', 'select');
 			</div>
 		</div>
 		
-		<p>Sélectionnez la date pour laquelle vous souhaitez participer comme bnévole.</p>
+		<p>Sélectionnez la date pour laquelle vous souhaitez participer comme bénévole.</p>
 		<div class="control-group ">
 			<div class="control-label">
 				<label id="jform_daytime_id" for="jform_daytime_id" class="required">Date : </label>

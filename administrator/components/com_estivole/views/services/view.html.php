@@ -1,4 +1,4 @@
-﻿<?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
+<?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
 
 require_once JPATH_COMPONENT .'/helpers/job.php';
  

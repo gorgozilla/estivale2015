@@ -42,7 +42,7 @@ class EstivoleModelServices extends JModelLegacy
   * @return   object  Query object
   *
   */
-  protected function _buildWhere(&$query)
+  protected function _buildWhere(&$query, $onlyPublished)
   {
 
     if(is_numeric($this->_service_id)) 
@@ -50,7 +50,9 @@ class EstivoleModelServices extends JModelLegacy
       $query->where('b.service_id = ' . (int) $this->_service_id);
     }
 	
-	$query->where('b.published = 1');
+	if($onlyPublished){
+		$query->where('b.published = 1');
+	}
 
     return $query;
   }
@@ -73,10 +75,10 @@ class EstivoleModelServices extends JModelLegacy
   *
   * @return array An array of results.
   */
-  public function listItems()
+  public function listItems($onlyPublished = true)
   {
     $query = $this->_buildQuery();    
-    $query = $this->_buildWhere($query);
+    $query = $this->_buildWhere($query, $onlyPublished);
 	$query->order('b.name ASC');
     $list = $this->_getList($query, $this->limitstart, $this->limit);
 
