@@ -9,6 +9,8 @@ class EstivoleViewServices extends JViewLegacy
 		$app = JFactory::getApplication();
 		$this->state	= $this->get('State');
 		
+		$this->pagination	= $this->get('Pagination');
+		
 		$model = new EstivoleModelServices();
 		$layout = $app->input->get('layout', 'edit');
 

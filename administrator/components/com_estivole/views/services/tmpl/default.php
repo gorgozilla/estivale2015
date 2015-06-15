@@ -30,6 +30,7 @@ function tableOrdering( order, dir, task )
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th>#</th>
 					<th width="1%" class="hidden-phone">
 						<?php echo JHtml::_('grid.checkall'); ?>
 					</th>
@@ -44,9 +45,17 @@ function tableOrdering( order, dir, task )
 					</th>
 				</tr>
 			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="5">
+						<?php echo $this->pagination->getListFooter(); ?>
+					</td>
+				</tr>
+			</tfoot>
 			<tbody>
 			<?php foreach ($this->services as $i => $item) : ?>
 				<tr class="row<?php echo $i % 2; ?>">
+					<td><?php echo $this->pagination->getRowOffset($i); ?></td>
 					<td class="center hidden-phone">
 						<?php echo JHtml::_('grid.id', $i, $item->service_id); ?>
 					</td>

@@ -8,9 +8,11 @@
  */
 
 defined('_JEXEC') or die;
-
+JHtml::_('behavior.multiselect');
+JHtml::_('formbehavior.chosen', 'select');
 $this->sortColumn	= $this->escape($this->state->get('list.ordering'));
 $this->sortDirection	= $this->escape($this->state->get('list.direction'));
+
 ?>
 <script language="javascript" type="text/javascript">
 function tableOrdering( order, dir, task )
@@ -30,18 +32,23 @@ function tableOrdering( order, dir, task )
 	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=members');?>" method="post" name="adminForm" id="adminForm">
 		<div id="j-main-container">
 			<div id="filter-bar" class="btn-toolbar">
-			<div class="filter-search btn-group pull-left">
-				<label for="filter_search" class="element-invisible">Rechercher dans le titre</label>
-				<input type="text" name="jform[filter_search]" id="filter_search" placeholder="Rechercher" value="" class="hasTooltip" title="Rechercher dans le titre" />
-			</div>
-			<div class="btn-group pull-left">
-				<button type="submit" class="btn hasTooltip" title="Rechercher"><i class="icon-search"></i></button>
-				<button type="button" class="btn hasTooltip" title="Effacer" onclick="this.form.submit();"><i class="icon-remove"></i></button>
-			</div>
+				<div class="filter-search btn-group pull-left">
+					<label for="filter_search" class="element-invisible">Rechercher dans le titre</label>
+					<input type="text" name="jform[filter_search]" id="filter_search" placeholder="Rechercher" value="" class="hasTooltip" title="Rechercher dans le titre" />
+				</div>
+				<div class="btn-group pull-left">
+					<button type="submit" class="btn hasTooltip" title="Rechercher"><i class="icon-search"></i></button>
+					<button type="button" class="btn hasTooltip" title="Effacer" onclick="this.form.submit();"><i class="icon-remove"></i></button>
+				</div>
+				<div class="btn-group pull-right hidden-phone">
+					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+					<?php echo $this->pagination->getLimitBox(); ?>
+				</div>
 			</div>
 			<table class="table table-striped">
 				<thead>
 					<tr>
+						<th>#</th>
 						<th class="left">
 							<?php echo JHTML::_( 'grid.sort', 'Nom', 'b.lastname', $this->sortDirection, $this->sortColumn); ?>
 						</th>
@@ -68,6 +75,7 @@ function tableOrdering( order, dir, task )
 				<tbody>
 				<?php foreach ($this->members as $i => $item) : ?>
 					<tr class="row<?php echo $i % 2; ?>">
+						<td><?php echo $this->pagination->getRowOffset($i); ?></td>
 						<td class="left">
 							<a href="<?php echo JRoute::_('index.php?option=com_estivole&task=member.edit&member_id='.(int) $item->member_id); ?>">
 								<?php echo JText::_($item->lastname); ?>
@@ -100,7 +108,19 @@ function tableOrdering( order, dir, task )
 					</tr>
 					<?php endforeach; ?>
 				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="8">
+							<?php echo $this->pagination->getListFooter(); ?>
+						</td>
+					</tr>
+				</tfoot>
 			</table>
+			<div class="pagination">
+				<p class="counter">
+				<?php echo $this->pagination->getPagesCounter(); ?>
+				</p>
+			</div>
 
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />

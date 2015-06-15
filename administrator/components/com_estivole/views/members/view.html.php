@@ -1,11 +1,12 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
- 
+
 class EstivoleViewMembers extends JViewLegacy
 {
 	function display($tpl=null)
 	{
 		$app = JFactory::getApplication();
 		$this->state	= $this->get('State');
+		$this->pagination	= $this->get('Pagination');
 
 		//retrieve task list from model
 		$model = new EstivoleModelMembers();

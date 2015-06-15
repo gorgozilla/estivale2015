@@ -1,26 +1,72 @@
 <?php // no direct access
 
 defined( '_JEXEC' ) or die( 'Restricted access' ); 
+
+jimport('joomla.application.component.modellist');
  
 class EstivoleModelMembers extends JModelList
 {
+
 	function __construct()
-	{
-		$app = JFactory::getApplication();
-		$this->_member_id = $app->input->get('member_id', null);
-	
+	{   
 		$config['filter_fields'] = array(
 			'b.lastname',
 			'b.firstname',
 			'b.email',
 			'b.city'
 		);
-		parent::__construct($config);     
+		parent::__construct($config);  
+		
+		
+		$app = JFactory::getApplication();
+		$this->_member_id = $app->input->get('member_id', null);
 	}
   
 	protected function populateState($ordering = null, $direction = null) {
+		$app = JFactory::getApplication();
+		
+		// Get pagination request variables
+		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int');
+		$limitstart = JRequest::getVar('limitstart', 0, '', 'int');
+
+		// In case limit has been changed, adjust it
+		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
+		
+		$this->setState('limit', $limit);
+		$this->setState('limitstart', $limitstart);
+		
 		parent::populateState('lastname', 'ASC');
 	}
+	
+	function getData() 
+	{
+		// if data hasn't already been obtained, load it
+		if (empty($this->_data)) {
+			$query = $this->_buildQuery();
+			$this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));	
+		}
+		return $this->_data;
+	}
+
+  function getTotal()
+  {
+ 	// Load the content if it doesn't already exist
+ 	if (empty($this->_total)) {
+ 	    $query = $this->_buildQuery();
+ 	    $this->_total = $this->_getListCount($query);	
+ 	}
+ 	return $this->_total;
+  }
+
+  function getPagination()
+  {
+ 	// Load the content if it doesn't already exist
+ 	if (empty($this->_pagination)) {
+ 	    jimport('joomla.html.pagination');
+ 	    $this->_pagination = new JPagination($this->getTotal(), $this->getState('limitstart'), $this->getState('limit') );
+ 	}
+ 	return $this->_pagination;
+  }
  
 	/**
 	* Builds the query to be used by the member model
@@ -77,7 +123,7 @@ class EstivoleModelMembers extends JModelList
 	{
 		$query = $this->_buildQuery();    
 		$query = $this->_buildWhere($query);
-		$list = $this->_getList($query, $this->limitstart, $this->limit);
+		$list = $this->_getList($query, $limitstart, $limit);
 		return $list;
 	}
 
@@ -94,6 +140,8 @@ class EstivoleModelMembers extends JModelList
 	*/
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
+		$limit = $this->getState('limit');
+		$limitstart = $this->getState('limitstart');
 		$db = JFactory::getDBO();
 		$query->order($db->escape($this->getState('list.ordering', 'b.lastname')).' '.$db->escape($this->getState('list.direction', 'ASC')));
 		$db->setQuery($query, $limitstart, $limit);
