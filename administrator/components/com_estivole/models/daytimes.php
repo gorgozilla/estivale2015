@@ -23,8 +23,51 @@ class EstivoleModelDaytimes extends JModelList
 	}
   
 	protected function populateState($ordering = null, $direction = null) {
+		$app = JFactory::getApplication();
+		
+		// Get pagination request variables
+		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int');
+		$limitstart = JRequest::getVar('limitstart', 0, '', 'int');
+
+		// In case limit has been changed, adjust it
+		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
+		
+		$this->setState('limit', $limit);
+		$this->setState('limitstart', $limitstart);
 		parent::populateState('lastname', 'ASC');
 	}
+	
+	function getData() 
+	{
+		// if data hasn't already been obtained, load it
+		if (empty($this->_data)) {
+			$query = $this->_buildQuery();
+			$query = $this->_buildWhere($query);
+			$this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));	
+		}
+		return $this->_data;
+	}
+
+  function getTotal()
+  {
+ 	// Load the content if it doesn't already exist
+ 	if (empty($this->_total)) {
+ 	    $query = $this->_buildQuery();
+		$query = $this->_buildWhere($query);
+ 	    $this->_total = $this->_getListCount($query);	
+ 	}
+ 	return $this->_total;
+  }
+
+  function getPagination()
+  {
+ 	// Load the content if it doesn't already exist
+ 	if (empty($this->_pagination)) {
+ 	    jimport('joomla.html.pagination');
+ 	    $this->_pagination = new JPagination($this->getTotal(), $this->getState('limitstart'), $this->getState('limit') );
+ 	}
+ 	return $this->_pagination;
+  }
  
 	/**
 	* Builds the query to be used by the member model
@@ -105,6 +148,8 @@ class EstivoleModelDaytimes extends JModelList
 	*/
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
+		$limit = $this->getState('limit');
+		$limitstart = $this->getState('limitstart');
 		$db = JFactory::getDBO();
 		$query->order($db->escape($this->getState('list.ordering', 'm.lastname')).' '.$db->escape($this->getState('list.direction', 'ASC')));
 		$db->setQuery($query, $limitstart, $limit);

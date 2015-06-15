@@ -7,6 +7,7 @@ class EstivoleViewDaytimes extends JViewLegacy
 	{
 		$app = JFactory::getApplication();
 		$this->state	= $this->get('State');
+		$this->pagination	= $this->get('Pagination');
 
 		//retrieve task list from model
 		$model = new EstivoleModelDaytimes();

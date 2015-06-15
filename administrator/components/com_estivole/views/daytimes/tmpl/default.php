@@ -32,12 +32,26 @@ function tableOrdering( order, dir, task )
 
 <div id="j-main-container" class="span10">
 	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=daytimes');?>" method="post" name="adminForm" id="adminForm">
-			<div id="j-main-container">
+		<div id="j-main-container">
 			<?php
 			// Search tools bar
 			//echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
 			?>
-		<table class="table table-striped">
+			<div id="filter-bar" class="btn-toolbar">
+				<div class="filter-search btn-group pull-left">
+					<label for="filter_search" class="element-invisible">Rechercher dans le titre</label>
+					<input type="text" name="filter_search" id="filter_search" placeholder="Rechercher" value="<?php echo $this->escape($this->searchterms); ?>" class="hasTooltip" title="Rechercher dans le titre" />
+				</div>
+				<div class="btn-group pull-left">
+					<button type="submit" class="btn hasTooltip" title="Rechercher"><i class="icon-search"></i></button>
+					<button type="button" class="btn hasTooltip" title="Effacer" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
+				</div>
+				<div class="btn-group pull-right hidden-phone">
+					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+					<?php echo $this->pagination->getLimitBox(); ?>
+				</div>
+			</div>
+			<table class="table table-striped">
 			<thead>
 				<tr>
 					<th class="left">
@@ -112,7 +126,20 @@ function tableOrdering( order, dir, task )
 				</tr>
 				<?php endforeach; ?>
 			</tbody>
-		</table>
+			<tfoot>
+				<tr>
+					<td colspan="8">
+						<?php echo $this->pagination->getListFooter(); ?>
+					</td>
+				</tr>
+			</tfoot>
+			</table>
+			</table>
+			<div class="pagination">
+				<p class="counter">
+				<?php echo $this->pagination->getPagesCounter(); ?>
+				</p>
+			</div>
 
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
