@@ -6,7 +6,9 @@ jimport('joomla.application.component.modellist');
  
 class EstivoleModelMembers extends JModelList
 {
-
+	//Add this handy array with database fields to search in
+	protected $searchInFields = array('b.lastname','b.firstname', 'b.email');
+	
 	function __construct()
 	{   
 		$config['filter_fields'] = array(
@@ -15,6 +17,7 @@ class EstivoleModelMembers extends JModelList
 			'b.email',
 			'b.city'
 		);
+		$config['filter_fields']=array_merge($this->searchInFields,array('b.member'));
 		parent::__construct($config);  
 		
 		
@@ -24,6 +27,11 @@ class EstivoleModelMembers extends JModelList
   
 	protected function populateState($ordering = null, $direction = null) {
 		$app = JFactory::getApplication();
+		
+		// Load the filter state.
+		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		//Omit double (white-)spaces and set state
+		$this->setState('filter.search', preg_replace('/\s+/',' ', $search));
 		
 		// Get pagination request variables
 		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int');
@@ -43,6 +51,7 @@ class EstivoleModelMembers extends JModelList
 		// if data hasn't already been obtained, load it
 		if (empty($this->_data)) {
 			$query = $this->_buildQuery();
+			$query = $this->_buildWhere($query);
 			$this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));	
 		}
 		return $this->_data;
@@ -53,6 +62,7 @@ class EstivoleModelMembers extends JModelList
  	// Load the content if it doesn't already exist
  	if (empty($this->_total)) {
  	    $query = $this->_buildQuery();
+		$query = $this->_buildWhere($query);
  	    $this->_total = $this->_getListCount($query);	
  	}
  	return $this->_total;
@@ -93,9 +103,17 @@ class EstivoleModelMembers extends JModelList
 	*/
 	protected function _buildWhere(&$query)
 	{
+		$db = JFactory::getDBO();
 		if(is_numeric($this->_member_id)) 
 		{
 			$query->where('b.member_id = ' . (int) $this->_member_id);
+		}
+		
+		// Filter search // Extra: Search more than one fields and for multiple words
+		$regex = str_replace(' ', '|', $this->getState('filter.search'));
+		if (!empty($regex)) {
+			$regex=' REGEXP '.$db->quote($regex);
+			$query->where('('.implode($regex.' OR ',$this->searchInFields).$regex.')');
 		}
 
 		return $query;

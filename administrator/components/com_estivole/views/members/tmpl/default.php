@@ -34,11 +34,11 @@ function tableOrdering( order, dir, task )
 			<div id="filter-bar" class="btn-toolbar">
 				<div class="filter-search btn-group pull-left">
 					<label for="filter_search" class="element-invisible">Rechercher dans le titre</label>
-					<input type="text" name="jform[filter_search]" id="filter_search" placeholder="Rechercher" value="" class="hasTooltip" title="Rechercher dans le titre" />
+					<input type="text" name="filter_search" id="filter_search" placeholder="Rechercher" value="<?php echo $this->escape($this->searchterms); ?>" class="hasTooltip" title="Rechercher dans le titre" />
 				</div>
 				<div class="btn-group pull-left">
 					<button type="submit" class="btn hasTooltip" title="Rechercher"><i class="icon-search"></i></button>
-					<button type="button" class="btn hasTooltip" title="Effacer" onclick="this.form.submit();"><i class="icon-remove"></i></button>
+					<button type="button" class="btn hasTooltip" title="Effacer" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
