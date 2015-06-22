@@ -4,6 +4,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  
 class EstivoleModelDaytimes extends JModelList
 {
+	protected $searchInFields = array('text','s.name');
+	
 	function __construct()
 	{
 		$app = JFactory::getApplication();
@@ -19,6 +21,7 @@ class EstivoleModelDaytimes extends JModelList
 			's.name',
 			'md.status_id'
 		);
+		$config['filter_fields']=array_merge($this->searchInFields,array('s.service'));
 		parent::__construct($config);     
 	}
   
@@ -34,6 +37,11 @@ class EstivoleModelDaytimes extends JModelList
 		
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
+		
+		//Filter (dropdown) service
+		$services= $app->getUserStateFromRequest($this->context.'.filter.services', 'filter_services', '', 'string');
+		$this->setState('filter.services', $services);
+		
 		parent::populateState('lastname', 'ASC');
 	}
 	
@@ -96,6 +104,8 @@ class EstivoleModelDaytimes extends JModelList
 	*/
 	protected function _buildWhere(&$query)
 	{
+		$db = JFactory::getDBO();
+		
 		if(is_numeric($this->_member_id)) 
 		{
 			$query->where('md.member_id = ' . $this->_member_id);
@@ -104,6 +114,11 @@ class EstivoleModelDaytimes extends JModelList
 		if(is_numeric($this->_calendar_id)) 
 		{
 			$query->where('d.calendar_id = ' . $this->_calendar_id);
+		}
+		
+		$service= $db->escape($this->getState('filter.services'));
+		if (!empty($service)) {
+			$query->where('s.service_id='.$service);
 		}
 
 		return $query;

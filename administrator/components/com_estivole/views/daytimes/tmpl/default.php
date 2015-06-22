@@ -15,6 +15,11 @@ JHtml::_('behavior.modal', 'a.modal');
 
 $this->sortColumn	= $this->escape($this->state->get('list.ordering'));
 $this->sortDirection	= $this->escape($this->state->get('list.direction'));
+
+//Get services options
+JFormHelper::addFieldPath(JPATH_COMPONENT . '/models/fields');
+$services = JFormHelper::loadFieldType('Services', false);
+$servicesOptions=$services->getOptions(); // works only if you set your field getOptions on public!!
 ?>
 <script language="javascript" type="text/javascript">
 function tableOrdering( order, dir, task )
@@ -47,6 +52,10 @@ function tableOrdering( order, dir, task )
 					<button type="button" class="btn hasTooltip" title="Effacer" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
 				</div>
 				<div class="btn-group pull-right hidden-phone">
+					<select name="filter_services" class="inputbox" onchange="this.form.submit()">
+						<option value=""> - Select secteur - </option>
+						<?php echo JHtml::_('select.options', $servicesOptions, 'value', 'text', $this->state->get('filter.services'));?>
+					</select>
 					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
 					<?php echo $this->pagination->getLimitBox(); ?>
 				</div>
