@@ -99,7 +99,7 @@ function tableOrdering( order, dir, task )
 						</a>
 					</td>
 					<td class="left">
-						<?php echo JText::_($item->name); ?>
+						<?php echo JText::_($item->name.' - '.$item->description); ?>
 					</td>
 					<td class="left">
 						<?php echo date('d-m-Y',strtotime($item->daytime_day)); ?>

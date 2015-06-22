@@ -106,7 +106,7 @@ class EstivoleModelDaytime extends JModelItem
 	  //Build and querydatabase
     $query = $this->_buildQuery();    
     $query = $this->_buildWhere($query);
-
+	$query->order('b.daytime_day');
 	//Get list of data
     $list = $this->_getList($query, $this->limitstart, $this->limit);
 	
