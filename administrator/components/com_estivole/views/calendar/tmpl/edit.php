@@ -22,8 +22,12 @@ JHtml::_('formbehavior.chosen', 'select');
 	}
 </script>
 
-<div id="j-main-container" class="span12">
-	<h1><?php echo $this->calendar->name; ?></h1>
+<div id="j-sidebar-container" class="span2">
+	<?php echo $this->sidebar; ?>
+</div>
+
+<div id="j-main-container" class="span10">
+	<h1>Calendriers > <?php echo $this->calendar->name; ?></h1>
 	<form action="<?php echo JRoute::_('index.php?option=com_estivole&view=calendar&layout=edit&calendar_id=' . (int) $this->calendar->calendar_id);?>" method="post" name="adminForm" id="calendar-form" class="form-validate">
 		<div class="span12">
 			<div class="form-inline form-inline-header">
@@ -38,7 +42,7 @@ JHtml::_('formbehavior.chosen', 'select');
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th class="left">
+				<th class="left" colspan="2">
 					<?php echo JText::_('Jour'); ?>
 				</th>
 
@@ -62,11 +66,11 @@ JHtml::_('formbehavior.chosen', 'select');
 						<?php echo date('d-m-Y', strtotime($item->daytime_day)); ?>
 					</a>
 				</td>
-					<td class="center">
-						<a class="btn" onClick="javascript:return confirm('Supprimera également toutes les inscriptions associées à cette date. Êtes-vous sûr?')" href="index.php?option=com_estivole&task=calendar.deleteListDaytime&daytime_id=<?php echo $item->daytime_id; ?>">
-							<i class="icon-trash"></i>
-						</a>
-					</td>
+				<td class="center">
+					<a class="btn" onClick="javascript:return confirm('Supprimera également toutes les inscriptions associées à cette date. Êtes-vous sûr?')" href="index.php?option=com_estivole&task=calendar.deleteListDaytime&daytime_id=<?php echo $item->daytime_id; ?>">
+						<i class="icon-trash"></i>
+					</a>
+				</td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>

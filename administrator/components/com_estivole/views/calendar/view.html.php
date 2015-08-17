@@ -14,6 +14,9 @@ class EstivoleViewCalendar extends JViewLegacy
 		
 		$modelDaytime = new EstivoleModelDaytime();
 		$this->daytimes = $modelDaytime->listItems();
+		
+		EstivoleHelpersEstivole::addSubmenu('calendars');
+		$this->sidebar = JHtmlSidebar::render();
 
 		$this->addToolbar();
 

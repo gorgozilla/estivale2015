@@ -20,12 +20,14 @@ $this->sortDirection	= $this->escape($this->state->get('list.direction'));
 JFormHelper::addFieldPath(JPATH_COMPONENT . '/models/fields');
 $services = JFormHelper::loadFieldType('Services', false);
 $servicesOptions=$services->getOptions(); // works only if you set your field getOptions on public!!
+
+$dates = JFormHelper::loadFieldType('Dates', false);
+$datesOptions=$dates->getOptions(); // works only if you set your field getOptions on public!!
 ?>
 <script language="javascript" type="text/javascript">
 function tableOrdering( order, dir, task )
 {
 	var form = document.adminForm;
- 
 	form.filter_order.value = order;
 	form.filter_order_Dir.value = dir;
 	document.adminForm.submit( task );
@@ -56,6 +58,10 @@ function tableOrdering( order, dir, task )
 						<option value=""> - Select secteur - </option>
 						<?php echo JHtml::_('select.options', $servicesOptions, 'value', 'text', $this->state->get('filter.services'));?>
 					</select>
+					<select name="filter_dates" class="inputbox" onchange="this.form.submit()">
+						<option value=""> - Select date - </option>
+						<?php echo JHtml::_('select.options', $datesOptions, 'value', 'text', $this->state->get('filter.dates'));?>
+					</select>
 					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
 					<?php echo $this->pagination->getLimitBox(); ?>
 				</div>
@@ -76,11 +82,10 @@ function tableOrdering( order, dir, task )
 						<?php echo JHTML::_( 'grid.sort', 'Secteur', 's.name', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
-						<?php echo JText::_('Date'); ?>
+						<?php echo JHTML::_( 'grid.sort', 'Date', 'd.daytime_day', $this->sortDirection, $this->sortColumn); ?>
 					</th>
 					<th class="left">
-						<?php echo JText::_('Horaire'); ?>
-					</th>
+						<?php echo JHTML::_( 'grid.sort', 'Horaire', 'd.daytime_hour_start', $this->sortDirection, $this->sortColumn); ?>					</th>
 					<th class="left">
 						<?php echo JHTML::_( 'grid.sort', 'Status', 'md.status_id', $this->sortDirection, $this->sortColumn); ?>
 					</th>

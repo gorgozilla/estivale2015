@@ -39,7 +39,6 @@ class EstivoleControllerCalendar extends JControllerForm
 		$memberDaytimes = $modelDaytime->getDaytimeDaytimes($daytime_id);
 
 		foreach($memberDaytimes as $memberDaytime){
-			echo $memberDaytime->member_daytime_id;
 			$daytime = JTable::getInstance('MemberDaytime','Table');
 			$daytime->load($memberDaytime->member_daytime_id);
 

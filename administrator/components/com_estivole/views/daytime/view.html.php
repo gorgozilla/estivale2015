@@ -1,6 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
 require_once JPATH_COMPONENT . '/models/daytime.php';
 require_once JPATH_COMPONENT . '/models/service.php';
+require_once JPATH_COMPONENT . '/models/calendar.php';
   
 class EstivoleViewDaytime extends JViewLegacy
 {
@@ -22,6 +23,8 @@ class EstivoleViewDaytime extends JViewLegacy
 		$this->state	= $this->get('State');
 		$this->daytime	= $this->daytimes[0];
 		$this->form		= $this->get('Form');
+		$modelCalendar = new EstivoleModelCalendar();
+		$this->calendar	= $modelCalendar->getItem($this->daytime->calendar_id);
 		
 		$this->addToolbar();
 

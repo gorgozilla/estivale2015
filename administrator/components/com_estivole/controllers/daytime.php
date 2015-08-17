@@ -16,7 +16,9 @@ class EstivoleControllerDaytime extends JControllerForm
 		//Get model class
 		$this->model = $this->getModel($modelName);
 
-		if($task=='changeStatusDaytime'){
+		if($task=='deleteListDaytime'){
+			$this->deleteListDaytime();
+		}if($task=='changeStatusDaytime'){
 			$member_daytime_id = $input->get('member_daytime_id'); 
 			$status_id = $input->get('status_id'); 
 			$this->changeStatusDaytime($member_daytime_id, $status_id);
@@ -61,18 +63,34 @@ class EstivoleControllerDaytime extends JControllerForm
 	* @param int      ID of the member to delete
 	* @return boolean True if successfully deleted
 	*/
-	public function deleteDaytime()
+	public function deleteListDaytime()
 	{
-		$app  = JFactory::getApplication();
-		$id   = $id ? $id : $app->input->get('daytime_id');
+		$app      = JFactory::getApplication();
+		$daytime_id  = $app->input->get('daytime_id');
+		$return = array("success"=>false);
+		
+		$modelDaytime = new EstivoleModelDaytime();
 
-		$daytime = JTable::getInstance('Daytime','Table');
-		$daytime->load($id);
+		$memberDaytimes = $modelDaytime->getDaytimeDaytimes($daytime_id);
 
-		if ($daytime->delete()) 
-		{
-			return true;
+		foreach($memberDaytimes as $memberDaytime){
+			$daytime = JTable::getInstance('MemberDaytime','Table');
+			$daytime->load($memberDaytime->member_daytime_id);
+
+			if (!$daytime->delete()) 
+			{
+				return false;
+			}
 		}
-		return false;
+
+
+		if($modelDaytime->deleteDaytime($daytime_id)){
+			$return['success'] = true;
+			$return['msg'] = 'Yes';
+			$app->enqueueMessage('Date supprimée avec succès!');
+		}else{
+			$app->enqueueMessage('Erreur!');
+		}
+		$app->redirect( $_SERVER['HTTP_REFERER']);
 	}
 }

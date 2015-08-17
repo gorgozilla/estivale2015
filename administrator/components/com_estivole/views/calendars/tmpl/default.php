@@ -35,6 +35,7 @@ JHtml::_('behavior.modal', 'a.modal');
 		// Joomla.tableOrdering(order, dirn, '');
 	// }
 </script>
+
 <div id="j-sidebar-container" class="span2">
 	<?php echo $this->sidebar; ?>
 </div>

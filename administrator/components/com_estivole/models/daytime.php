@@ -310,7 +310,6 @@ class EstivoleModelDaytime extends JModelAdmin
 	
 	public function deleteDaytime($daytime_id = null)
 	{
-
 		$app  = JFactory::getApplication();
 		$id   = $id ? $id : $daytime_id;
 

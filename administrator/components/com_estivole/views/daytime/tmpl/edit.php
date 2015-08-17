@@ -26,7 +26,7 @@ JHtml::_('behavior.modal', 'a.modal');
 		<input type="hidden" name="calendar_id" value="<?php echo $this->daytime->calendar_id; ?>" />
 		<input type="hidden" name="task" value="" />
 	</form>
-	<h1><?php echo date('d-m-Y', strtotime($this->daytime->daytime_day)); ?></h1>
+	<h1>Calendriers > <?php echo $this->calendar->name; ?> > <?php echo date('d-m-Y', strtotime($this->daytime->daytime_day)); ?></h1>
 	<h2>Tranches horaire de la date</h2>
 	<table class="table table-striped">
 		<thead>
@@ -46,7 +46,7 @@ JHtml::_('behavior.modal', 'a.modal');
 				<th class="left">
 					<?php echo JText::_('Heure fin'); ?>
 				</th>
-				<th class="left">
+				<th class="left" colspan="2">
 					<?php echo JText::_('Quota'); ?>
 				</th>
 			</tr>
@@ -71,6 +71,11 @@ JHtml::_('behavior.modal', 'a.modal');
 				</td>
 				<td class="left">
 					<?php echo $item->filledQuota !='' ? $item->filledQuota : '0'; echo ' / '.JText::_($item->quota); ?>
+				</td>
+				<td class="center">
+					<a class="btn" onClick="javascript:return confirm('Supprimera également toutes les inscriptions associées à cette tranche horaire. Êtes-vous sûr?')" href="index.php?option=com_estivole&task=daytime.deleteListDaytime&daytime_id=<?php echo $item->daytime_id; ?>">
+						<i class="icon-trash"></i>
+					</a>
 				</td>
 			</tr>
 			<?php endforeach; ?>

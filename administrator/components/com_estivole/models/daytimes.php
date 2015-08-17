@@ -4,7 +4,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  
 class EstivoleModelDaytimes extends JModelList
 {
-	protected $searchInFields = array('text','s.name');
+	protected $searchInFields = array('m.lastname','m.email','s.name', 'm.firstname', 'd.daytime_day', 'd.daytime_hour_start');
 	
 	function __construct()
 	{
@@ -17,8 +17,8 @@ class EstivoleModelDaytimes extends JModelList
 			'm.lastname',
 			'm.firstname',
 			'm.email',
-			'm.city',
 			's.name',
+			'd.daytime_day',
 			'md.status_id'
 		);
 		$config['filter_fields']=array_merge($this->searchInFields,array('s.service'));
@@ -38,9 +38,18 @@ class EstivoleModelDaytimes extends JModelList
 		$this->setState('limit', $limit);
 		$this->setState('limitstart', $limitstart);
 		
+		// Load the filter state.
+		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		//Omit double (white-)spaces and set state
+		$this->setState('filter.search', preg_replace('/\s+/',' ', $search));
+		
 		//Filter (dropdown) service
 		$services= $app->getUserStateFromRequest($this->context.'.filter.services', 'filter_services', '', 'string');
 		$this->setState('filter.services', $services);
+		
+		//Filter (dropdown) date
+		$dates= $app->getUserStateFromRequest($this->context.'.filter.dates', 'filter_dates', '', 'string');
+		$this->setState('filter.dates', $dates);
 		
 		parent::populateState('lastname', 'ASC');
 	}
@@ -119,6 +128,18 @@ class EstivoleModelDaytimes extends JModelList
 		$service= $db->escape($this->getState('filter.services'));
 		if (!empty($service)) {
 			$query->where('s.service_id='.$service);
+		}
+		
+		$date= $db->escape($this->getState('filter.dates'));
+		if (!empty($date)) {
+			$query->where('d.daytime_day=\''.$date.'\'');
+		}
+		
+		// Filter search // Extra: Search more than one fields and for multiple words
+		$regex = str_replace(' ', '|', $this->getState('filter.search'));
+		if (!empty($regex)) {
+			$regex=' REGEXP '.$db->quote($regex);
+			$query->where('('.implode($regex.' OR ',$this->searchInFields).$regex.')');
 		}
 
 		return $query;
