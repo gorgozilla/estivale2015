@@ -30,7 +30,6 @@ function tableOrdering( order, dir, task )
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>#</th>
 					<th width="1%" class="hidden-phone">
 						<?php echo JHtml::_('grid.checkall'); ?>
 					</th>
@@ -55,7 +54,6 @@ function tableOrdering( order, dir, task )
 			<tbody>
 			<?php foreach ($this->services as $i => $item) : ?>
 				<tr class="row<?php echo $i % 2; ?>">
-					<td><?php echo $this->pagination->getRowOffset($i); ?></td>
 					<td class="center hidden-phone">
 						<?php echo JHtml::_('grid.id', $i, $item->service_id); ?>
 					</td>
@@ -67,19 +65,12 @@ function tableOrdering( order, dir, task )
 					<td class="left">
 						<?php echo JText::_($item->summary); ?>
 					</td>
-					<td class="center">
-					
+					<td class="center">		
 						<?php echo JHtml::_('job.publishList', $item->published, $i); ?>
-						<!--<a class="btn" href="index.php?option=com_estivole&task=services.deleteListService&service_id=<?php echo $item->service_id; ?>">
-							<i class="icon-publish"></i>
-						</a>-->
-						<a class="btn" onClick="javascript:return confirm('Supprimera également toutes les inscriptions associées au secteur. Êtes-vous sûr?')" href="index.php?option=com_estivole&task=services.deleteListService&service_id=<?php echo $item->service_id; ?>">
-							<i class="icon-trash"></i>
-						</a>
+						<?php echo JHtml::_('job.deleteList', $item->service_id, $i); ?>
 					</td>
 				</tr>
 				<?php endforeach; ?>
-
 			</tbody>
 		</table>
 		

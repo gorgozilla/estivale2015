@@ -160,16 +160,16 @@ class EstivoleModelDaytime extends JModelAdmin
     return $result;
   }
   
-  public function getServiceDaytimes($service_id)
+  public function getServiceDaytimes($cid)
   {
-
+	$cids = implode( ',', $cid );
+		 
     $query = $this->_buildQuery();   
     $db = JFactory::getDBO();
     $query = $db->getQuery(TRUE);
-
 	$query->select('*');
 	$query->from('#__estivole_members_daytimes as md');
-	$query->where('md.service_id = ' . $service_id);
+	$query->where('md.service_id IN (' . $cids.')');
 	
     $db->setQuery($query, 0, 0);
     $result = $db->loadObjectList();

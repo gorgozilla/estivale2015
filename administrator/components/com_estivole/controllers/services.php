@@ -26,7 +26,7 @@ class EstivoleControllerServices extends JControllerAdmin
 		$this->model = $this->getModel($modelName);
 
 		if($task=='deleteListService'){
-			$this->deleteListService();
+			$this->deleteListService($task);
 		}else if($task=='publishList' || $task=='unpublishList'){
 			$this->publishList($task);
 		}else{
@@ -34,15 +34,16 @@ class EstivoleControllerServices extends JControllerAdmin
 		}
 	}
 	
-	public function deleteListService()
+	public function deleteListService($task)
 	{
 		$app      = JFactory::getApplication();
 		$service_id  = $app->input->get('service_id');
-		$return = array("success"=>false);
-		
-		$modelDaytime = new EstivoleModelDaytime();
+        $ids    = JRequest::getVar('cid', array(), '', 'array');
 
-		$memberDaytimes = $modelDaytime->getServiceDaytimes($service_id);
+        $value  = JArrayHelper::getValue($task, 0, 'int');
+		$return = array("success"=>false);
+		$modelDaytime = new EstivoleModelDaytime();
+		$memberDaytimes = $modelDaytime->getServiceDaytimes($ids);
 		
 		foreach($memberDaytimes as $memberDaytime){
 			$daytime = JTable::getInstance('MemberDaytime','Table');
@@ -53,13 +54,26 @@ class EstivoleControllerServices extends JControllerAdmin
 			}
 		}
 
-		if($this->model->deleteService($service_id)){
-			$return['success'] = true;
-			$return['msg'] = 'Yes';
-			$app->enqueueMessage('Secteur supprimé avec succès!');
-		}else{
-			$app->enqueueMessage('Erreur!');
-		}
+		// if($this->model->deleteService($service_id)){
+			// $return['success'] = true;
+			// $return['msg'] = 'Yes';
+			// $app->enqueueMessage('Secteur supprimé avec succès!');
+		// }else{
+			// $app->enqueueMessage('Erreur!');
+		// }
+
+        if (empty($ids)) {
+            JError::raiseWarning(500, JText::_('JERROR_NO_ITEMS_SELECTED'));
+        }
+        else {
+            // Get the model.
+            $model = $this->getModel('service');
+
+            // Publish the items.
+            if (!$model->deleteService($ids)) {
+                JError::raiseWarning(500, $model->getError());
+            }
+        }
 		$app->redirect( $_SERVER['HTTP_REFERER']);
 	}
 
@@ -76,7 +90,6 @@ class EstivoleControllerServices extends JControllerAdmin
         $user   = JFactory::getUser();
         $ids    = JRequest::getVar('cid', array(), '', 'array');
         $values = array('publishList' => 1, 'unpublishList' => 0);
-
         $value  = JArrayHelper::getValue($values, $task, 0, 'int');
 
         if (empty($ids)) {

@@ -4,7 +4,6 @@ defined('_JEXEC') or die;
  
 class EstivoleModelService extends JModelAdmin
 {
-
   /**
   * Protected fields
   **/
@@ -101,61 +100,75 @@ class EstivoleModelService extends JModelAdmin
 		return $item;
 	}
   
-  /**
-  * Gets an array of objects from the results of database query.
-  *
-  * @param   string   $query       The query.
-  * @param   integer  $limitstart  Offset.
-  * @param   integer  $limit       The number of records.
-  *
-  * @return  array  An array of results.
-  *
-  * @since   11.1
-  */
-  protected function _getList($query, $limitstart = 0, $limit = 0)
-  {
-    $db = JFactory::getDBO();
-    $db->setQuery($query, $limitstart, $limit);
-    $result = $db->loadObjectList();
- 
-    return $result;
-  }
+	/**
+	* Gets an array of objects from the results of database query.
+	*
+	* @param   string   $query       The query.
+	* @param   integer  $limitstart  Offset.
+	* @param   integer  $limit       The number of records.
+	*
+	* @return  array  An array of results.
+	*
+	* @since   11.1
+	*/
+	protected function _getList($query, $limitstart = 0, $limit = 0)
+	{
+		$db = JFactory::getDBO();
+		$db->setQuery($query, $limitstart, $limit);
+		$result = $db->loadObjectList();
 
-  /**
-  * Delete a member
-  * @param int      ID of the member to delete
-  * @return boolean True if successfully deleted
-  */
-  public function deleteService($id = null)
-  {
+		return $result;
+	}
+
+	/**
+	* Delete a member
+	* @param int      ID of the member to delete
+	* @return boolean True if successfully deleted
+	*/
+	public function deleteService($cid = null)
+	{
 		$app  = JFactory::getApplication();
 		$id   = $id ? $id : $this->_service_id;
 
-		$service = JTable::getInstance('Service','Table');
-		$service->load($id);
+		// $service = JTable::getInstance('Service','Table');
+		// $service->load($id);
 
-		if ($service->delete()) 
+		// if ($service->delete()) 
+		// {
+			// return true;
+		// }
+		// return false;
+		
+		if (count( $cid ))
 		{
-			return true;
+		 JArrayHelper::toInteger($cid);
+		 $cids = implode( ',', $cid );
+		 $query = 'DELETE FROM #__estivole_services'
+			   . ' WHERE service_id IN ( '.$cids.' )';
+			  $this->_db->setQuery( $query );
+			if (!$this->_db->query()) {
+				$this->setError($this->_db->getErrorMsg());
+				return false;
+			 }
 		}
-		return false;
-  }
-}
-
-function publish($cid, $publish) {
-
-	if (count( $cid ))
-	{
-	 JArrayHelper::toInteger($cid);
-	 $cids = implode( ',', $cid );
-	 $query = 'UPDATE #__estivole_services'
-		   . ' SET published = '.(int) $publish
-		   . ' WHERE service_id IN ( '.$cids.' )';
-		  $this->_db->setQuery( $query );
-		if (!$this->_db->query()) {
-			$this->setError($this->_db->getErrorMsg());
-			return false;
-		 }
+		return true;
 	}
-	return true;
- }
+
+	function publish($cid, $publish) 
+	{
+		if (count( $cid ))
+		{
+		 JArrayHelper::toInteger($cid);
+		 $cids = implode( ',', $cid );
+		 $query = 'UPDATE #__estivole_services'
+			   . ' SET published = '.(int) $publish
+			   . ' WHERE service_id IN ( '.$cids.' )';
+			  $this->_db->setQuery( $query );
+			if (!$this->_db->query()) {
+				$this->setError($this->_db->getErrorMsg());
+				return false;
+			 }
+		}
+		return true;
+	 }
+}
