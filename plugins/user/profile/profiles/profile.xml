@@ -100,10 +100,10 @@
 				rows="5"
 				filter="safehtml"
 			/>
-			<field name="dob_spacer" type="spacer"
+			<!-- <field name="dob_spacer" type="spacer"
 				class="text"
 				label="PLG_USER_PROFILE_SPACER_DOB"
-			/>
+			/> -->
 			<field
 				name="dob"
 				type="calendar"

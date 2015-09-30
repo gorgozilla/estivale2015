@@ -73,7 +73,10 @@ function tableOrdering( order, dir, task )
 					</tr>
 				</thead>
 				<tbody>
-				<?php foreach ($this->members as $i => $item) : ?>
+				<?php foreach ($this->members as $i => $item) :
+						$userId = $item->user_id; 
+						$userProfile = JUserHelper::getProfile( $userId );
+				?>
 					<tr class="row<?php echo $i % 2; ?>">
 						<td><?php echo $this->pagination->getRowOffset($i); ?></td>
 						<td class="left">
@@ -92,13 +95,13 @@ function tableOrdering( order, dir, task )
 							</a>
 						</td>
 						<td class="left">
-							<?php echo JText::_($item->phone); ?>
+							<?php echo JText::_($userProfile->profile['phone']); ?>
 						</td>
 						<td class="left">
-							<?php echo JText::_($item->address); ?>
+							<?php echo JText::_($userProfile->profile['address1']); ?>
 						</td>
 						<td class="left">
-							<?php echo JText::_($item->npa." / ".$item->city); ?>
+							<?php echo JText::_($userProfile->profile['zipcode']." / ".$userProfile->profile['city']); ?>
 						</td>
 						<td class="center">
 							<a class="btn" onClick="javascript:return confirm('Supprimera également toutes les inscriptions associées à ce membre. Êtes-vous sûr?')" href="index.php?option=com_estivole&controller=member&task=member.delete&member_id=<?php echo $item->member_id; ?>">

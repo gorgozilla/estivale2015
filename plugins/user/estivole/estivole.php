@@ -47,20 +47,5 @@ class plgUserEstivole extends JPlugin
         }else{
 			return false;
 		}
-        /*jimport('joomla.log.log');
-        $res = someThirdPartyCall();
-        //Res is valid here
-        JLog::add("Res  ".print_r($res,true), JLog::WARNING, 'jerror');
-
-
-        $userOb = JUser::getInstance($user['id']);
-        $userOb->setParam('sugarid', $res['id']);
-        //User ob is valid here
-        JLog::add("UserOb  ".print_r($userOb,true), JLog::WARNING, 'jerror');
-        $saveRes = $userOb->save();
-
-         //Result is true. Error array is empty.
-        JLog::add("Result ".print_r($saveRes,true), JLog::WARNING, 'jerror');
-        JLog::add("Errors ".print_r($userOb->getErrors(),true), JLog::WARNING, 'jerror');*/
     }
 }

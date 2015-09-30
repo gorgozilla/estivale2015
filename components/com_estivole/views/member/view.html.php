@@ -10,6 +10,8 @@ class EstivoleViewMember extends JViewLegacy
 		$app = JFactory::getApplication();
 		$model = new EstivoleModelMember();
 		$this->user = JFactory::getUser();
+		$userId = $this->user->id; 
+		$this->userProfile = JUserHelper::getProfile( $userId );
 		
 		if(!$this->user->guest){
 			$this->state	= $this->get('State');

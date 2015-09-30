@@ -61,7 +61,7 @@ if($this->user->guest){
 			<div class="control-group">
 				<label for="inputBirthdate" class="control-label">Date de naissance</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="birthdate" name="jform[birthdate]" placeholder="Date de naissance" value="<?php echo $this->member->birthdate; ?>">
+					<input type="text" class="input-xlarge" id="birthdate" name="jform[birthdate]" placeholder="Date de naissance" value="<?php echo date_format(date_create($this->userProfile->profile['dob']), 'd-m-Y'); ?>">
 				</div>
 			</div>
 			<div class="control-group">
@@ -80,6 +80,12 @@ if($this->user->guest){
 				<label for="inputCity" class="control-label">Ville</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" name="jform[city]" placeholder="Ville" value="<?php echo $this->member->city; ?>">
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="inputCity" class="control-label">Téléphone</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="jform[phone]" placeholder="Tél." value="<?php echo $this->userProfile->profile['phone']; ?>">
 				</div>
 			</div>
 			<div class="control-group">
